@@ -23,6 +23,13 @@ caveat that the project is pre-1.0 and currently a **prototype**.
 - The website now publishes all 12 research documents under `docs/research/`, linked
   from a new "Read the working out" section. The published file count went from 8 to 20.
 
+### Added
+- `scripts/compare-apk-payload.py`: compares two APKs by payload, ignoring the
+  per-machine debug certificate. CI now asserts that a fresh build has a
+  byte-identical payload (all 546 ZIP entries) to the published pre-release.
+  The previous whole-file SHA-256 comparison could never have passed across
+  machines, because Gradle generates a different debug keystore on each one.
+
 ### Fixed
 - 17 text/background pairs were below WCAG AA. The worst was the "Read the full safety
   note" link inside the dark safety band, which rendered the site's green on the band's
@@ -31,6 +38,10 @@ caveat that the project is pre-1.0 and currently a **prototype**.
   illustration.
 - The published test count said 30; it double-counted the app tests, which run under
   both the debug and release variants. The true count is 21 distinct tests.
+- The README and PROJECT_STATUS claimed the build is "byte-identical" to the published
+  APK. That holds only for a build on the same machine. The corrected claim is
+  payload-identical across machines, with only the debug certificate differing - and
+  CI now verifies it on every run.
 
 ### Changed
 - The project's differentiation claim was corrected after verifying that Google Lookout

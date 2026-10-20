@@ -21,6 +21,10 @@ Disha Voice explores whether a phone can offer concise Hindi descriptions of sel
 - **Android app builds** — `:android:app:assembleDebug` produces a 30,671,369-byte APK
   (SHA-256 `96bab1f3…dc7b0`), minSdk 24 / targetSdk 36, requesting **only** the `CAMERA`
   permission, with **no** `INTERNET` permission. **9 tests passing.**
+  The build is **payload-reproducible**: a CI build of the same commit has a
+  byte-identical payload (all 546 ZIP entries, including `classes.dex`, the manifest and
+  the bundled model). Only the debug signing certificate differs, because Gradle
+  generates a per-machine debug keystore. CI asserts this on every run.
 - **On-device detection works** — a bundled Apache-2.0 EfficientDet-Lite0 model
   (COCO-2017, 90 classes) detects real objects: a Labrador as *dog* at 0.840, a street bus
   as *bus* at 0.801 alongside three people, with correct image-relative zones. Desktop-CPU

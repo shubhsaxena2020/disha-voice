@@ -60,6 +60,31 @@ Ground truth for each image was confirmed with an independent vision model.
 **Latency (7 repeats/image, desktop CPU):** median 25.9–35.9 ms, min 25.1, max 63.7.
 **This is a desktop measurement, not a phone measurement.** Full data: `benchmarks/results/detector_benchmark.json`.
 
+### 3a. Cross-machine build reproducibility — VERIFIED
+A debug-signed APK cannot be byte-identical across machines, because Gradle generates a
+per-machine debug keystore. Comparing whole-file SHA-256 between CI and a developer
+machine therefore always fails, even for a perfectly reproducible build.
+
+The **CI-built** APK and the **published release** APK were compared entry by entry:
+
+| Comparison | Result |
+|---|---|
+| File length | 30,671,369 bytes — identical |
+| ZIP entries | 546 in both, same names |
+| Entry content (decompressed, SHA-256 per entry) | **546 / 546 identical** |
+| `classes.dex` | identical (`e5a44569…`) |
+| `AndroidManifest.xml` | identical (`173e1928…`) |
+| `resources.arsc` | identical (`e3d9356d…`) |
+| `assets/efficientdet_lite0_detection.tflite` | identical (`33a3b622…`) |
+| Bytes before the APK Signing Block (30,614,428) | identical |
+| Bytes after the APK Signing Block (52,845) | identical |
+| APK Signing Block (4,096) | **differs** — the per-machine debug certificate |
+| Whole-file SHA-256 | differs, for exactly that reason |
+
+`scripts/compare-apk-payload.py` performs this comparison and is now run in CI against
+the published pre-release, so the payload-equality claim is **continuously verified**
+rather than asserted once.
+
 ### 4. Independent APK verification (REA)
 The built APK was opened and inspected with the REA MCP server (`rea-agents` 6.7.0): **547 archive entries, 473 graph nodes, 0 integrity contradictions**, digest matching the locally computed SHA-256. REA's Android (JADX) route was unavailable in this environment — it requires a caller-supplied `REA_JADX_MCP_JAR` — so package facts were verified with `aapt2` and cross-checked against REA's archive graph.
 
@@ -215,7 +240,7 @@ the top of this document.
 | 7 | Website builds, links verified, deploy URL claimed | **Met** — deployed and verified live at https://shubhsaxena2020.github.io/disha-voice/ |
 | 8 | Licences, notices, version, hash recorded | **Met** — Apache-2.0 model hash recorded; `THIRD_PARTY_NOTICES.md` published; release hash published |
 | 9 | Limitations and non-mobility warnings prominent | **Met** — in-app, in README, on the website, in the release notes, and in the docs |
-| 10 | Another engineer can reproduce the build | **Met** — a clean clone was built and tested; the resulting APK is byte-identical to the published one |
+| 10 | Another engineer can reproduce the build | **Met** — a clean clone was built and tested. On the same machine the APK is byte-identical to the published one; from a different machine the **payload** (code, resources, manifest, model) is byte-identical and only the debug signing certificate differs. CI now asserts this payload equality on every run |
 
 **Conclusion: prototype / release candidate in progress. Not production-ready, and not safe for independent mobility use.**
 
@@ -243,6 +268,11 @@ the top of this document.
   published repository builds, runs 21/21 tests green, and produces a debug APK whose
   SHA-256 is **identical** to the published artifact
   (`96bab1f33062922add352ea4709bac080bd3f2266f19d582e53928346f3dc7b0`).
+  **Corrected 2026-10-20:** that identity holds for a build on the *same machine*,
+  because it reuses the same debug keystore. It does **not** hold across machines —
+  Gradle generates a per-machine debug keystore, so the certificate inside the APK
+  Signing Block always differs. A CI build of the same commit has a different
+  whole-file SHA-256 while carrying a **byte-identical payload**.
 - **2026-10-20** — Release asset round-trip verified: the APK downloaded from the GitHub
   release matches the local build byte for byte.
 - **2026-10-20** — **Competitor research completed and it changed the project.** Google
