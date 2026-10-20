@@ -32,6 +32,17 @@ jobs:
         run: ./scripts/gradle-with-retry.sh :android:app:testDebugUnitTest
       - name: Build the debug APK
         run: ./scripts/gradle-with-retry.sh :android:app:assembleDebug
+      - name: Upload the debug APK
+        # Uploaded before the verification steps, and unconditionally, so that a
+        # failed verification can be diagnosed from the artifact itself rather
+        # than only from the log.
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: app-debug-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 14
+          if-no-files-found: error
       - name: Verify the APK requests only the camera
         run: |
           set -euo pipefail
@@ -158,13 +169,6 @@ jobs:
             "https://github.com/shubhsaxena2020/disha-voice/releases/download/v0.1.3-prototype/disha-voice-v0.1.3-prototype-debug.apk"
           python3 scripts/compare-apk-payload.py \
             android/app/build/outputs/apk/debug/app-debug.apk /tmp/published.apk
-      - name: Upload the debug APK
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
-        with:
-          name: app-debug-apk
-          path: android/app/build/outputs/apk/debug/app-debug.apk
-          retention-days: 14
-          if-no-files-found: error
       - name: Upload the unit test reports
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4

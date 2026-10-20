@@ -20,6 +20,7 @@ gradlew text eol=lf
 *.html text eol=lf
 *.js text eol=lf
 *.json text eol=lf
+*.txt text eol=lf
 *.csv text eol=lf
 *.tflite binary
 *.apk binary
