@@ -62,8 +62,11 @@ jobs:
               "RESEARCH/platform-api-audit.md": "docs/research/platform-api-audit.md",
               "RESEARCH/architecture-options.md": "docs/research/architecture-options.md",
               "RESEARCH/feature-comparison.csv": "docs/research/feature-comparison.csv",
+              "RESEARCH/third-party-inventory.csv": "docs/research/third-party-inventory.csv",
+              "THIRD_PARTY_NOTICES.md": "docs/THIRD_PARTY_NOTICES.md",
               "docs/RELEASE_NOTES_v0.1.1-prototype.md": "docs/RELEASE_NOTES_v0.1.1-prototype.md",
               "docs/RELEASE_NOTES_v0.1.2-prototype.md": "docs/RELEASE_NOTES_v0.1.2-prototype.md",
+              "docs/RELEASE_NOTES_v0.1.3-prototype.md": "docs/RELEASE_NOTES_v0.1.3-prototype.md",
               "docs/adr/0001-core-architecture.md": "docs/adr/0001-core-architecture.md",
               "TESTING/field-evaluation-protocol.md": "docs/research/field-evaluation-protocol.md",
           }

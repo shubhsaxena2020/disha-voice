@@ -1,6 +1,13 @@
 # Open-Source and Licence Audit — Disha Voice
 
-**Reviewed:** 2026-10-20. All URLs accessed 2026-10-20.
+**Reviewed:** 2026-10-21 (corrected). Originally 2026-10-20; all URLs accessed 2026-10-20
+and 2026-10-21.
+**Correction note (2026-10-21):** a machine-readable inventory of every resolved dependency
+was built by reading the built APK and the Gradle cache
+(`RESEARCH/third-party-inventory.csv`). It found that this document made several claims that
+were not true. The false ones are corrected below, and the corrections are called out
+rather than quietly applied, because a licence audit that is wrong about what ships is worse
+than no audit at all.
 **Rule applied:** no third-party code is copied into this project. Everything here is a
 clean-room implementation. This audit exists to record what was checked, what may be
 used, and what must not be used.
@@ -14,11 +21,14 @@ Every claim is marked **VERIFIED** (read in the primary source), **OBSERVATION**
 
 | Question | Answer |
 |---|---|
-| Can this project be Apache-2.0? | **Yes.** The only bundled third-party binary asset is an Apache-2.0 model; every code dependency is Apache-2.0. |
+| Can this project be Apache-2.0? | **Yes**, with one item recorded as undetermined. Every shipped *code* dependency is Apache-2.0, and the one shipped *model* is Apache-2.0. |
 | Is any code copied from another project? | **No.** |
 | Is any model redistributed without a compatible licence? | **No.** The one bundled model is Apache-2.0. |
 | Does anything force a reciprocal licence? | **No.** No GPL, AGPL, CC-BY-NC, or source-available component is used. |
-| Are the test images redistributable? | **Yes**, with attribution (see §5). They are development fixtures and are **not** shipped in the APK. |
+| Are the test images redistributable? | **Unknown.** Their *repository* licences are known; **no licence statement for the photographs themselves was found**. They are development fixtures and are **not** shipped in the APK. |
+| What binary assets actually ship in the APK? | **Four**, not one: the model, and **three native libraries** totalling 15,366,820 bytes. The previous version of this document said the model was the only bundled binary asset. That was false. |
+| Is the shipped licence text present? | **Yes, now.** The APK contains no licence file at all until 2026-10-21; it now ships `assets/LICENSE-Apache-2.0.txt` and `assets/THIRD_PARTY_NOTICES.txt`, and CI asserts both are present. |
+| Is the shipped COCO category-name table licensed? | **UNDETERMINED.** It ships in the APK. No licence statement for the table itself was found, so it is recorded as an open item rather than assumed to be public domain. |
 
 ---
 
@@ -56,16 +66,62 @@ from a camera view — which is not itself protectable.
 
 ## 3. Third-party components actually shipped in the APK
 
-| Component | Type | Version | Licence | Evidence | OK to redistribute |
+**The complete list is `RESEARCH/third-party-inventory.csv`** — 134 rows, machine-readable,
+built by reading the built APK (all 546 ZIP entries at the time of the measurement — 548 now that the
+notices and licence text are bundled — and all 8 DEX files) and the Gradle cache.
+The table below is the summary; the CSV is the authority, and it records the exact SHA-256
+of every shipped artifact and where each is used.
+
+### 3.1 The four binary assets that ship
+
+| Asset | Type | Version | Licence | Evidence | OK to redistribute |
 |---|---|---|---|---|---|
-| **EfficientDet-Lite0 int8** (`efficientdet_lite0_detection.tflite`) | model | `tensorflow/efficientdet/lite0/detection/1` (same file as `lite0/int8/1`) | **Apache-2.0** | Model card front-matter `license: apache-2.0` at `https://huggingface.co/litert-community/efficientdet`; file SHA-256 `33a3b622c7cac0762f96089353cd61495f3e993968d133af7871bfc2d5396704` | **Yes** |
-| **LiteRT** (`com.google.ai.edge.litert:litert`) | code | 1.0.1 | Apache-2.0 | `LICENSE` file shipped inside the resolved AAR in the Gradle cache | **Yes** |
-| **AndroidX CameraX** (core, camera2, lifecycle, view) | code | 1.4.1 | Apache-2.0 | `https://dl.google.com/dl/android/maven2/androidx/camera/camera-view/1.4.1/camera-view-1.4.1.aar` (Apache-2.0, AndroidX policy) | **Yes** |
-| **AndroidX Compose** (ui, material3, foundation) | code | ui 1.6.8, material3 1.2.1 | Apache-2.0 | AndroidX is Apache-2.0 | **Yes** |
-| **AndroidX Core / Activity / Lifecycle** | code | 1.13.1 / 1.9.3 / 2.8.7 | Apache-2.0 | AndroidX is Apache-2.0 | **Yes** |
-| **Kotlin standard library & coroutines** | code | 2.0.21 / 1.9.0 | Apache-2.0 | Apache-2.0 | **Yes** |
-| **JUnit 4** (test only) | code | 4.13.2 | EPL-1.0 | test-only, not shipped in the APK | Yes (not redistributed) |
-| **COCO 2017 category names** | data (labels) | 2017 | Factual identifiers, not expressive content | Only the id→name table is used; **no COCO image is redistributed** | **Yes** |
+| **EfficientDet-Lite0 int8** (`efficientdet_lite0_detection.tflite`) | model | `tensorflow/efficientdet/lite0/detection/1` | **Apache-2.0** | Model card front-matter `license: apache-2.0` at `https://huggingface.co/litert-community/efficientdet`; SHA-256 `33a3b622c7cac0762f96089353cd61495f3e993968d133af7871bfc2d5396704` | **Yes** |
+| **`libtensorflowlite_jni.so`** (LiteRT runtime), 4 ABIs | native library | 1.0.1 | **Apache-2.0, plus a BSD-3-Clause Caffe attribution** | The `LICENSE` inside the resolved AAR carries the Apache-2.0 text **and** a separate notice for TensorFlow code derived from Caffe | **Yes**, provided the Caffe notice is reproduced — which it now is, in the shipped `THIRD_PARTY_NOTICES.txt` |
+| **`libimage_processing_util_jni.so`** (CameraX), 4 ABIs | native library | 1.4.1 | Apache-2.0 | Hash-matched byte-for-byte to `camera-core-1.4.1.aar` in the Gradle cache | **Yes** |
+| **`libsurface_util_jni.so`** (CameraX), 4 ABIs | native library | 1.4.1 | Apache-2.0 | Hash-matched byte-for-byte to `camera-core-1.4.1.aar` in the Gradle cache | **Yes** |
+
+The three native libraries were **not listed in the previous version of this document**, which
+asserted that the model was "the only bundled third-party binary asset". They are 15,366,820
+of the APK's 30,701,552 bytes, so the claim was wrong about half the artifact.
+
+### 3.2 The code dependencies
+
+Eighty-four Maven coordinates resolve into the shipped APK: 83 AndroidX libraries and one
+`com.google.*` artifact. The full list is in the CSV. Two version corrections matter, and
+both were found by reading the version metadata the APK carries about itself rather than
+by reading the version catalog:
+
+| Component | Previously stated | Actually shipped | How it was established |
+|---|---|---|---|
+| `org.jetbrains.kotlinx:kotlinx-coroutines-core` / `-android` | 1.9.0 | **1.7.3** | `META-INF/kotlinx_coroutines_core.version` inside the APK. 1.9.0 is `kotlinx-coroutines-test`, which is test-scope only |
+| `androidx.compose.runtime:runtime` / `-runtime-saveable` | 1.6.8 | **1.7.1** | `META-INF/androidx.compose.runtime_runtime.version` inside the APK |
+
+`androidx.compose.foundation:foundation` also ships, but it is not a *direct* dependency:
+it arrives transitively through `androidx.compose.material` and `androidx.compose.ui`. The
+previous version of this document listed it as though the project had chosen it.
+
+### 3.3 Two components whose own POMs carry no licence
+
+`com.google.auto.value:auto-value-annotations` and `com.google.guava:listenablefuture`
+have **no `<licenses>` element in their own POMs**. The Apache-2.0 conclusion for both is
+inherited from their parent POMs. That is a weaker form of evidence than reading the
+artefact's own `LICENSE` file, and the CSV says so explicitly rather than asserting
+Apache-2.0 as though it had been read directly.
+
+### 3.4 The platform text-to-speech engine
+
+The app's entire spoken output depends on `android.speech.tts.TextToSpeech`. **No TTS
+engine is bundled**; the device's own engine provides the voice, and its licence is the
+device manufacturer's. It is recorded in the CSV as a platform dependency with
+`shipped_in_apk = not-applicable`. The previous version of this document did not mention
+it at all, which is an omission in a document whose subject is what the app ships.
+
+### 3.5 Data
+
+| Component | Type | Version | Licence | OK to redistribute |
+|---|---|---|---|---|
+| **COCO 2017 category names** (`CocoLabels.kt`, shipped in the APK) | data (labels) | 2017 | **UNDETERMINED** — no licence statement for the table itself was found. The COCO dataset's own terms govern the dataset; **no COCO image is redistributed** | **Open item.** Recorded as undetermined rather than argued to be unencumbered. The previous version of this document listed the licence as "Factual identifiers, not expressive content", which is an argument, not a licence. |
 
 ### Deliberately **not** used
 
@@ -81,9 +137,10 @@ from a camera view — which is not itself protectable.
 
 ## 4. Licence compatibility conclusion
 
-The project is licensed **Apache-2.0** (`LICENSE`). Every shipped third-party component
-is Apache-2.0, which is compatible with Apache-2.0 distribution (Apache-2.0 → Apache-2.0
-requires preserving notices, which `THIRD_PARTY_NOTICES.md` does).
+The project is licensed **Apache-2.0** (`LICENSE`). Every shipped *code* component and
+the one shipped *model* are Apache-2.0, which is compatible with Apache-2.0 distribution.
+Apache-2.0 → Apache-2.0 requires preserving the notices and conveying the licence, which
+`THIRD_PARTY_NOTICES.md` does and which the APK now also carries for itself.
 
 **No reciprocal-licence obligations are triggered.** There is no GPL/AGPL code, no
 CC-BY-NC asset, and no source-available model in the shipped artifact.
@@ -92,16 +149,40 @@ CC-BY-NC asset, and no source-available model in the shipped artifact.
 licence was verified from the model card before the model was downloaded into the
 repository — not after.
 
+**Two items are open, and neither is a blocker for an Apache-2.0 distribution, but both
+should be closed rather than argued away:**
+
+1. **The COCO category-name table ships in the APK and has no determined licence.** The
+   table is a list of factual object-category names, and no licence statement for it was
+   found. It is recorded as UNDETERMINED. If the project wants a clean position, the
+   table can be regenerated from the COCO annotation files at build time and the committed
+   copy removed, which would make the question disappear rather than answer it.
+2. **The LiteRT Caffe attribution is a BSD-3-Clause notice with its own retention
+   condition.** It is now reproduced in full in the shipped notices, and CI asserts it has
+   not been dropped. Before 2026-10-21 it was recorded nowhere in the repository.
+
+**A third item is about the artifact rather than the licences:** until 2026-10-21 the APK
+contained **no `LICENSE` or `NOTICE` file at all**, while this document asserted that the
+notices requirement was satisfied by `THIRD_PARTY_NOTICES.md` in the repository. A
+repository file does not travel with a distributed binary. The notices and the licence
+text are now bundled as APK assets, reachable from an **Open source licences** screen in
+the app, and CI fails the build if either is missing.
+
 ---
 
 ## 5. Development test images (not shipped)
 
 | File | Source | Licence / terms | Notes |
 |---|---|---|---|
-| `benchmarks/testdata/yellow_labrador.jpg` | `https://storage.googleapis.com/download.tensorflow.org/example_images/YellowLabradorLooking_new.jpg` | Google-provided example image, published for use with TensorFlow documentation | Development fixture only |
-| `benchmarks/testdata/samoyed.jpg` | `https://raw.githubusercontent.com/pytorch/hub/master/images/dog.jpg` | PyTorch Hub example image | Development fixture only |
-| `benchmarks/testdata/bus_street.jpg` | `https://raw.githubusercontent.com/ultralytics/yolov5/master/data/images/bus.jpg` | Ultralytics repo example image (AGPL-3.0 repository) — **image only, no code** | Development fixture only |
+| `benchmarks/testdata/yellow_labrador.jpg` | `https://storage.googleapis.com/download.tensorflow.org/example_images/YellowLabradorLooking_new.jpg` | **UNDETERMINED** — published as TensorFlow documentation material, but no explicit licence statement for the photograph was found | Development fixture only |
+| `benchmarks/testdata/samoyed.jpg` | `https://raw.githubusercontent.com/pytorch/hub/master/images/dog.jpg` | **UNDETERMINED** — the `pytorch/pytorch` repository is BSD-3-Clause, but that licence covers the repository's code, not the sample photograph | Development fixture only |
+| `benchmarks/testdata/bus_street.jpg` | `https://raw.githubusercontent.com/ultralytics/yolov5/master/data/images/bus.jpg` | **UNDETERMINED** — the `yolov5` repository is AGPL-3.0, but that licence covers the software, not the photograph. **Image only, no code** | Development fixture only |
 | `benchmarks/testdata/people_tie.jpg` | `https://raw.githubusercontent.com/ultralytics/yolov5/master/data/images/zidane.jpg` | as above | Development fixture only |
+
+**The repository licences are known; the photograph licences are not.** The previous version
+of this document listed the repository licences in the "Licence / terms" column, which read
+as though they covered the images. They do not, and a licence that covers software is not
+a licence that covers a photograph.
 
 **Important:** the `yolov5` repository is AGPL-3.0. **No code from it is used** — only two
 well-known example photographs are retained as test fixtures, and the repository's code is
@@ -121,4 +202,11 @@ rather than silently left.
 3. **Re-check licences at release time** — dependency versions change, and a licence can
    change between versions.
 4. **Confirm COCO dataset terms** if any COCO *image* is ever used in evaluation; only
-   category names are used now.
+   category names are used now — but the *category-name table's* own licence is
+   **UNDETERMINED** and it does ship. Either find a licence statement for it, or
+   regenerate it at build time from the COCO annotations and stop shipping a copy.
+5. **Re-run the dependency inventory at release time.** `RESEARCH/third-party-inventory.csv`
+   is the check. It found fourteen discrepancies in this document and in
+   `THIRD_PARTY_NOTICES.md` on 2026-10-21, including two wrong versions and a missing
+   native-library notice, so it is worth running on every release rather than trusting
+   that the prose is still right.

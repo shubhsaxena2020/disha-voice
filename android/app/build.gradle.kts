@@ -12,8 +12,8 @@ android {
         applicationId = "org.dishavoice.app"
         minSdk = 24
         targetSdk = 36
-        versionCode = 3
-        versionName = "0.1.2-prototype"
+        versionCode = 4
+        versionName = "0.1.3-prototype"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

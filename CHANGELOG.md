@@ -8,9 +8,9 @@ caveat that the project is pre-1.0 and currently a **prototype**.
 
 ## [0.1.1-prototype] - 2026-10-20
 
-**Published pre-release:** https://github.com/shubhsaxena2020/disha-voice/releases/tag/v0.1.2-prototype
+**Published pre-release:** https://github.com/shubhsaxena2020/disha-voice/releases/tag/v0.1.3-prototype
 
-- SHA-256 `6b55a59f2a76b94fad397a22b34a021d26adf1a125f1e809b6528ade057f2790`, 30,671,369 bytes.
+- SHA-256 `5041d752ed16bc1c0c4c3225e471fd83a5115f5c866bacba40c4f3dd3f33dfa9`, 30,701,552 bytes.
 - **No user-visible change** from v0.1.0-prototype. Republished because the source changed in
   a way that matters for trust:
   - The input-tensor construction is now a testable unit (`InputTensorBuilder`), with **7 new
@@ -26,6 +26,12 @@ caveat that the project is pre-1.0 and currently a **prototype**.
 ## [Unreleased]
 
 ### Added
+- **`RESEARCH/third-party-inventory.csv`** — 134 rows, 10 columns, machine-readable
+  inventory of every third-party component: version, type, licence, licence URL, source
+  URL, SHA-256 of the shipped artifact, where it is used, whether it ships in the APK, and
+  notes. Built by reading the built APK and the Gradle cache rather than by trusting the
+  version catalog, which is how it found the two wrong versions. It is the authority the
+  shipped notices are generated from, and CI checks they still match.
 - **A third research pass, recovered from an orphaned batch.** An earlier parallel research
   batch was interrupted before it recorded any results, and it left no side effects at all -
   no files, no commits, no working-tree changes - but its transcripts held research *leads*.
@@ -71,7 +77,13 @@ caveat that the project is pre-1.0 and currently a **prototype**.
   and every benchmark number would still look plausible. Measured: `raw` and `norm11`
   agree closely (this model's input quantisation maps the uint8 range onto [-1, 1]), while
   ImageNet mean/std normalisation is clearly worse (bus 0.801 -> 0.668, dog 0.840 -> 0.801).
-  The app's convention is confirmed correct, and the check is now in CI.
+  The app's convention is confirmed correct.
+  **Correction (2026-10-21):** this entry originally said the check was "now in CI".
+  It is not. The three-convention comparison needs the test images, which are
+  deliberately not committed, so it cannot run in CI. What CI does enforce is the
+  app's *behaviour* — `InputTensorBuilderTest` pins the raw-uint8 convention — and the
+  comparison proves that behaviour is the right one. See
+  `RESEARCH/model-and-data-audit.md` section 3.
 - **A second-pass competitor finding, and the corrections it forced.**
   - **Google Guided Vision in Gemini Live** (launched **2026-10-01**) is a closer and far
     more capable competitor than Lookout: conversational camera description for blind and
@@ -114,6 +126,36 @@ caveat that the project is pre-1.0 and currently a **prototype**.
   machines, because Gradle generates a different debug keystore on each one.
 
 ### Fixed
+- **The APK carried no third-party licence notices at all.** A machine-readable inventory
+  of every resolved dependency (`RESEARCH/third-party-inventory.csv`, 134 rows), built by
+  reading the built APK and the Gradle cache, found **fourteen discrepancies** in the
+  licence documentation. Two mattered:
+  - The APK contained **no `LICENSE` or `NOTICE` file**, while `THIRD_PARTY_NOTICES.md`
+    claimed the Apache-2.0 requirement to retain notices was met by a repository file. A
+    repository file does not travel with a distributed binary.
+  - The LiteRT runtime's `LICENSE` carries a **BSD-3-Clause attribution** for TensorFlow
+    code derived from Caffe, recorded nowhere in the repository.
+
+  Three native libraries (15.4 MB of the 30.7 MB APK) also shipped without appearing in
+  any notice, and the documentation claimed the model was the only bundled binary asset.
+  Two versions were wrong: coroutines ships **1.7.3**, not the 1.9.0 in the version catalog
+  (which is test-scope only), and the Compose runtime ships **1.7.1**, not 1.6.8.
+
+  **Fixed:** the Apache-2.0 licence text and the full notices are now bundled inside the
+  APK as assets and reachable from an **Open source licences** screen — because a screen
+  reader cannot read a file inside an APK, so the obligation is only genuinely met for
+  this app's users if the notices are reachable. CI now asserts the APK carries both
+  files, that the licence text is Apache-2.0, that the Caffe attribution is present, and
+  that the notices still match the inventory.
+
+  **Left open deliberately:** the COCO category-name table ships in the APK and no licence
+  statement for it was found, so it is recorded as UNDETERMINED rather than argued to be
+  unencumbered; and the four test photographs have known *repository* licences but no
+  determinable *photograph* licence.
+- **Two documents claimed the preprocessing comparison was "now in CI". It is not.** The
+  three-convention comparison needs the test images, which are deliberately not committed.
+  CI enforces the app's *behaviour* via `InputTensorBuilderTest`; the comparison proves
+  that behaviour is correct and stays reproducible locally.
 - **Seven rows of the source register did not match the table header.** Rows S25 to S31
   carried six columns against a nine-column header, so the register did not parse as the
   table it claimed to be. The missing fields - source title, publisher, reliability - were
@@ -220,8 +262,8 @@ signed release, and no store distribution have been performed.
 
 - `:core:test` and `:android:app:testDebugUnitTest` — **28 distinct tests, 0 failures**
   (12 in `:core`, 16 in `:android:app`; the app tests also run under the release variant).
-- `:android:app:assembleDebug` — produces `app-debug.apk` (30,671,369 bytes,
-  SHA-256 `6b55a59f2a76b94fad397a22b34a021d26adf1a125f1e809b6528ade057f2790`),
+- `:android:app:assembleDebug` — produces `app-debug.apk` (30,701,552 bytes,
+  SHA-256 `5041d752ed16bc1c0c4c3225e471fd83a5115f5c866bacba40c4f3dd3f33dfa9`),
   minSdk 24 / targetSdk 36.
 - APK inspected independently: **CAMERA permission only, no `INTERNET` permission**,
   `allowBackup=false`, `usesCleartextTraffic=false`, model present in `assets/`.
@@ -250,5 +292,5 @@ signed release, and no store distribution have been performed.
   image" helps a blind user without egocentric grounding is an open research question.
 - **A debug-signed APK only.** No release keystore has been configured.
 
-[Unreleased]: https://github.com/shubhsaxena2020/disha-voice/compare/v0.1.2-prototype...HEAD
-[0.1.0-prototype]: https://github.com/shubhsaxena2020/disha-voice/releases/tag/v0.1.2-prototype
+[Unreleased]: https://github.com/shubhsaxena2020/disha-voice/compare/v0.1.3-prototype...HEAD
+[0.1.0-prototype]: https://github.com/shubhsaxena2020/disha-voice/releases/tag/v0.1.3-prototype

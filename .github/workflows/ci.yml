@@ -45,6 +45,70 @@ jobs:
           fi
           grep -q 'android.permission.CAMERA' /tmp/perms.txt
           echo "APK requests CAMERA and not INTERNET."
+      - name: Verify the APK carries its third-party notices
+        run: |
+          set -euo pipefail
+          # The app redistributes Apache-2.0 components, so the licence and the
+          # attribution notices must travel with the artifact. This check makes
+          # that a build failure rather than a documentation promise.
+          APK=android/app/build/outputs/apk/debug/app-debug.apk
+          python3 - "$APK" <<'PY'
+          import sys, zipfile
+          apk = sys.argv[1]
+          with zipfile.ZipFile(apk) as z:
+              names = set(z.namelist())
+              required = {
+                  "assets/THIRD_PARTY_NOTICES.txt": "third-party notices",
+                  "assets/LICENSE-Apache-2.0.txt": "Apache-2.0 licence text",
+              }
+              missing = [f"{n} ({why})" for n, why in required.items() if n not in names]
+              if missing:
+                  raise SystemExit("APK is missing required licence files: " + ", ".join(missing))
+              notices = z.read("assets/THIRD_PARTY_NOTICES.txt").decode("utf-8")
+              licence = z.read("assets/LICENSE-Apache-2.0.txt").decode("utf-8")
+              if "Apache License" not in licence or "Version 2.0" not in licence:
+                  raise SystemExit("the bundled licence text is not the Apache-2.0 licence")
+              # LiteRT's own LICENSE carries a separate BSD-3-Clause attribution
+              # for code derived from Caffe. It must be reproduced in full.
+              if "Caffe" not in notices:
+                  raise SystemExit("the notices omit the LiteRT/Caffe BSD-3-Clause attribution")
+              if "UNDETERMINED" not in notices:
+                  raise SystemExit("the notices must record components whose licence could not be determined")
+              print(f"APK carries the third-party notices and the Apache-2.0 licence text "
+                    f"({len(notices)} + {len(licence)} characters).")
+          PY
+      - name: Verify the shipped notices match the dependency inventory
+        run: |
+          set -euo pipefail
+          # RESEARCH/third-party-inventory.csv is the authority for what ships.
+          # The notices inside the APK are generated from it, so they cannot
+          # silently drift away from it. This check fails if any component
+          # marked as shipped in the inventory is missing from the notices.
+          python3 - <<'PY'
+          import csv, io, pathlib, re, zipfile
+          apk = 'android/app/build/outputs/apk/debug/app-debug.apk'
+          with open('RESEARCH/third-party-inventory.csv', encoding='utf-8', newline='') as fh:
+              rows = list(csv.DictReader(fh))
+          shipped = [r for r in rows if r['shipped_in_apk'] == 'yes']
+          with zipfile.ZipFile(apk) as z:
+              notices = z.read('assets/THIRD_PARTY_NOTICES.txt').decode('utf-8')
+          def coordinate(component):
+              m = re.match(r'^([\w.]+):([\w.-]+)(?::([\w.-]+))?$', component)
+              if m:
+                  return f"{m.group(1)}:{m.group(2)}" + (f":{m.group(3)}" if m.group(3) else '')
+              return component
+          missing = []
+          for r in shipped:
+              coord = coordinate(r['component'])
+              if coord not in notices:
+                  missing.append(coord)
+          if missing:
+              raise SystemExit(
+                  f"{len(missing)} shipped components are missing from the bundled notices, "
+                  f"e.g. {missing[:5]}. Regenerate the notices from the inventory."
+              )
+          print(f"All {len(shipped)} shipped components appear in the bundled notices.")
+          PY
       - name: Record the APK SHA-256
         run: |
           set -euo pipefail
@@ -91,7 +155,7 @@ jobs:
           # Block always differs. What must match is the payload: code,
           # resources, manifest and the bundled model.
           curl -fsSL -o /tmp/published.apk \
-            "https://github.com/shubhsaxena2020/disha-voice/releases/download/v0.1.2-prototype/disha-voice-v0.1.2-prototype-debug.apk"
+            "https://github.com/shubhsaxena2020/disha-voice/releases/download/v0.1.3-prototype/disha-voice-v0.1.3-prototype-debug.apk"
           python3 scripts/compare-apk-payload.py \
             android/app/build/outputs/apk/debug/app-debug.apk /tmp/published.apk
       - name: Upload the debug APK

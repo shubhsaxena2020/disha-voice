@@ -40,7 +40,11 @@ import org.dishavoice.app.UiState
  * actions that are large enough to hit reliably.
  */
 @Composable
-fun DishaScreen(viewModel: DishaViewModel, previewView: androidx.camera.view.PreviewView) {
+fun DishaScreen(
+    viewModel: DishaViewModel,
+    previewView: androidx.camera.view.PreviewView,
+    onShowLicences: () -> Unit = {},
+) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
     Surface(
@@ -105,6 +109,19 @@ fun DishaScreen(viewModel: DishaViewModel, previewView: androidx.camera.view.Pre
                     modifier = Modifier.weight(1f),
                 )
             }
+
+            Spacer(Modifier.height(16.dp))
+
+            // Full width, so the target stays large enough to hit reliably.
+            // The app bundles Apache-2.0 components, and a screen reader
+            // cannot read a file inside an APK, so the notices have to be
+            // reachable from the screen to be genuinely conveyed.
+            SecondaryControl(
+                label = "Open source licences",
+                description = "Read the list of bundled third-party software and its licences",
+                onClick = onShowLicences,
+                modifier = Modifier.fillMaxWidth(),
+            )
 
             Spacer(Modifier.height(18.dp))
 

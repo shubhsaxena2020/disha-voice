@@ -8,8 +8,13 @@ import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.camera.view.PreviewView
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.core.content.ContextCompat
 import org.dishavoice.app.ui.DishaScreen
+import org.dishavoice.app.ui.LicencesScreen
 
 class MainActivity : ComponentActivity() {
 
@@ -39,7 +44,16 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            DishaScreen(viewModel = viewModel, previewView = previewView)
+            var showLicences by rememberSaveable { mutableStateOf(false) }
+            if (showLicences) {
+                LicencesScreen(onBack = { showLicences = false })
+            } else {
+                DishaScreen(
+                    viewModel = viewModel,
+                    previewView = previewView,
+                    onShowLicences = { showLicences = true },
+                )
+            }
         }
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)

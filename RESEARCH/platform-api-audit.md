@@ -278,7 +278,7 @@ announcements the user asked for, because stale speech is worse than interruptio
 ### 7.7 The APK ships four ABIs
 
 `arm64-v8a`, `armeabi-v7a`, `x86`, `x86_64`, each with `libtensorflowlite_jni.so` and the
-CameraX JNI libraries. This is a large share of the 30,671,369-byte APK. A real release
+CameraX JNI libraries. This is a large share of the 30,701,552-byte APK. A real release
 should use ABI splits (or ship arm64 only), which is a build-configuration change rather
 than a code change. Recorded as **issue #15**.
 

@@ -1,0 +1,508 @@
+Disha Voice - third-party notices
+========================================================================
+
+This app redistributes the third-party components listed below. The
+full text of the licences is bundled with the app:
+  LICENSE-Apache-2.0.txt   - the Apache License, Version 2.0
+  THIRD_PARTY_NOTICES.txt   - this file
+
+89 components are shipped in this APK. The authoritative,
+machine-readable inventory - including the exact SHA-256 of every
+shipped artifact and where each one is used - is published at:
+  https://github.com/shubhsaxena2020/disha-voice
+  -> RESEARCH/third-party-inventory.csv
+
+------------------------------------------------------------------------
+
+Apache-2.0
+----------
+
+  CameraX native image-processing JNI (libimage_processing_util_jni.so, 4 ABIs)  (1.4.1)
+      https://dl.google.com/dl/android/maven2/androidx/camera/camera-core/1.4.1/camera-core-1.4.1.pom
+      arm64-v8a 29,008 B sha256 3e0071afcdc7e321f839e196d266014182f18d0988e4455acc9857a085b2184e; armeabi-v7a 20,380 B sha256 e48e356bbe1902ae9a66178a4a0141c993b82ee9f70dde52ad83e4af3eca984f; x86 38,292 B sha256 f5bdd537631cce21ad038a6737775540a7aef1f5a3d1fdc26c469f6c1ae73010; x86_64 48,104 B sha256 676e3
+  CameraX native surface utility JNI (libsurface_util_jni.so, 4 ABIs)  (1.4.1)
+      https://dl.google.com/dl/android/maven2/androidx/camera/camera-core/1.4.1/camera-core-1.4.1.pom
+      arm64-v8a 4,832 B sha256 ee3f0d56f81cc0a301db32dc4fd51274c3216733b4c40172768e38bc5049a265; armeabi-v7a 3,440 B sha256 f110d6a305fef5be5664d58cfb054366b002bc516066b4ec880c38a68428756f; x86 3,712 B sha256 6b5d033063bc125d99706f14f0ded08b3f0058f53f5a3d17d134e7d2ea75db11; x86_64 4,928 B sha256 cd425e10a
+  EfficientDet-Lite0 int8 detection model (TFLite)  (tensorflow/efficientdet/lite0/detection/1)
+      https://huggingface.co/litert-community/efficientdet
+      4,561,184 bytes. Same file as tensorflow/efficientdet/lite0/int8/1. Licence read from the model card front matter 'license: apache-2.0' at https://huggingface.co/litert-community/efficientdet (fetched 2026-10-21). Trained on COCO 2017. sha256 matches the copy packaged in the APK (assets/efficientdet
+  LiteRT native runtime (libtensorflowlite_jni.so, 4 ABIs)  (1.0.1)
+      https://dl.google.com/dl/android/maven2/com/google/ai/edge/litert/litert/1.0.1/litert-1.0.1.pom
+      arm64-v8a 3,549,384 B sha256 cfecb1f2da022a555dc916fd890df385221034cc3bd27365706a3f91847a1990; armeabi-v7a 2,366,508 B sha256 ec828382c802100e6ec54d298aaddbce039c918e5792ce1e56fcbdf5d636a0; x86 4,610,960 B sha256 33c40903d63c46ad7f7b220409d1851a5dc6138715c18f47410cdc5fc51fc8bc; x86_64 4,687,272 B sh
+  androidx.activity:activity  (1.9.3)
+      https://dl.google.com/dl/android/maven2/androidx/activity/activity/1.9.3/activity-1.9.3.pom
+      Shipped artifact activity-1.9.3.aar (214,105 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.activity.ComponentActivity, declared in the merged manifest.
+  androidx.activity:activity-compose  (1.9.3)
+      https://dl.google.com/dl/android/maven2/androidx/activity/activity-compose/1.9.3/activity-compose-1.9.3.pom
+      Shipped artifact activity-compose-1.9.3.aar (1,139,788 bytes); sha256 of the artifact in the local Gradle cache. Direct dependency; setContent {} in android/app/src/main/java/org/dishavoice/app/MainActivity.kt.
+  androidx.activity:activity-ktx  (1.9.3)
+      https://dl.google.com/dl/android/maven2/androidx/activity/activity-ktx/1.9.3/activity-ktx-1.9.3.pom
+      Shipped artifact activity-ktx-1.9.3.aar (2,130 bytes); sha256 of the artifact in the local Gradle cache. Supplies registerForActivityResult used in MainActivity.kt.
+  androidx.annotation:annotation  (1.8.1)
+      https://dl.google.com/dl/android/maven2/androidx/annotation/annotation/1.8.1/annotation-1.8.1.pom
+      Shipped artifact annotation-jvm-1.8.1.jar (56,126 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.annotation.* annotations.
+  androidx.annotation:annotation-experimental  (1.4.1)
+      https://dl.google.com/dl/android/maven2/androidx/annotation/annotation-experimental/1.4.1/annotation-experimental-1.4.1.pom
+      Shipped artifact annotation-experimental-1.4.1.aar (39,841 bytes); sha256 of the artifact in the local Gradle cache. Experimental-API opt-in annotations.
+  androidx.appcompat:appcompat  (1.1.0)
+      https://dl.google.com/dl/android/maven2/androidx/appcompat/appcompat/1.1.0/appcompat-1.1.0.pom
+      Shipped artifact appcompat-1.1.0.aar (1,068,080 bytes); sha256 of the artifact in the local Gradle cache. Not a declared dependency. Pulled in by camera-view; contributes 384 androidx/appcompat classes to the DEX and the res/abc_* resources.
+  androidx.appcompat:appcompat-resources  (1.1.0)
+      https://dl.google.com/dl/android/maven2/androidx/appcompat/appcompat-resources/1.1.0/appcompat-resources-1.1.0.pom
+      Shipped artifact appcompat-resources-1.1.0.aar (63,726 bytes); sha256 of the artifact in the local Gradle cache. Resources half of appcompat.
+  androidx.arch.core:core-common  (2.2.0)
+      https://dl.google.com/dl/android/maven2/androidx/arch/core/core-common/2.2.0/core-common-2.2.0.pom
+      Shipped artifact core-common-2.2.0.jar (11,657 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.arch.core.internal.SafeIterableMap.
+  androidx.arch.core:core-runtime  (2.2.0)
+      https://dl.google.com/dl/android/maven2/androidx/arch/core/core-runtime/2.2.0/core-runtime-2.2.0.pom
+      Shipped artifact core-runtime-2.2.0.aar (7,577 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.arch.core.executor.TaskExecutor.
+  androidx.autofill:autofill  (1.0.0)
+      https://dl.google.com/dl/android/maven2/androidx/autofill/autofill/1.0.0/autofill-1.0.0.pom
+      Shipped artifact autofill-1.0.0.aar (4,280 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.autofill.HintConstants.
+  androidx.camera:camera-camera2  (1.4.1)
+      https://dl.google.com/dl/android/maven2/androidx/camera/camera-camera2/1.4.1/camera-camera2-1.4.1.pom
+      Shipped artifact camera-camera2-1.4.1.aar (488,750 bytes); sha256 of the artifact in the local Gradle cache. Pulled in directly by android/app/build.gradle.kts. camera-core also ships the two native .so files listed separately above.
+  androidx.camera:camera-core  (1.4.1)
+      https://dl.google.com/dl/android/maven2/androidx/camera/camera-core/1.4.1/camera-core-1.4.1.pom
+      Shipped artifact camera-core-1.4.1.aar (938,840 bytes); sha256 of the artifact in the local Gradle cache. Pulled in directly by android/app/build.gradle.kts. camera-core also ships the two native .so files listed separately above.
+  androidx.camera:camera-lifecycle  (1.4.1)
+      https://dl.google.com/dl/android/maven2/androidx/camera/camera-lifecycle/1.4.1/camera-lifecycle-1.4.1.pom
+      Shipped artifact camera-lifecycle-1.4.1.aar (38,454 bytes); sha256 of the artifact in the local Gradle cache. Pulled in directly by android/app/build.gradle.kts. camera-core also ships the two native .so files listed separately above.
+  androidx.camera:camera-view  (1.4.1)
+      https://dl.google.com/dl/android/maven2/androidx/camera/camera-view/1.4.1/camera-view-1.4.1.pom
+      Shipped artifact camera-view-1.4.1.aar (111,164 bytes); sha256 of the artifact in the local Gradle cache. Pulled in directly by android/app/build.gradle.kts. camera-core also ships the two native .so files listed separately above.
+  androidx.collection:collection  (1.4.0)
+      https://dl.google.com/dl/android/maven2/androidx/collection/collection/1.4.0/collection-1.4.0.pom
+      Shipped artifact collection-jvm-1.4.0.jar (767,379 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.collection.ArrayMap.
+  androidx.collection:collection-ktx  (1.4.0)
+      https://dl.google.com/dl/android/maven2/androidx/collection/collection-ktx/1.4.0/collection-ktx-1.4.0.pom
+      Shipped artifact collection-ktx-1.4.0.jar (261 bytes); sha256 of the artifact in the local Gradle cache. Kotlin extensions over androidx.collection.
+  androidx.compose.animation:animation  (1.6.8)
+      https://dl.google.com/dl/android/maven2/androidx/compose/animation/animation/1.6.8/animation-1.6.8.pom
+      Shipped artifact animation-release.aar (1,410,585 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.compose.animation.core.Animation and the animation runtime.
+  androidx.compose.animation:animation-core  (1.6.8)
+      https://dl.google.com/dl/android/maven2/androidx/compose/animation/animation-core/1.6.8/animation-core-1.6.8.pom
+      Shipped artifact animation-core-release.aar (1,463,381 bytes); sha256 of the artifact in the local Gradle cache. Animation primitives (Animation, AnimationVector, TweenSpec).
+  androidx.compose.foundation:foundation  (1.6.8)
+      https://dl.google.com/dl/android/maven2/androidx/compose/foundation/foundation/1.6.8/foundation-1.6.8.pom
+      Shipped artifact foundation-release.aar (4,432,298 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.compose.foundation.layout.* layout primitives.
+  androidx.compose.foundation:foundation-layout  (1.6.8)
+      https://dl.google.com/dl/android/maven2/androidx/compose/foundation/foundation-layout/1.6.8/foundation-layout-1.6.8.pom
+      Shipped artifact foundation-layout-release.aar (526,511 bytes); sha256 of the artifact in the local Gradle cache. Layout primitives split out of foundation.
+  androidx.compose.material:material  (1.6.0)
+      https://dl.google.com/dl/android/maven2/androidx/compose/material/material/1.6.0/material-1.6.0.pom
+      Shipped artifact material-release.aar (2,990,008 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.compose.material.MaterialTheme and the Material 2 components that Material3 still pulls in.
+  androidx.compose.material:material-icons-core  (1.6.0)
+      https://dl.google.com/dl/android/maven2/androidx/compose/material/material-icons-core/1.6.0/material-icons-core-1.6.0.pom
+      Shipped artifact material-icons-core-release.aar (823,515 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.compose.material.icons.Icons.
+  androidx.compose.material:material-ripple  (1.6.0)
+      https://dl.google.com/dl/android/maven2/androidx/compose/material/material-ripple/1.6.0/material-ripple-1.6.0.pom
+      Shipped artifact material-ripple-release.aar (73,206 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.compose.material.ripple.* ripple implementations.
+  androidx.compose.material3:material3  (1.2.1)
+      https://dl.google.com/dl/android/maven2/androidx/compose/material3/material3/1.2.1/material3-1.2.1.pom
+      Shipped artifact material3-release.aar (4,738,857 bytes); sha256 of the artifact in the local Gradle cache. Direct dependency. Supplies androidx.compose.material3.Scaffold / Surface / MaterialTheme.
+  androidx.compose.runtime:runtime  (1.7.1)
+      https://dl.google.com/dl/android/maven2/androidx/compose/runtime/runtime/1.7.1/runtime-1.7.1.pom
+      Shipped artifact runtime-release.aar (2,415,743 bytes); sha256 of the artifact in the local Gradle cache. Resolved to 1.7.1 (not 1.6.8) by Gradle conflict resolution. Supplies androidx.compose.runtime.Composer.
+  androidx.compose.runtime:runtime-saveable  (1.7.1)
+      https://dl.google.com/dl/android/maven2/androidx/compose/runtime/runtime-saveable/1.7.1/runtime-saveable-1.7.1.pom
+      Shipped artifact runtime-saveable-release.aar (1,116,232 bytes); sha256 of the artifact in the local Gradle cache. Resolved to 1.7.1 by Gradle conflict resolution.
+  androidx.compose.ui:ui  (1.6.8)
+      https://dl.google.com/dl/android/maven2/androidx/compose/ui/ui/1.6.8/ui-1.6.8.pom
+      Shipped artifact ui-release.aar (4,842,274 bytes); sha256 of the artifact in the local Gradle cache. Direct dependency; largest single DEX contributor (8,362 androidx/compose classes in total). Also the source of androidx.compose.ui.tooling.PreviewActivity declared in the merged manifest. The artifa
+  androidx.compose.ui:ui-geometry  (1.6.8)
+      https://dl.google.com/dl/android/maven2/androidx/compose/ui/ui-geometry/1.6.8/ui-geometry-1.6.8.pom
+      Shipped artifact ui-geometry-release.aar (36,628 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.compose.ui.geometry.Offset.
+  androidx.compose.ui:ui-graphics  (1.6.8)
+      https://dl.google.com/dl/android/maven2/androidx/compose/ui/ui-graphics/1.6.8/ui-graphics-1.6.8.pom
+      Shipped artifact ui-graphics-release.aar (1,530,757 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.compose.ui.graphics.Color.
+  androidx.compose.ui:ui-test-manifest  (1.6.8)
+      https://dl.google.com/dl/android/maven2/androidx/compose/ui/ui-test-manifest/1.6.8/ui-test-manifest-1.6.8.pom
+      Shipped artifact ui-test-manifest-1.6.8.aar (9,382 bytes); sha256 of the artifact in the local Gradle cache. DEBUG-ONLY. Ships exactly one class, androidx/compose/ui/test/manifest/R, because it is declared debugImplementation. Not present in a release build.
+  androidx.compose.ui:ui-text  (1.6.8)
+      https://dl.google.com/dl/android/maven2/androidx/compose/ui/ui-text/1.6.8/ui-text-1.6.8.pom
+      Shipped artifact ui-text-release.aar (769,360 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.compose.ui.text.AnnotatedString.
+  androidx.compose.ui:ui-tooling  (1.6.8)
+      https://dl.google.com/dl/android/maven2/androidx/compose/ui/ui-tooling/1.6.8/ui-tooling-1.6.8.pom
+      Shipped artifact ui-tooling-release.aar (230,644 bytes); sha256 of the artifact in the local Gradle cache. DEBUG-ONLY. It is a debugImplementation dependency, so it is present in the debug APK (164 androidx/compose/ui/tooling classes) but would be removed by the release build, which sets isMinifyEna
+  androidx.compose.ui:ui-tooling-data  (1.6.8)
+      https://dl.google.com/dl/android/maven2/androidx/compose/ui/ui-tooling-data/1.6.8/ui-tooling-data-1.6.8.pom
+      Shipped artifact ui-tooling-data-release.aar (36,972 bytes); sha256 of the artifact in the local Gradle cache. Design-data bridge for the tooling inspector; debug-only in effect.
+  androidx.compose.ui:ui-tooling-preview  (1.6.8)
+      https://dl.google.com/dl/android/maven2/androidx/compose/ui/ui-tooling-preview/1.6.8/ui-tooling-preview-1.6.8.pom
+      Shipped artifact ui-tooling-preview-release.aar (17,210 bytes); sha256 of the artifact in the local Gradle cache. Supplies the @Preview annotation used in the Compose UI source.
+  androidx.compose.ui:ui-unit  (1.6.8)
+      https://dl.google.com/dl/android/maven2/androidx/compose/ui/ui-unit/1.6.8/ui-unit-1.6.8.pom
+      Shipped artifact ui-unit-release.aar (84,166 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.compose.ui.unit.Dp.
+  androidx.compose.ui:ui-util  (1.6.8)
+      https://dl.google.com/dl/android/maven2/androidx/compose/ui/ui-util/1.6.8/ui-util-1.6.8.pom
+      Shipped artifact ui-util-release.aar (13,478 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.compose.ui.util.* helpers.
+  androidx.concurrent:concurrent-futures  (1.1.0)
+      https://dl.google.com/dl/android/maven2/androidx/concurrent/concurrent-futures/1.1.0/concurrent-futures-1.1.0.pom
+      Shipped artifact concurrent-futures-1.1.0.jar (25,987 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.concurrent.futures.AbstractResolvableFuture.
+  androidx.concurrent:concurrent-futures-ktx  (1.1.0)
+      https://dl.google.com/dl/android/maven2/androidx/concurrent/concurrent-futures-ktx/1.1.0/concurrent-futures-ktx-1.1.0.pom
+      Shipped artifact concurrent-futures-ktx-1.1.0.jar (5,605 bytes); sha256 of the artifact in the local Gradle cache. Kotlin extensions over concurrent-futures.
+  androidx.core:core  (1.13.1)
+      https://dl.google.com/dl/android/maven2/androidx/core/core/1.13.1/core-1.13.1.pom
+      Shipped artifact core-1.13.1.aar (1,270,406 bytes); sha256 of the artifact in the local Gradle cache. Transitive of core-ktx. Supplies android.appComponentFactory=androidx.core.app.CoreComponentFactory in the merged manifest and the DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION.
+  androidx.core:core-ktx  (1.13.1)
+      https://dl.google.com/dl/android/maven2/androidx/core/core-ktx/1.13.1/core-ktx-1.13.1.pom
+      Shipped artifact core-ktx-1.13.1.aar (171,581 bytes); sha256 of the artifact in the local Gradle cache. Direct dependency.
+  androidx.cursoradapter:cursoradapter  (1.0.0)
+      https://dl.google.com/dl/android/maven2/androidx/cursoradapter/cursoradapter/1.0.0/cursoradapter-1.0.0.pom
+      Shipped artifact cursoradapter-1.0.0.aar (10,591 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.cursoradapter.widget.CursorAdapter.
+  androidx.customview:customview  (1.0.0)
+      https://dl.google.com/dl/android/maven2/androidx/customview/customview/1.0.0/customview-1.0.0.pom
+      Shipped artifact customview-1.0.0.aar (33,238 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.customview.widget.ViewDragHelper.
+  androidx.customview:customview-poolingcontainer  (1.0.0)
+      https://dl.google.com/dl/android/maven2/androidx/customview/customview-poolingcontainer/1.0.0/customview-poolingcontainer-1.0.0.pom
+      Shipped artifact customview-poolingcontainer-1.0.0.aar (6,608 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.customview.poolingcontainer.PoolingContainer.
+  androidx.drawerlayout:drawerlayout  (1.0.0)
+      https://dl.google.com/dl/android/maven2/androidx/drawerlayout/drawerlayout/1.0.0/drawerlayout-1.0.0.pom
+      Shipped artifact drawerlayout-1.0.0.aar (32,470 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.drawerlayout.widget.DrawerLayout.
+  androidx.emoji2:emoji2  (1.3.0)
+      https://dl.google.com/dl/android/maven2/androidx/emoji2/emoji2/1.3.0/emoji2-1.3.0.pom
+      Shipped artifact emoji2-1.3.0.aar (143,474 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.emoji2.text.EmojiCompat; EmojiCompatInitializer is registered in the merged manifest.
+  androidx.exifinterface:exifinterface  (1.3.2)
+      https://dl.google.com/dl/android/maven2/androidx/exifinterface/exifinterface/1.3.2/exifinterface-1.3.2.pom
+      Shipped artifact exifinterface-1.3.2.aar (60,708 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.exifinterface.media.ExifInterface.
+  androidx.fragment:fragment  (1.1.0)
+      https://dl.google.com/dl/android/maven2/androidx/fragment/fragment/1.1.0/fragment-1.1.0.pom
+      Shipped artifact fragment-1.1.0.aar (166,608 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.fragment.app.Fragment.
+  androidx.interpolator:interpolator  (1.0.0)
+      https://dl.google.com/dl/android/maven2/androidx/interpolator/interpolator/1.0.0/interpolator-1.0.0.pom
+      Shipped artifact interpolator-1.0.0.aar (7,669 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.interpolator.view.animation.* classes.
+  androidx.lifecycle:lifecycle-common  (2.8.7)
+      https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-common/2.8.7/lifecycle-common-2.8.7.pom
+      Shipped artifact lifecycle-common-jvm-2.8.7.jar (57,238 bytes); sha256 of the artifact in the local Gradle cache. Defines androidx.lifecycle.Lifecycle.
+  androidx.lifecycle:lifecycle-common-java8  (2.8.7)
+      https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-common-java8/2.8.7/lifecycle-common-java8-2.8.7.pom
+      Shipped artifact lifecycle-common-java8-2.8.7.jar (261 bytes); sha256 of the artifact in the local Gradle cache. Constraint-only artifact in the resolved runtime graph.
+  androidx.lifecycle:lifecycle-livedata  (2.8.7)
+      https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-livedata/2.8.7/lifecycle-livedata-2.8.7.pom
+      Shipped artifact lifecycle-livedata-2.8.7.aar (57,494 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.lifecycle.LiveData.
+  androidx.lifecycle:lifecycle-livedata-core  (2.8.7)
+      https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-livedata-core/2.8.7/lifecycle-livedata-core-2.8.7.pom
+      Shipped artifact lifecycle-livedata-core-2.8.7.aar (32,096 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.lifecycle.LiveData.
+  androidx.lifecycle:lifecycle-livedata-core-ktx  (2.8.7)
+      https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-livedata-core-ktx/2.8.7/lifecycle-livedata-core-ktx-2.8.7.pom
+      Shipped artifact lifecycle-livedata-core-ktx-2.8.7.aar (1,349 bytes); sha256 of the artifact in the local Gradle cache. Kotlin extensions over lifecycle-livedata-core.
+  androidx.lifecycle:lifecycle-process  (2.8.7)
+      https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-process/2.8.7/lifecycle-process-2.8.7.pom
+      Shipped artifact lifecycle-process-2.8.7.aar (15,241 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.lifecycle.ProcessLifecycleOwner; ProcessLifecycleInitializer is registered in the merged manifest.
+  androidx.lifecycle:lifecycle-runtime  (2.8.7)
+      https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-runtime/2.8.7/lifecycle-runtime-2.8.7.pom
+      Shipped artifact lifecycle-runtime-release.aar (82,180 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.lifecycle.LifecycleOwner.
+  androidx.lifecycle:lifecycle-runtime-compose  (2.8.7)
+      https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-runtime-compose/2.8.7/lifecycle-runtime-compose-2.8.7.pom
+      Shipped artifact lifecycle-runtime-compose-release.aar (58,286 bytes); sha256 of the artifact in the local Gradle cache. Direct dependency.
+  androidx.lifecycle:lifecycle-runtime-ktx  (2.8.7)
+      https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-runtime-ktx/2.8.7/lifecycle-runtime-ktx-2.8.7.pom
+      Shipped artifact lifecycle-runtime-ktx-release.aar (1,333 bytes); sha256 of the artifact in the local Gradle cache. Direct dependency.
+  androidx.lifecycle:lifecycle-viewmodel  (2.8.7)
+      https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-viewmodel/2.8.7/lifecycle-viewmodel-2.8.7.pom
+      Shipped artifact lifecycle-viewmodel-release.aar (57,286 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.lifecycle.ViewModel.
+  androidx.lifecycle:lifecycle-viewmodel-compose  (2.8.7)
+      https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-viewmodel-compose/2.8.7/lifecycle-viewmodel-compose-2.8.7.pom
+      Shipped artifact lifecycle-viewmodel-compose-release.aar (22,569 bytes); sha256 of the artifact in the local Gradle cache. Direct dependency; viewModels {} delegate in MainActivity.kt.
+  androidx.lifecycle:lifecycle-viewmodel-ktx  (2.8.7)
+      https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-viewmodel-ktx/2.8.7/lifecycle-viewmodel-ktx-2.8.7.pom
+      Shipped artifact lifecycle-viewmodel-ktx-2.8.7.aar (1,343 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.lifecycle.ViewModel.
+  androidx.lifecycle:lifecycle-viewmodel-savedstate  (2.8.7)
+      https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-viewmodel-savedstate/2.8.7/lifecycle-viewmodel-savedstate-2.8.7.pom
+      Shipped artifact lifecycle-viewmodel-savedstate-2.8.7.aar (37,817 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.lifecycle.SavedStateHandle.
+  androidx.loader:loader  (1.0.0)
+      https://dl.google.com/dl/android/maven2/androidx/loader/loader/1.0.0/loader-1.0.0.pom
+      Shipped artifact loader-1.0.0.aar (33,445 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.loader.app.LoaderManager.
+  androidx.profileinstaller:profileinstaller  (1.3.1)
+      https://dl.google.com/dl/android/maven2/androidx/profileinstaller/profileinstaller/1.3.1/profileinstaller-1.3.1.pom
+      Shipped artifact profileinstaller-1.3.1.aar (47,619 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.profileinstaller.ProfileInstaller and ProfileInstallReceiver, declared in the merged manifest.
+  androidx.savedstate:savedstate  (1.2.1)
+      https://dl.google.com/dl/android/maven2/androidx/savedstate/savedstate/1.2.1/savedstate-1.2.1.pom
+      Shipped artifact savedstate-1.2.1.aar (20,217 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.savedstate.SavedStateRegistry.
+  androidx.savedstate:savedstate-ktx  (1.2.1)
+      https://dl.google.com/dl/android/maven2/androidx/savedstate/savedstate-ktx/1.2.1/savedstate-ktx-1.2.1.pom
+      Shipped artifact savedstate-ktx-1.2.1.aar (3,375 bytes); sha256 of the artifact in the local Gradle cache. Kotlin extensions over savedstate.
+  androidx.startup:startup-runtime  (1.1.1)
+      https://dl.google.com/dl/android/maven2/androidx/startup/startup-runtime/1.1.1/startup-runtime-1.1.1.pom
+      Shipped artifact startup-runtime-1.1.1.aar (19,371 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.startup.InitializationProvider, declared in the merged manifest.
+  androidx.tracing:tracing  (1.2.0)
+      https://dl.google.com/dl/android/maven2/androidx/tracing/tracing/1.2.0/tracing-1.2.0.pom
+      Shipped artifact tracing-1.2.0.aar (6,060 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.tracing.Trace.
+  androidx.tracing:tracing-ktx  (1.2.0)
+      https://dl.google.com/dl/android/maven2/androidx/tracing/tracing-ktx/1.2.0/tracing-ktx-1.2.0.pom
+      Shipped artifact tracing-ktx-1.2.0.aar (6,007 bytes); sha256 of the artifact in the local Gradle cache. Kotlin extensions over androidx.tracing.
+  androidx.vectordrawable:vectordrawable  (1.1.0)
+      https://dl.google.com/dl/android/maven2/androidx/vectordrawable/vectordrawable/1.1.0/vectordrawable-1.1.0.pom
+      Shipped artifact vectordrawable-1.1.0.aar (33,236 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.vectordrawable.graphics.drawable.VectorDrawableCompat.
+  androidx.vectordrawable:vectordrawable-animated  (1.1.0)
+      https://dl.google.com/dl/android/maven2/androidx/vectordrawable/vectordrawable-animated/1.1.0/vectordrawable-animated-1.1.0.pom
+      Shipped artifact vectordrawable-animated-1.1.0.aar (34,496 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat.
+  androidx.versionedparcelable:versionedparcelable  (1.1.1)
+      https://dl.google.com/dl/android/maven2/androidx/versionedparcelable/versionedparcelable/1.1.1/versionedparcelable-1.1.1.pom
+      Shipped artifact versionedparcelable-1.1.1.aar (31,061 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.versionedparcelable.VersionedParcel.
+  androidx.viewpager:viewpager  (1.0.0)
+      https://dl.google.com/dl/android/maven2/androidx/viewpager/viewpager/1.0.0/viewpager-1.0.0.pom
+      Shipped artifact viewpager-1.0.0.aar (53,513 bytes); sha256 of the artifact in the local Gradle cache. Supplies androidx.viewpager.widget.PagerAdapter.
+  com.google.ai.edge.litert:litert  (1.0.1)
+      https://dl.google.com/dl/android/maven2/com/google/ai/edge/litert/litert/1.0.1/litert-1.0.1.pom
+      Shipped artifact litert-1.0.1.aar (6,487,444 bytes); sha256 of the artifact in the local Gradle cache. Java API of the TFLite runtime, relocated from org.tensorflow:tensorflow-lite to com.google.ai.edge.litert. Shipped as org/tensorflow/lite/* classes (36 classes in the DEX). The AAR's LICENSE bundl
+  com.google.ai.edge.litert:litert-api  (1.0.1)
+      https://dl.google.com/dl/android/maven2/com/google/ai/edge/litert/litert-api/1.0.1/litert-api-1.0.1.pom
+      Shipped artifact litert-api-1.0.1.aar (23,844 bytes); sha256 of the artifact in the local Gradle cache. Public API surface of LiteRT. Ships the same Apache-2.0 + Caffe BSD-3-Clause LICENSE file.
+  com.google.auto.value:auto-value-annotations  (1.6.3)
+      https://repo1.maven.org/maven2/com/google/auto/value/auto-value-annotations/1.6.3/auto-value-annotations-1.6.3.pom
+      Shipped artifact auto-value-annotations-1.6.3.jar (5,906 bytes); sha256 of the artifact in the local Gradle cache. Supplies com/google/auto/value/AutoValue and friends. The module POM has no <licenses> element; the licence is inherited from com.google.auto:auto-parent:7, which declares 'Apache 2.0'.
+  com.google.guava:listenablefuture  (1.0)
+      https://repo1.maven.org/maven2/com/google/guava/listenablefuture/1.0/listenablefuture-1.0.pom
+      Shipped artifact listenablefuture-1.0.jar (3,149 bytes); sha256 of the artifact in the local Gradle cache. Supplies com/google/common/util/concurrent/ListenableFuture. The module POM has no <licenses> element; the licence is inherited from com.google.guava:guava-parent:26.0-android, which declares '
+  org.jetbrains:annotations  (23.0.0)
+      https://repo1.maven.org/maven2/org/jetbrains/annotations/23.0.0/annotations-23.0.0.pom
+      Shipped artifact annotations-23.0.0.jar (29,371 bytes); sha256 of the artifact in the local Gradle cache. Supplies org/jetbrains/annotations/* (30 classes) and org/intellij/lang/annotations/* (27 classes).
+  org.jetbrains.kotlin:kotlin-stdlib  (2.0.21)
+      https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/2.0.21/kotlin-stdlib-2.0.21.pom
+      Shipped artifact kotlin-stdlib-2.0.21.jar (1,747,660 bytes); sha256 of the artifact in the local Gradle cache. Ships the kotlin/* and kotlin/jdk7 classes in the DEX plus the seven kotlin/*.kotlin_builtins files in the APK root.
+  org.jetbrains.kotlin:kotlin-stdlib-common  (2.0.21)
+      https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-common/2.0.21/kotlin-stdlib-common-2.0.21.pom
+      Artifact not present in the local Gradle cache; no sha256 available. Metadata-only module: the Gradle cache holds only the .pom and .module for it, no jar. It contributes no classes of its own beyond kotlin-stdlib, so there is no artifact to hash.
+  org.jetbrains.kotlin:kotlin-stdlib-jdk7  (1.8.20)
+      https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.8.20/kotlin-stdlib-jdk7-1.8.20.pom
+      Shipped artifact kotlin-stdlib-jdk7-1.8.20.jar (963 bytes); sha256 of the artifact in the local Gradle cache. Supplies kotlin.jdk7.AutoCloseableKt in the DEX. The 1.8.20 artifact itself ships only a multi-release module-info, so the classes come from kotlin-stdlib 2.0.21.
+  org.jetbrains.kotlin:kotlin-stdlib-jdk8  (1.8.20)
+      https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.8.20/kotlin-stdlib-jdk8-1.8.20.pom
+      Shipped artifact kotlin-stdlib-jdk8-1.8.20.jar (969 bytes); sha256 of the artifact in the local Gradle cache. Constraint-only in the resolved graph: the 1.8.20 artifact ships no class files, only META-INF/versions/9/module-info.class.
+  org.jetbrains.kotlinx:kotlinx-coroutines-android  (1.7.3)
+      https://repo1.maven.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-android/1.7.3/kotlinx-coroutines-android-1.7.3.pom
+      Shipped artifact kotlinx-coroutines-android-1.7.3.jar (20,637 bytes); sha256 of the artifact in the local Gradle cache. Supplies kotlinx.coroutines.android.AndroidDispatcherFactory, the Dispatchers.Main implementation.
+  org.jetbrains.kotlinx:kotlinx-coroutines-core  (1.7.3)
+      https://repo1.maven.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.7.3/kotlinx-coroutines-core-1.7.3.pom
+      Shipped artifact kotlinx-coroutines-core-jvm-1.7.3.jar (1,551,152 bytes); sha256 of the artifact in the local Gradle cache. Resolved to 1.7.3 (not 1.9.0) in the app runtime classpath. Supplies the kotlinx/coroutines classes (878 of them).
+  org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm  (1.7.3)
+      https://repo1.maven.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.7.3/kotlinx-coroutines-core-jvm-1.7.3.pom
+      Shipped artifact kotlinx-coroutines-core-jvm-1.7.3.jar (1,551,152 bytes); sha256 of the artifact in the local Gradle cache. KMP split: this is the artifact whose classes reach the APK.
+
+UNDETERMINED
+------------
+
+  COCO 2017 category id-to-name table  (2017)
+      https://cocodataset.org/
+      LICENCE COULD NOT BE DETERMINED. The COCO dataset itself is published at https://cocodataset.org/ under its own terms, but those terms cover the images and annotations, and no separate licence statement for the category id->name table was found in the COCO publication or in the upstream detection co
+
+------------------------------------------------------------------------
+
+ATTRIBUTION NOTICE - LiteRT (Google AI Edge)
+
+The LiteRT runtime redistributed in this app is licensed under the Apache
+License, Version 2.0, whose text is bundled as LICENSE-Apache-2.0.txt. Its own
+LICENSE file additionally carries the following attribution, which is
+reproduced here in full because it is a separate notice with its own
+conditions:
+
+Some of TensorFlow's code is derived from Caffe, which is subject to the following copyright notice:
+
+COPYRIGHT
+
+All contributions by the University of California:
+
+Copyright (c) 2014, The Regents of the University of California (Regents)
+All rights reserved.
+
+All other contributions:
+
+Copyright (c) 2014, the respective contributors
+All rights reserved.
+
+Caffe uses a shared copyright model: each contributor holds copyright over
+their contributions to Caffe. The project versioning records all such
+contribution and copyright details. If a contributor wants to further mark
+their specific copyright on a particular contribution, they should indicate
+their copyright solely in the commit message of the change when it is
+committed.
+
+LICENSE
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+   ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+   WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+   DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+   ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+   (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+   LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+   ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+CONTRIBUTION AGREEMENT
+
+By contributing to the BVLC/caffe repository through pull-request, comment,
+or otherwise, the contributor releases their content to the
+license and copyright terms herein.
+
+------------------------------------------------------------------------
+
+UNDETERMINED LICENCES
+------------------------------------------------------------------------
+
+The following are shipped, or used, with no licence statement that could
+be confirmed from a primary source. They are listed here rather than
+guessed, and they are open items in the project's issue tracker.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  COCO 2017 category id-to-name table (2017)
+      shipped in the APK: yes
+      LICENCE COULD NOT BE DETERMINED. The COCO dataset itself is published at https://cocodataset.org/ under its own terms, but those terms cover the images and annotations, and no separate licence statement for the category id->name table was found in the COCO publication or in the upstream detection code it is derived from. The table is reproduced verbatim from COCO 2017. This project asserts that ca
+
+  benchmarks/testdata/yellow_labrador.jpg (n/a)
+      shipped in the APK: no
+      Google-provided example image published with the TensorFlow documentation. No explicit licence statement was found for this image; the page is published as documentation material. LICENCE COULD NOT BE DETERMINED from the file itself. Development fixture only; not compiled into the APK. The sha256 is of the file as committed in the repository.
+
+  benchmarks/testdata/samoyed.jpg (n/a)
+      shipped in the APK: no
+      PyTorch Hub example image. The pytorch/pytorch repository is BSD-3-Clause, but that licence is stated for the repository's code, not for the sample photograph; no separate licence statement for the image was found. LICENCE COULD NOT BE DETERMINED for the image itself. Development fixture only; not compiled into the APK. The sha256 is of the file as committed in the repository.
+
+  benchmarks/testdata/bus_street.jpg (n/a)
+      shipped in the APK: no
+      Ultralytics yolov5 example image. The yolov5 repository is AGPL-3.0, but that repository licence covers the software, not the photograph. No separate licence statement for the image was found. LICENCE COULD NOT BE DETERMINED for the image itself. Not shipped in the APK. Development fixture only; not compiled into the APK. The sha256 is of the file as committed in the repository.
+
+  benchmarks/testdata/people_tie.jpg (n/a)
+      shipped in the APK: no
+      As above. LICENCE COULD NOT BE DETERMINED for the image itself. Not shipped in the APK. Development fixture only; not compiled into the APK. The sha256 is of the file as committed in the repository.

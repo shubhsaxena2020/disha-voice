@@ -19,7 +19,7 @@ See `RESEARCH/competitor-landscape.md`.
 |---|---|
 | **Repository** | https://github.com/shubhsaxena2020/disha-voice |
 | **Website (live)** | https://shubhsaxena2020.github.io/disha-voice/ |
-| **Pre-release** | https://github.com/shubhsaxena2020/disha-voice/releases/tag/v0.1.2-prototype |
+| **Pre-release** | https://github.com/shubhsaxena2020/disha-voice/releases/tag/v0.1.3-prototype |
 
 **Last updated:** 2026-10-20
 
@@ -35,8 +35,8 @@ Image-relative zone classification (left/centre/right from box centre x, boundar
 ### 2. Android app (`android/app/`) — BUILDS, NOT YET DEVICE-VERIFIED
 Kotlin + Jetpack Compose + CameraX + LiteRT + Android TextToSpeech.
 
-- `app-debug.apk` — **30,671,369 bytes**
-- SHA-256 `6b55a59f2a76b94fad397a22b34a021d26adf1a125f1e809b6528ade057f2790`
+- `app-debug.apk` — **30,701,552 bytes**
+- SHA-256 `5041d752ed16bc1c0c4c3225e471fd83a5115f5c866bacba40c4f3dd3f33dfa9`
 - minSdk 24, targetSdk 36, compileSdk 36
 - **Permissions: `CAMERA` only.** No `INTERNET`. Verified with `aapt2 dump permissions`.
 - `allowBackup=false`, `usesCleartextTraffic=false` — verified in the built manifest.
@@ -72,7 +72,8 @@ Ground truth for each image was confirmed with an independent vision model.
 
 **Input convention — verified, not assumed.** The app and the desktop benchmark both feed
 **raw uint8 RGB**. That agreement is not proof, so the model was run on the real test images
-under three conventions (`benchmarks/scripts/verify_preprocessing.py`, now in CI):
+under three conventions (`benchmarks/scripts/verify_preprocessing.py` — a **local**
+check, not a CI one, because the test images are deliberately not committed):
 `raw` → bus 0.801 / dog 0.840 / dog 0.723; `norm11` → near-identical, because this model's
 input quantisation maps the uint8 range onto [-1, 1]; `imagenet` → clearly **worse**
 (bus 0.801 → 0.668, dog 0.840 → 0.801). The app's convention is correct.
@@ -89,7 +90,7 @@ The **CI-built** APK and the **published release** APK were compared entry by en
 
 | Comparison | Result |
 |---|---|
-| File length | 30,671,369 bytes — identical |
+| File length | 30,701,552 bytes — identical |
 | ZIP entries | 546 in both, same names |
 | Entry content (decompressed, SHA-256 per entry) | **546 / 546 identical** |
 | `classes.dex` | identical (`e5a44569…`) |
@@ -126,6 +127,43 @@ images.
 The full platform API audit, including four further findings that need a device to
 validate and are therefore documented but not fixed blind, is in
 `RESEARCH/platform-api-audit.md` (issues #11-#15).
+
+### 3c. Third-party licence compliance — FIXED, AND NOW ENFORCED IN CI
+
+A machine-readable inventory of every resolved dependency
+(`RESEARCH/third-party-inventory.csv`, 134 rows) was built by reading the **built
+APK** — all 546 ZIP entries, all 8 DEX files — and the Gradle cache. It found
+**fourteen discrepancies** in the project's licence documentation, and two of
+them mattered:
+
+- **The APK contained no `LICENSE` or `NOTICE` file at all**, while
+  `THIRD_PARTY_NOTICES.md` asserted that the Apache-2.0 requirement to retain
+  the notices was satisfied by a file in the repository. A repository file does
+  not travel with a distributed binary.
+- **The LiteRT runtime's own `LICENSE` carries a BSD-3-Clause attribution** for
+  TensorFlow code derived from Caffe. That obligation was recorded nowhere in
+  the repository.
+- Three native libraries (15.4 MB of the 30.7 MB APK) shipped and were listed
+  in no notice, and the documentation claimed the model was the only bundled
+  binary asset.
+- Two versions were wrong: coroutines ships **1.7.3**, not the 1.9.0 in the
+  version catalog (that is the test-scope artifact), and the Compose runtime
+  ships **1.7.1**, not 1.6.8.
+
+**Fixed.** The Apache-2.0 licence text and the full third-party notices are now
+bundled **inside the APK** as assets, and reachable from an **Open source
+licences** screen in the app — because a screen reader cannot read a file
+inside an APK, so the obligation is only genuinely met for this app's users if
+the notices are reachable from the screen. CI asserts on every build that the
+APK carries both files, that the licence text really is Apache-2.0, that the
+Caffe attribution has not been dropped, and that the notices still match the
+dependency inventory.
+
+**Two items remain open, deliberately.** The COCO category-name table ships in
+the APK and **no licence statement for it was found**, so it is recorded as
+UNDETERMINED rather than argued to be unencumbered. And the four test
+photographs have known *repository* licences but no determinable *photograph*
+licence.
 
 ### 4. Independent APK verification (REA)
 The built APK was opened and inspected with the REA MCP server (`rea-agents` 6.7.0): **547 archive entries, 473 graph nodes, 0 integrity contradictions**, digest matching the locally computed SHA-256. REA's Android (JADX) route was unavailable in this environment — it requires a caller-supplied `REA_JADX_MCP_JAR` — so package facts were verified with `aapt2` and cross-checked against REA's archive graph.
@@ -347,7 +385,7 @@ the top of this document.
 - **2026-10-20** — Published the repository (public, as authorised), enabled GitHub Pages,
   created three milestones and ten real issues, set branch protection on `main` (required
   status checks, one approving review, no force-push, no deletions), and published the
-  `v0.1.2-prototype` pre-release with the debug APK and `SHA256SUMS.txt`.
+  `v0.1.3-prototype` pre-release with the debug APK and `SHA256SUMS.txt`.
 - **2026-10-20** — CI failed twice for real reasons and both were fixed: the Gradle wrapper
   had lost its POSIX executable bit (exit 126), and the Pages link check caught three links
   that would 404 on the deployed site. Added `scripts/check-website-links.py` so the second
@@ -367,7 +405,7 @@ the top of this document.
 - **2026-10-20** — **Clean-checkout reproduction verified**: a fresh `git clone` of the
   published repository builds, runs 36/36 tests green, and produces a debug APK whose
   SHA-256 is **identical** to the published artifact
-  (`6b55a59f2a76b94fad397a22b34a021d26adf1a125f1e809b6528ade057f2790`).
+  (`5041d752ed16bc1c0c4c3225e471fd83a5115f5c866bacba40c4f3dd3f33dfa9`).
   **Corrected 2026-10-20:** that identity holds for a build on the *same machine*,
   because it reuses the same debug keystore. It does **not** hold across machines —
   Gradle generates a per-machine debug keystore, so the certificate inside the APK
