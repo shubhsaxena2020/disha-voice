@@ -1,0 +1,795 @@
+{
+  "benchmark": "disha-voice-detector-cpu",
+  "measured_on": "development machine (NOT a phone)",
+  "host": {
+    "platform": "Windows-10-10.0.26300-SP0",
+    "processor": "Intel64 Family 6 Model 197 Stepping 2, GenuineIntel",
+    "python": "3.11.15"
+  },
+  "model": {
+    "path": "efficientdet_lite0_detection.tflite",
+    "sha256": "33a3b622c7cac0762f96089353cd61495f3e993968d133af7871bfc2d5396704",
+    "input_shape": [
+      1,
+      320,
+      320,
+      3
+    ],
+    "input_dtype": "<class 'numpy.uint8'>"
+  },
+  "parameters": {
+    "repeats_per_image": 7,
+    "score_floor": 0.45,
+    "zone_boundaries": {
+      "left_end": 0.38,
+      "right_start": 0.62
+    }
+  },
+  "results": [
+    {
+      "image": "bus_street.jpg",
+      "image_sha256": "33b198a1d2839bb9ac4c65d61f9e852196793cae9a0781360859425f6022b69c",
+      "latency_ms": {
+        "repeats": 7,
+        "median": 35.63,
+        "min": 27.1,
+        "max": 63.75,
+        "stdev": 11.88,
+        "samples": [
+          35.63,
+          31.58,
+          33.76,
+          37.96,
+          27.1,
+          38.17,
+          63.75
+        ]
+      },
+      "detections_above_floor": [
+        {
+          "label": "bus",
+          "score": 0.8008,
+          "box_normalized": [
+            0.009,
+            0.1864,
+            0.991,
+            0.7051
+          ],
+          "center_x": 0.5,
+          "zone": "CENTER"
+        },
+        {
+          "label": "person",
+          "score": 0.7891,
+          "box_normalized": [
+            0.0612,
+            0.3633,
+            0.2853,
+            0.8282
+          ],
+          "center_x": 0.1733,
+          "zone": "LEFT"
+        },
+        {
+          "label": "person",
+          "score": 0.707,
+          "box_normalized": [
+            0.2811,
+            0.3715,
+            0.432,
+            0.7908
+          ],
+          "center_x": 0.3565,
+          "zone": "LEFT"
+        },
+        {
+          "label": "person",
+          "score": 0.6289,
+          "box_normalized": [
+            0.8408,
+            0.3515,
+            1.0031,
+            0.8109
+          ],
+          "center_x": 0.9219,
+          "zone": "RIGHT"
+        },
+        {
+          "label": "bus",
+          "score": 0.8008,
+          "box_normalized": [
+            0.009,
+            0.1864,
+            0.991,
+            0.7051
+          ],
+          "center_x": 0.5,
+          "zone": "CENTER"
+        },
+        {
+          "label": "person",
+          "score": 0.7891,
+          "box_normalized": [
+            0.0612,
+            0.3633,
+            0.2853,
+            0.8282
+          ],
+          "center_x": 0.1733,
+          "zone": "LEFT"
+        },
+        {
+          "label": "person",
+          "score": 0.707,
+          "box_normalized": [
+            0.2811,
+            0.3715,
+            0.432,
+            0.7908
+          ],
+          "center_x": 0.3565,
+          "zone": "LEFT"
+        },
+        {
+          "label": "person",
+          "score": 0.6289,
+          "box_normalized": [
+            0.8408,
+            0.3515,
+            1.0031,
+            0.8109
+          ],
+          "center_x": 0.9219,
+          "zone": "RIGHT"
+        },
+        {
+          "label": "bus",
+          "score": 0.8008,
+          "box_normalized": [
+            0.009,
+            0.1864,
+            0.991,
+            0.7051
+          ],
+          "center_x": 0.5,
+          "zone": "CENTER"
+        },
+        {
+          "label": "person",
+          "score": 0.7891,
+          "box_normalized": [
+            0.0612,
+            0.3633,
+            0.2853,
+            0.8282
+          ],
+          "center_x": 0.1733,
+          "zone": "LEFT"
+        },
+        {
+          "label": "person",
+          "score": 0.707,
+          "box_normalized": [
+            0.2811,
+            0.3715,
+            0.432,
+            0.7908
+          ],
+          "center_x": 0.3565,
+          "zone": "LEFT"
+        },
+        {
+          "label": "person",
+          "score": 0.6289,
+          "box_normalized": [
+            0.8408,
+            0.3515,
+            1.0031,
+            0.8109
+          ],
+          "center_x": 0.9219,
+          "zone": "RIGHT"
+        },
+        {
+          "label": "bus",
+          "score": 0.8008,
+          "box_normalized": [
+            0.009,
+            0.1864,
+            0.991,
+            0.7051
+          ],
+          "center_x": 0.5,
+          "zone": "CENTER"
+        },
+        {
+          "label": "person",
+          "score": 0.7891,
+          "box_normalized": [
+            0.0612,
+            0.3633,
+            0.2853,
+            0.8282
+          ],
+          "center_x": 0.1733,
+          "zone": "LEFT"
+        },
+        {
+          "label": "person",
+          "score": 0.707,
+          "box_normalized": [
+            0.2811,
+            0.3715,
+            0.432,
+            0.7908
+          ],
+          "center_x": 0.3565,
+          "zone": "LEFT"
+        },
+        {
+          "label": "person",
+          "score": 0.6289,
+          "box_normalized": [
+            0.8408,
+            0.3515,
+            1.0031,
+            0.8109
+          ],
+          "center_x": 0.9219,
+          "zone": "RIGHT"
+        },
+        {
+          "label": "bus",
+          "score": 0.8008,
+          "box_normalized": [
+            0.009,
+            0.1864,
+            0.991,
+            0.7051
+          ],
+          "center_x": 0.5,
+          "zone": "CENTER"
+        },
+        {
+          "label": "person",
+          "score": 0.7891,
+          "box_normalized": [
+            0.0612,
+            0.3633,
+            0.2853,
+            0.8282
+          ],
+          "center_x": 0.1733,
+          "zone": "LEFT"
+        },
+        {
+          "label": "person",
+          "score": 0.707,
+          "box_normalized": [
+            0.2811,
+            0.3715,
+            0.432,
+            0.7908
+          ],
+          "center_x": 0.3565,
+          "zone": "LEFT"
+        },
+        {
+          "label": "person",
+          "score": 0.6289,
+          "box_normalized": [
+            0.8408,
+            0.3515,
+            1.0031,
+            0.8109
+          ],
+          "center_x": 0.9219,
+          "zone": "RIGHT"
+        },
+        {
+          "label": "bus",
+          "score": 0.8008,
+          "box_normalized": [
+            0.009,
+            0.1864,
+            0.991,
+            0.7051
+          ],
+          "center_x": 0.5,
+          "zone": "CENTER"
+        },
+        {
+          "label": "person",
+          "score": 0.7891,
+          "box_normalized": [
+            0.0612,
+            0.3633,
+            0.2853,
+            0.8282
+          ],
+          "center_x": 0.1733,
+          "zone": "LEFT"
+        },
+        {
+          "label": "person",
+          "score": 0.707,
+          "box_normalized": [
+            0.2811,
+            0.3715,
+            0.432,
+            0.7908
+          ],
+          "center_x": 0.3565,
+          "zone": "LEFT"
+        },
+        {
+          "label": "person",
+          "score": 0.6289,
+          "box_normalized": [
+            0.8408,
+            0.3515,
+            1.0031,
+            0.8109
+          ],
+          "center_x": 0.9219,
+          "zone": "RIGHT"
+        },
+        {
+          "label": "bus",
+          "score": 0.8008,
+          "box_normalized": [
+            0.009,
+            0.1864,
+            0.991,
+            0.7051
+          ],
+          "center_x": 0.5,
+          "zone": "CENTER"
+        },
+        {
+          "label": "person",
+          "score": 0.7891,
+          "box_normalized": [
+            0.0612,
+            0.3633,
+            0.2853,
+            0.8282
+          ],
+          "center_x": 0.1733,
+          "zone": "LEFT"
+        },
+        {
+          "label": "person",
+          "score": 0.707,
+          "box_normalized": [
+            0.2811,
+            0.3715,
+            0.432,
+            0.7908
+          ],
+          "center_x": 0.3565,
+          "zone": "LEFT"
+        },
+        {
+          "label": "person",
+          "score": 0.6289,
+          "box_normalized": [
+            0.8408,
+            0.3515,
+            1.0031,
+            0.8109
+          ],
+          "center_x": 0.9219,
+          "zone": "RIGHT"
+        }
+      ]
+    },
+    {
+      "image": "people_tie.jpg",
+      "image_sha256": "356dad2107bb0254e4e4a81bc1d9c7140043e88569d546e5b404b19bffa77d0a",
+      "latency_ms": {
+        "repeats": 7,
+        "median": 29.18,
+        "min": 26.23,
+        "max": 34.09,
+        "stdev": 2.82,
+        "samples": [
+          34.09,
+          30.75,
+          27.07,
+          28.36,
+          32.22,
+          29.18,
+          26.23
+        ]
+      },
+      "detections_above_floor": [
+        {
+          "label": "person",
+          "score": 0.6484,
+          "box_normalized": [
+            0.5433,
+            0.0828,
+            0.9032,
+            0.9792
+          ],
+          "center_x": 0.7233,
+          "zone": "RIGHT"
+        },
+        {
+          "label": "person",
+          "score": 0.6055,
+          "box_normalized": [
+            0.0839,
+            0.2598,
+            0.7371,
+            1.0021
+          ],
+          "center_x": 0.4105,
+          "zone": "CENTER"
+        },
+        {
+          "label": "person",
+          "score": 0.6484,
+          "box_normalized": [
+            0.5433,
+            0.0828,
+            0.9032,
+            0.9792
+          ],
+          "center_x": 0.7233,
+          "zone": "RIGHT"
+        },
+        {
+          "label": "person",
+          "score": 0.6055,
+          "box_normalized": [
+            0.0839,
+            0.2598,
+            0.7371,
+            1.0021
+          ],
+          "center_x": 0.4105,
+          "zone": "CENTER"
+        },
+        {
+          "label": "person",
+          "score": 0.6484,
+          "box_normalized": [
+            0.5433,
+            0.0828,
+            0.9032,
+            0.9792
+          ],
+          "center_x": 0.7233,
+          "zone": "RIGHT"
+        },
+        {
+          "label": "person",
+          "score": 0.6055,
+          "box_normalized": [
+            0.0839,
+            0.2598,
+            0.7371,
+            1.0021
+          ],
+          "center_x": 0.4105,
+          "zone": "CENTER"
+        },
+        {
+          "label": "person",
+          "score": 0.6484,
+          "box_normalized": [
+            0.5433,
+            0.0828,
+            0.9032,
+            0.9792
+          ],
+          "center_x": 0.7233,
+          "zone": "RIGHT"
+        },
+        {
+          "label": "person",
+          "score": 0.6055,
+          "box_normalized": [
+            0.0839,
+            0.2598,
+            0.7371,
+            1.0021
+          ],
+          "center_x": 0.4105,
+          "zone": "CENTER"
+        },
+        {
+          "label": "person",
+          "score": 0.6484,
+          "box_normalized": [
+            0.5433,
+            0.0828,
+            0.9032,
+            0.9792
+          ],
+          "center_x": 0.7233,
+          "zone": "RIGHT"
+        },
+        {
+          "label": "person",
+          "score": 0.6055,
+          "box_normalized": [
+            0.0839,
+            0.2598,
+            0.7371,
+            1.0021
+          ],
+          "center_x": 0.4105,
+          "zone": "CENTER"
+        },
+        {
+          "label": "person",
+          "score": 0.6484,
+          "box_normalized": [
+            0.5433,
+            0.0828,
+            0.9032,
+            0.9792
+          ],
+          "center_x": 0.7233,
+          "zone": "RIGHT"
+        },
+        {
+          "label": "person",
+          "score": 0.6055,
+          "box_normalized": [
+            0.0839,
+            0.2598,
+            0.7371,
+            1.0021
+          ],
+          "center_x": 0.4105,
+          "zone": "CENTER"
+        },
+        {
+          "label": "person",
+          "score": 0.6484,
+          "box_normalized": [
+            0.5433,
+            0.0828,
+            0.9032,
+            0.9792
+          ],
+          "center_x": 0.7233,
+          "zone": "RIGHT"
+        },
+        {
+          "label": "person",
+          "score": 0.6055,
+          "box_normalized": [
+            0.0839,
+            0.2598,
+            0.7371,
+            1.0021
+          ],
+          "center_x": 0.4105,
+          "zone": "CENTER"
+        }
+      ]
+    },
+    {
+      "image": "samoyed.jpg",
+      "image_sha256": "f3f87bb8ab3c26c7ecfd3ac60421d7f32b0503d1d6c5baf8bac42ed93d86351a",
+      "latency_ms": {
+        "repeats": 7,
+        "median": 25.9,
+        "min": 25.07,
+        "max": 30.58,
+        "stdev": 2.66,
+        "samples": [
+          25.9,
+          25.07,
+          30.46,
+          25.25,
+          25.8,
+          30.28,
+          30.58
+        ]
+      },
+      "detections_above_floor": [
+        {
+          "label": "dog",
+          "score": 0.7227,
+          "box_normalized": [
+            0.0843,
+            0.0379,
+            0.9434,
+            0.9621
+          ],
+          "center_x": 0.5138,
+          "zone": "CENTER"
+        },
+        {
+          "label": "dog",
+          "score": 0.7227,
+          "box_normalized": [
+            0.0843,
+            0.0379,
+            0.9434,
+            0.9621
+          ],
+          "center_x": 0.5138,
+          "zone": "CENTER"
+        },
+        {
+          "label": "dog",
+          "score": 0.7227,
+          "box_normalized": [
+            0.0843,
+            0.0379,
+            0.9434,
+            0.9621
+          ],
+          "center_x": 0.5138,
+          "zone": "CENTER"
+        },
+        {
+          "label": "dog",
+          "score": 0.7227,
+          "box_normalized": [
+            0.0843,
+            0.0379,
+            0.9434,
+            0.9621
+          ],
+          "center_x": 0.5138,
+          "zone": "CENTER"
+        },
+        {
+          "label": "dog",
+          "score": 0.7227,
+          "box_normalized": [
+            0.0843,
+            0.0379,
+            0.9434,
+            0.9621
+          ],
+          "center_x": 0.5138,
+          "zone": "CENTER"
+        },
+        {
+          "label": "dog",
+          "score": 0.7227,
+          "box_normalized": [
+            0.0843,
+            0.0379,
+            0.9434,
+            0.9621
+          ],
+          "center_x": 0.5138,
+          "zone": "CENTER"
+        },
+        {
+          "label": "dog",
+          "score": 0.7227,
+          "box_normalized": [
+            0.0843,
+            0.0379,
+            0.9434,
+            0.9621
+          ],
+          "center_x": 0.5138,
+          "zone": "CENTER"
+        }
+      ]
+    },
+    {
+      "image": "yellow_labrador.jpg",
+      "image_sha256": "d4cb12ea8a768582562e1f1c0c930ea6fc4757f5b66551b986b41498efd75ca1",
+      "latency_ms": {
+        "repeats": 7,
+        "median": 35.89,
+        "min": 29.45,
+        "max": 39.1,
+        "stdev": 3.7,
+        "samples": [
+          29.45,
+          31.95,
+          39.1,
+          35.89,
+          29.93,
+          36.17,
+          36.55
+        ]
+      },
+      "detections_above_floor": [
+        {
+          "label": "dog",
+          "score": 0.8398,
+          "box_normalized": [
+            0.0558,
+            0.0573,
+            0.9094,
+            0.9427
+          ],
+          "center_x": 0.4826,
+          "zone": "CENTER"
+        },
+        {
+          "label": "dog",
+          "score": 0.8398,
+          "box_normalized": [
+            0.0558,
+            0.0573,
+            0.9094,
+            0.9427
+          ],
+          "center_x": 0.4826,
+          "zone": "CENTER"
+        },
+        {
+          "label": "dog",
+          "score": 0.8398,
+          "box_normalized": [
+            0.0558,
+            0.0573,
+            0.9094,
+            0.9427
+          ],
+          "center_x": 0.4826,
+          "zone": "CENTER"
+        },
+        {
+          "label": "dog",
+          "score": 0.8398,
+          "box_normalized": [
+            0.0558,
+            0.0573,
+            0.9094,
+            0.9427
+          ],
+          "center_x": 0.4826,
+          "zone": "CENTER"
+        },
+        {
+          "label": "dog",
+          "score": 0.8398,
+          "box_normalized": [
+            0.0558,
+            0.0573,
+            0.9094,
+            0.9427
+          ],
+          "center_x": 0.4826,
+          "zone": "CENTER"
+        },
+        {
+          "label": "dog",
+          "score": 0.8398,
+          "box_normalized": [
+            0.0558,
+            0.0573,
+            0.9094,
+            0.9427
+          ],
+          "center_x": 0.4826,
+          "zone": "CENTER"
+        },
+        {
+          "label": "dog",
+          "score": 0.8398,
+          "box_normalized": [
+            0.0558,
+            0.0573,
+            0.9094,
+            0.9427
+          ],
+          "center_x": 0.4826,
+          "zone": "CENTER"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Desktop CPU measurement. Not a phone; do not present as device latency.",
+    "Deterministic test images only; not an accuracy evaluation.",
+    "No calibration of scores against ground truth was performed."
+  ]
+}
