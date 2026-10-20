@@ -45,6 +45,62 @@ jobs:
           fi
           grep -q 'android.permission.CAMERA' /tmp/perms.txt
           echo "APK requests CAMERA and not INTERNET."
+      - name: Record the APK SHA-256
+        run: |
+          set -euo pipefail
+          APK=android/app/build/outputs/apk/debug/app-debug.apk
+          sha256sum "$APK" | tee "$RUNNER_TEMP/apk-sha256.txt"
+          echo "SHA-256: $(cut -d' ' -f1 "$RUNNER_TEMP/apk-sha256.txt")" >> "$GITHUB_STEP_SUMMARY"
+      - name: Summarise the test results
+        run: |
+          set -euo pipefail
+          python3 - <<'PY' | tee -a "$GITHUB_STEP_SUMMARY"
+          import glob, re, os
+          total = failed = errors = skipped = 0
+          suites = []
+          for path in glob.glob('**/test-results/**/*.xml', recursive=True):
+              if 'testReleaseUnitTest' in path:
+                  continue
+              head = open(path, encoding='utf-8', errors='replace').read(4000)
+              m = re.search(r'<testsuite[^>]*>', head)
+              if not m:
+                  continue
+              tag = m.group(0)
+              def count(name):
+                  mm = re.search(rf'\b{name}="(\d+)"', tag)
+                  return int(mm.group(1)) if mm else 0
+              t, f, e, s = count('tests'), count('failures'), count('errors'), count('skipped')
+              if t:
+                  total += t; failed += f; errors += e; skipped += s
+                  suites.append((os.path.basename(path), t, f, e, s))
+          print('### Unit test results\n')
+          print('| Suite | Tests | Failures | Errors | Skipped |')
+          print('|---|---|---|---|---|')
+          for name, t, f, e, s in sorted(suites):
+              print(f'| {name} | {t} | {f} | {e} | {s} |')
+          print(f'\n**Total: {total} tests, {failed} failures, {errors} errors, {skipped} skipped**')
+          if failed or errors:
+              raise SystemExit('unit tests failed')
+          PY
+      - name: Upload the debug APK
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: app-debug-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 14
+          if-no-files-found: error
+      - name: Upload the unit test reports
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: unit-test-reports
+          path: |
+            core/build/test-results/**/*.xml
+            android/app/build/test-results/**/*.xml
+            core/build/reports/tests/**
+            android/app/build/reports/tests/**
+          retention-days: 14
+          if-no-files-found: ignore
 
   website-checks:
     name: Static website checks
@@ -91,4 +147,11 @@ jobs:
         run: python3 scripts/check-website-links.py
       - name: Audit WCAG AA text contrast
         run: python3 scripts/check-website-contrast.py
+      - name: Set up Python for the layout check
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install playwright
+          python3 -m playwright install --with-deps chromium
+      - name: Check the rendered layout at three viewports
+        run: python3 scripts/check-website-layout.py
 

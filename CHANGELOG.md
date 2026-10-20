@@ -8,6 +8,37 @@ caveat that the project is pre-1.0 and currently a **prototype**.
 
 ## [Unreleased]
 
+### Added
+- CI artefacts: the debug APK and the unit-test reports are uploaded from every run,
+  the APK SHA-256 is recorded in the run summary, and a test-results table is printed.
+- The app module's unit tests and an APK build now run in CI, and CI asserts the APK
+  requests `CAMERA` and not `INTERNET`.
+- `scripts/check-website-layout.py`: a real-browser layout audit at 390, 900 and
+  1440 px, asserting one `h1`, heading order, landmarks, a resolvable skip link, no
+  positive `tabindex`, accessible names, `alt` text, no horizontal overflow, no console
+  errors, and that every in-page anchor resolves.
+- `scripts/check-website-contrast.py`: a WCAG 2.2 AA audit that resolves the rendered
+  result from the DOM and CSS, rather than approximating the cascade from stylesheet
+  text. 152 rendered pairs checked.
+- The website now publishes all 12 research documents under `docs/research/`, linked
+  from a new "Read the working out" section. The published file count went from 8 to 20.
+
+### Fixed
+- 17 text/background pairs were below WCAG AA. The worst was the "Read the full safety
+  note" link inside the dark safety band, which rendered the site's green on the band's
+  dark green at **1.94:1** - effectively invisible to a low-vision user.
+- A 7 px horizontal scroll on mobile viewports, caused by a decorative ring in the hero
+  illustration.
+- The published test count said 30; it double-counted the app tests, which run under
+  both the debug and release variants. The true count is 21 distinct tests.
+
+### Changed
+- The project's differentiation claim was corrected after verifying that Google Lookout
+  already ships Hindi, already works offline, and already provides direction and
+  distance. The website now states plainly that the project is not the first.
+
+
+
 Nothing yet.
 
 ## [0.1.0-prototype] — 2026-10-20

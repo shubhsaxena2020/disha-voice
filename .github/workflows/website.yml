@@ -47,6 +47,18 @@ jobs:
               "PROJECT_STATUS.md": "PROJECT_STATUS.md",
               "CHANGELOG.md": "CHANGELOG.md",
               "LICENSE": "LICENSE",
+              "RESEARCH/competitor-landscape.md": "docs/research/competitor-landscape.md",
+              "RESEARCH/assistive-ux-requirements.md": "docs/research/assistive-ux-requirements.md",
+              "RESEARCH/skeptical-review-research.md": "docs/research/skeptical-review-research.md",
+              "RESEARCH/safety-and-claims-review.md": "docs/research/safety-and-claims-review.md",
+              "RESEARCH/source-register.md": "docs/research/source-register.md",
+              "RESEARCH/threat-model.md": "docs/research/threat-model.md",
+              "RESEARCH/speech-hindi-audit.md": "docs/research/speech-hindi-audit.md",
+              "RESEARCH/model-and-data-audit.md": "docs/research/model-and-data-audit.md",
+              "RESEARCH/differentiation-hypothesis.md": "docs/research/differentiation-hypothesis.md",
+              "RESEARCH/open-source-license-audit.md": "docs/research/open-source-license-audit.md",
+              "RESEARCH/benchmark-plan.md": "docs/research/benchmark-plan.md",
+              "TESTING/field-evaluation-protocol.md": "docs/research/field-evaluation-protocol.md",
           }
           for source, destination in files.items():
               source_path = root / source

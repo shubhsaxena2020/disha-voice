@@ -64,6 +64,7 @@ Ground truth for each image was confirmed with an independent vision model.
 The built APK was opened and inspected with the REA MCP server (`rea-agents` 6.7.0): **547 archive entries, 473 graph nodes, 0 integrity contradictions**, digest matching the locally computed SHA-256. REA's Android (JADX) route was unavailable in this environment — it requires a caller-supplied `REA_JADX_MCP_JAR` — so package facts were verified with `aapt2` and cross-checked against REA's archive graph.
 
 ### 5. Companion website (`website/`) — BUILDS AND PASSES AUDIT
+**Now publishing 20 files, including all 12 research documents** under `docs/research/`.
 Static, dependency-free HTML/CSS. No framework, no build step, **no external requests at runtime** (the Google Fonts import was removed deliberately).
 
 Automated audit (Playwright, 390 px and 1520 px viewports): exactly one `h1`, correct heading order, all four landmarks present, skip link with a valid target, 15 tabbables, **zero positive tabindex**, no unlabelled links/buttons/inputs, no images without alt text, `prefers-reduced-motion` honoured, no console errors, no horizontal overflow.
@@ -88,7 +89,24 @@ inheritance. Both gaps were closed after the real browser disagreed with the scr
 **Both implementations now agree exactly**: the script reports 0 failures, and a
 Playwright run in Chromium reports **0 failures across 126 elements at both 1082 px and
 390 px** viewports. The script is wired into CI so this cannot regress silently. The
-lowest passing ratio is now 4.51:1.
+lowest passing ratio is now 4.51:1. (The figure is now 152 pairs, after the Research
+section was added.)
+
+**A third check was added: `scripts/check-website-layout.py`.** It drives a real
+Chromium at three viewports (390, 900, 1440 px) and asserts: exactly one `h1`, no
+skipped heading levels, all four landmarks present, a resolvable skip link, no positive
+`tabindex`, accessible names on every link and button, `alt` on every image, **no
+horizontal overflow**, no console errors, and that every in-page anchor resolves.
+
+**The layout check was verified by deliberately breaking the site**: with the `h1`
+removed, a dangling anchor added, and the mobile overflow fix reverted, the checker
+reported exactly those three problems and exited non-zero. A check that cannot go red
+is not a check.
+
+That test also found a **real 7 px horizontal scroll on mobile** — the decorative orbit
+ring in the hero illustration is wider than a 390 px viewport. Fixed with
+`overflow-x:clip` on the hero, verified not to break the sticky header or vertical
+scrolling.
 
 The camera view on the page is a **CSS illustration**, labelled in the page as "Illustration only · not a live detection".
 
@@ -193,7 +211,7 @@ the top of this document.
 | 3 | APK exists, installable, launches | **Partial** — APK builds and is verified structurally; **install/launch untested** |
 | 4 | Core detection and TTS verified on a real device | **Not met** — no device (issue #1) |
 | 5 | No secrets tracked; permissions justified | **Met** — CAMERA only, no INTERNET, `allowBackup=false`; secret scan clean |
-| 6 | Accessibility checked and TalkBack reviewed | **Partial** — website audited automatically against WCAG AA (126 rendered pairs, verified in a real browser at two viewports, enforced in CI); app semantics written; **no manual TalkBack review**, and the audio-collision risk is unmitigated (issue #8) |
+| 6 | Accessibility checked and TalkBack reviewed | **Partial** — website audited automatically: 152 rendered contrast pairs (WCAG AA), a three-viewport layout audit in a real browser, all enforced in CI; app semantics written; **no manual TalkBack review**, and the audio-collision risk is unmitigated (issue #8) |
 | 7 | Website builds, links verified, deploy URL claimed | **Met** — deployed and verified live at https://shubhsaxena2020.github.io/disha-voice/ |
 | 8 | Licences, notices, version, hash recorded | **Met** — Apache-2.0 model hash recorded; `THIRD_PARTY_NOTICES.md` published; release hash published |
 | 9 | Limitations and non-mobility warnings prominent | **Met** — in-app, in README, on the website, in the release notes, and in the docs |
@@ -241,6 +259,18 @@ the top of this document.
   states what may and may not be said and why, a source register, and a feature-comparison
   CSV. Each document separates evidence from inference and names what could not be
   verified.
+- **2026-10-20** — **CI artefacts added (issue #6).** CI now uploads the debug APK and
+  the unit-test reports, records the APK SHA-256 in the run summary, and prints a test
+  table. The app module's tests and an APK build were added to CI, and CI now asserts
+  the APK requests `CAMERA` and **not** `INTERNET`.
+- **2026-10-20** — **The website now publishes the research.** All 12 research documents
+  are in the published allowlist under `docs/research/`, and a new "Read the working out"
+  section links them from the site. The published file count went from 8 to 20.
+- **2026-10-20** — **A layout audit was added and proved it can fail.**
+  `scripts/check-website-layout.py` drives Chromium at three viewports. Injecting three
+  deliberate defects made it fail with exactly those defects — and one of them, a 7 px
+  horizontal scroll on mobile caused by a decorative hero ring, was a real bug that is
+  now fixed.
 - **2026-10-20** — **The website contrast audit was rebuilt and found 17 real failures.**
   The new auditor resolves the rendered result from the DOM and CSS rather than
   approximating the cascade from stylesheet text, which is what let it catch the

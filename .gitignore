@@ -45,3 +45,6 @@ website/dist/
 
 # Local site-build scratch directory
 _site_check/
+
+# Live-site audit scratch
+_live_check/

@@ -25,8 +25,11 @@ Disha Voice explores whether a phone can offer concise Hindi descriptions of sel
   (COCO-2017, 90 classes) detects real objects: a Labrador as *dog* at 0.840, a street bus
   as *bus* at 0.801 alongside three people, with correct image-relative zones. Desktop-CPU
   latency: 25.9–35.9 ms median over 7 repeats per image. **These are not phone numbers.**
-- **Website** — static, no external requests, passes an automated accessibility audit and
-  a WCAG contrast check. Deployed via GitHub Pages.
+- **Website** — static, no external requests, no JavaScript, deployed via GitHub Pages.
+  Checked in CI by three scripts: a link check, a **WCAG 2.2 AA contrast audit that
+  resolves the rendered result from the DOM and CSS** (152 rendered pairs, 0 failures),
+  and a **real-browser layout audit at 390, 900 and 1440 px**. The layout audit was
+  verified by deliberately breaking the site and confirming it failed.
 
 ## What is NOT verified
 
@@ -46,10 +49,32 @@ Disha Voice explores whether a phone can offer concise Hindi descriptions of sel
 - `android/` — the Android application (CameraX, LiteRT, Compose, TextToSpeech).
 - `website/` — dependency-free static companion site.
 - `benchmarks/` — reproducible model inspection and CPU benchmark harness, with results.
-- `RESEARCH/` — model audit, licence audit, benchmark plan, and prior-art research.
+- `RESEARCH/` — the research, published in full (see below).
 - `TESTING/` — field-evaluation protocol (a plan; **no results collected yet**).
 - `docs/` — setup, release, safety, privacy, and demo documentation.
+- `scripts/` — the website checks that run in CI (links, contrast, layout).
 - `PROJECT_STATUS.md` — acceptance-gate dashboard and verified blockers.
+
+## The research, in full
+
+All of this is published on the [website](https://shubhsaxena2020.github.io/disha-voice/)
+under `docs/research/`, and is written to separate what was **measured** from what was
+**inferred**, and to name what could not be verified.
+
+| Document | What it settles |
+|---|---|
+| [`competitor-landscape.md`](RESEARCH/competitor-landscape.md) | Google Lookout already ships Hindi, works offline, and gives direction and distance. What is actually left to differentiate on. |
+| [`skeptical-review-research.md`](RESEARCH/skeptical-review-research.md) | An adversarial pass on this project's own claims, including where they may be wrong. |
+| [`safety-and-claims-review.md`](RESEARCH/safety-and-claims-review.md) | What may and may not be said, and the reasoning behind each restriction. |
+| [`assistive-ux-requirements.md`](RESEARCH/assistive-ux-requirements.md) | The repetition problem, speech design rules, and a testable accessibility checklist. |
+| [`model-and-data-audit.md`](RESEARCH/model-and-data-audit.md) | First-hand measurement of the shipped model file, its licence, and its real limits. |
+| [`threat-model.md`](RESEARCH/threat-model.md) | What the app can be made to do to a user, and what the design prevents. |
+| [`speech-hindi-audit.md`](RESEARCH/speech-hindi-audit.md) | Phrase-by-phrase wording, locale handling, and the no-Hindi-voice fallback. |
+| [`source-register.md`](RESEARCH/source-register.md) | Every source consulted, with access dates, reliability ratings, and the retrievals that failed. |
+| [`field-evaluation-protocol.md`](TESTING/field-evaluation-protocol.md) | A stationary, do-no-harm protocol for testing with blind and low-vision users. |
+| [`differentiation-hypothesis.md`](RESEARCH/differentiation-hypothesis.md) | The falsifiable claims this project rests on, and the test for each. |
+| [`open-source-license-audit.md`](RESEARCH/open-source-license-audit.md) | Licence status of the prior-art projects (partly unresolved). |
+| [`benchmark-plan.md`](RESEARCH/benchmark-plan.md) | How the measurements will be made, so they can be reproduced. |
 
 ## Build the core tests
 
