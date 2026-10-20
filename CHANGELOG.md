@@ -56,6 +56,12 @@ signed release, and no store distribution have been performed.
 - Website audited with a headless browser: one `h1`, correct heading order, all
   landmarks, skip link, no unlabelled controls, no positive tabindex, reduced-motion
   supported, no console errors, no horizontal overflow, all colour pairs pass WCAG AA.
+- **Published** as a public GitHub repository with branch protection, three milestones and
+  ten tracked issues; the website is deployed and verified live at
+  <https://shubhsaxena2020.github.io/disha-voice/>.
+- **Clean-checkout reproduction:** a fresh clone of the published repository builds, passes
+  30/30 tests, and produces a debug APK whose SHA-256 is identical to the published
+  artifact.
 
 ### Known limitations
 

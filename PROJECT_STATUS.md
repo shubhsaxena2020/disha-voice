@@ -1,6 +1,12 @@
 # Disha Voice — Project Status
 
-**Status: working prototype.** Builds, tests pass, and a debug APK exists. **Not release-ready** — no real-device verification, no signed release, no public deployment.
+**Status: working prototype, published.** Builds, tests pass, and a debug APK is built, released and downloadable. **Not release-ready** — no real-device verification and no signed release.
+
+| | |
+|---|---|
+| **Repository** | https://github.com/shubhsaxena2020/disha-voice |
+| **Website (live)** | https://shubhsaxena2020.github.io/disha-voice/ |
+| **Pre-release** | https://github.com/shubhsaxena2020/disha-voice/releases/tag/v0.1.0-prototype |
 
 **Last updated:** 2026-10-20
 
@@ -66,7 +72,21 @@ The camera view on the page is a **CSS illustration**, labelled in the page as "
 ### 6. Research, docs, governance — PARTIAL
 Present: `RESEARCH/model-and-data-audit.md` (written from first-hand measurement), `RESEARCH/benchmark-plan.md`, `TESTING/field-evaluation-protocol.md`, `docs/privacy/privacy-policy.md`, `docs/safety/SAFETY.md`, `docs/DEMO_GUIDE.md`, `docs/website-deployment-plan.md`, `SECURITY.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SUPPORT.md`, issue/PR templates, two CI workflows.
 
-Specialist agents were dispatched for the remaining research (competitor landscape, licence audit, differentiation, threat model, Hindi speech audit, red-team review). **Their output is not yet in the tree** and must be reviewed against primary sources before any of it is trusted or published.
+Research present in the tree: `RESEARCH/model-and-data-audit.md` (written from first-hand
+measurement of the model file), `RESEARCH/open-source-license-audit.md`,
+`RESEARCH/differentiation-hypothesis.md`, `RESEARCH/benchmark-plan.md`, and
+`TESTING/field-evaluation-protocol.md`.
+
+**Outstanding research:** the competitor landscape, the threat model, the assistive-UX
+requirements, the Hindi speech audit, and the independent red-team review were dispatched to
+specialist agents but **did not produce files** (see the work log). These are tracked as open
+work — issue #4 covers the licence gap, and the rest must be written and reviewed against
+primary sources before they are published. Nothing in the published site or the release notes
+depends on them.
+
+A GitHub **project board** could not be created: the authenticated token lacks the `project`
+scope, and `gh auth refresh -s project` requires interactive browser authorisation. The
+issue tracker, labels, and three milestones cover the same ground and are all in place.
 
 ---
 
@@ -101,16 +121,16 @@ No JDK, Gradle, or Android SDK existed at discovery; all three were installed us
 
 | # | Requirement | Status |
 |---|---|---|
-| 1 | Builds from a clean checkout with documented steps | **Met** — wrapper committed, instructions in README |
-| 2 | Automated tests and CI pass | **Partial** — 30/30 local tests pass; CI defined but not yet run on GitHub |
+| 1 | Builds from a clean checkout with documented steps | **Met** — verified: a fresh `git clone` builds and tests successfully |
+| 2 | Automated tests and CI pass | **Met** — 30/30 local tests pass; both GitHub Actions workflows green |
 | 3 | APK exists, installable, launches | **Partial** — APK builds and is verified structurally; **install/launch untested** |
-| 4 | Core detection and TTS verified on a real device | **Not met** — no device |
-| 5 | No secrets tracked; permissions justified | **Met** — CAMERA only, no INTERNET, `allowBackup=false` |
-| 6 | Accessibility checked and TalkBack reviewed | **Partial** — website audited automatically; app semantics written; **no manual TalkBack review** |
-| 7 | Website builds, links verified, deploy URL claimed | **Partial** — site serves locally and passes audits; **not deployed** |
-| 8 | Licences, notices, version, hash recorded | **Met** — Apache-2.0 model hash recorded; `THIRD_PARTY_NOTICES.md` pending |
-| 9 | Limitations and non-mobility warnings prominent | **Met** — in-app, in README, on the website, and in the docs |
-| 10 | Another engineer can reproduce the build | **Partial** — instructions exist; a clean-checkout reproduction has not been performed |
+| 4 | Core detection and TTS verified on a real device | **Not met** — no device (issue #1) |
+| 5 | No secrets tracked; permissions justified | **Met** — CAMERA only, no INTERNET, `allowBackup=false`; secret scan clean |
+| 6 | Accessibility checked and TalkBack reviewed | **Partial** — website audited automatically; app semantics written; **no manual TalkBack review** (issue #8) |
+| 7 | Website builds, links verified, deploy URL claimed | **Met** — deployed and verified live at https://shubhsaxena2020.github.io/disha-voice/ |
+| 8 | Licences, notices, version, hash recorded | **Met** — Apache-2.0 model hash recorded; `THIRD_PARTY_NOTICES.md` published; release hash published |
+| 9 | Limitations and non-mobility warnings prominent | **Met** — in-app, in README, on the website, in the release notes, and in the docs |
+| 10 | Another engineer can reproduce the build | **Met** — a clean clone was built and tested; the resulting APK is byte-identical to the published one |
 
 **Conclusion: prototype / release candidate in progress. Not production-ready, and not safe for independent mobility use.**
 
@@ -126,3 +146,17 @@ No JDK, Gradle, or Android SDK existed at discovery; all three were installed us
 - **2026-10-20** — Built the Android app module, fixing real API mismatches found by compiling: CameraX `Preview.SurfaceProvider` (not `PreviewView.PreviewSurfaceProvider`), the LiteRT 1.0.1 `Tensor` API (buffer reads, not `floatArray()`), `setNumThreads` (not a `numThreads` property), and `FileChannel.map`.
 - **2026-10-20** — Produced and independently verified `app-debug.apk`; ran 30 unit tests (all pass); ran a 7-repeat CPU benchmark; audited the website with Playwright and computed WCAG contrast, fixing one failing pair.
 - **2026-10-20** — Committed 59 files as `3289c54`.
+- **2026-10-20** — Published the repository (public, as authorised), enabled GitHub Pages,
+  created three milestones and ten real issues, set branch protection on `main` (required
+  status checks, one approving review, no force-push, no deletions), and published the
+  `v0.1.0-prototype` pre-release with the debug APK and `SHA256SUMS.txt`.
+- **2026-10-20** — CI failed twice for real reasons and both were fixed: the Gradle wrapper
+  had lost its POSIX executable bit (exit 126), and the Pages link check caught three links
+  that would 404 on the deployed site. Added `scripts/check-website-links.py` so the second
+  class of error is caught locally.
+- **2026-10-20** — **Clean-checkout reproduction verified**: a fresh `git clone` of the
+  published repository builds, runs 30/30 tests green, and produces a debug APK whose
+  SHA-256 is **identical** to the published artifact
+  (`96bab1f33062922add352ea4709bac080bd3f2266f19d582e53928346f3dc7b0`).
+- **2026-10-20** — Release asset round-trip verified: the APK downloaded from the GitHub
+  release matches the local build byte for byte.
