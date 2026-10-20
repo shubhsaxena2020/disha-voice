@@ -307,7 +307,70 @@ its measurements. That is a real gap, but it is a small one, and the project sho
 
 ---
 
-## 9. Sources
+## 9. Third-pass findings — what Indian users actually report, and what they actually ask for
+
+Two peer-reviewed studies were retrieved and read in a later pass. Neither is a
+competitor product, and neither changes the technical position. Both change the
+**framing**, and one of them bears directly on the project's own open question.
+
+### 9.1 The OR apps in India were designed for a different social context (S32)
+
+A seven-day diary study followed by one-on-one interviews with **seven object-recognition
+app users in India** (CHI 2025) found that previous research had examined the *functional*
+accessibility of OR apps and given almost no attention to their **social** accessibility.
+The paper's finding is that a camera-based assistive technology "designed for independent,
+western contexts" does not sit well in a multicultural, interdependent Indian society,
+where people navigate public and private spheres *with* others. It proposes designing for
+interdependence, community-centered practice, cultural alignment, and local adaptability.
+
+**What this does to the project.** It is the strongest published support for the project's
+differentiator, and it is support for a reason the project had not articulated: the gap
+is not "Hindi", it is **context**. Two things follow.
+
+First, the claim "Hindi-first" is not sufficient on its own, and the project should not
+lean on it as though it were. A Hindi-language app designed on Western assumptions is
+still designed on Western assumptions.
+
+Second, and less comfortably: the paper's subject is OR app **users** — people who already
+use these apps and describe the social friction of doing so. That is evidence about
+adoption, and the project's own target users are people who do *not* use such apps yet.
+It sharpens the field evaluation protocol (`TESTING/field-evaluation-protocol.md`): the
+stationary, do-no-harm protocol should ask about the social context, not only whether the
+object was named correctly.
+
+### 9.2 What blind users say they want described — and how position factors in (S33)
+
+**"Beyond the Cane"** (ACM TOAC, 2022) ran two urban walking experiments with **13
+cane-using participants**, five of them early blind, to work out which objects in a street
+scene are worth describing and how they should be described. Two findings are directly
+relevant to issue #3, which asks whether the project's image-relative left/centre/right is
+actually useful.
+
+- **Late-blind participants requested information more frequently and prioritised
+  information about objects' locations.** Relative position was one of the factors that
+  affected how useful a description was.
+- **The detail level, the relative position and the type of information** all changed how
+  useful participants found a description to be — and participants frequently could not
+  explain how they had used the information, even when they had used it.
+
+**What this does to the project.** It is published evidence that **relative position
+matters** to blind users, which is the strongest available support for the project's
+"left / centre / right" design and for the decision not to guess at distance. It also
+warns against reading too much into it: the study found early- and late-blind
+participants wanted different things, and users often could not articulate the benefit
+even when it was there. That is an argument for the project's own confidence-aware
+phrasing, and for issue #2's threshold calibration, rather than for confident claims
+about the feature's value. Issue #3 should cite this paper.
+
+It is also a caution about the *other* obvious response. "Beyond the Cane" studied
+**urban walking for mobility**; the project is explicitly not a mobility aid, and the
+paper's participants were actively navigating streets. Its findings transfer to the
+project's object-naming case only partially, and the project should say so rather than
+borrow the authority wholesale.
+
+---
+
+## 10. Sources
 
 | # | Source | Type | Accessed | Used for |
 |---|---|---|---|---|
@@ -324,6 +387,8 @@ its measurements. That is a real gap, but it is a small one, and the project sho
 | S11 | <https://www.thurrott.com/mobile/294072/microsoft-launches-an-improved-seeing-ai-app-on-android-too> | secondary | 2026-10-20 | Seeing AI Android availability, 18 languages |
 | S12 | <https://gcn.com/google-gemini-live-guided-vision-android/22187> | secondary | 2026-10-20 | Guided Vision launch routes and availability (corroborates S1) |
 | S13 | <https://timesofindia.indiatimes.com/technology/tech-news/google-launches-guided-vision-for-gemini-live-what-is-it-and-how-it-works/amp_articleshow/134639412.cms> | secondary | 2026-10-20 | Guided Vision feedback from BLV communities incl. India (corroborates S1) |
+| S14 | <https://dl.acm.org/doi/10.1145/3706598.3713107> | primary (ACM CHI) | 2026-10-21 | Seven-day diary study and interviews with seven OR-app users in India; social accessibility, interdependence, Western design context (section 9.1) |
+| S15 | <https://pubmed.ncbi.nlm.nih.gov/36148267/> | primary (ACM TOAC) | 2026-10-21 | 13 cane-using participants, urban walking; late-blind participants prioritised object locations; relative position affects usefulness (section 9.2) |
 
 **Not verified in this session** (open gaps, not negative findings): Guided Vision's
 availability *specifically for Hindi camera guidance* (secondary reporting says Indic
@@ -332,4 +397,9 @@ is supported" without naming which); Guided Vision's data-retention terms; wheth
 Guided Vision can be run without a network; Seeing AI's current language list and privacy
 terms; Be My Eyes' and Envision's Hindi support; the licences, maintenance state and
 feature sets of SightBuddy, SeeForMe and VISION; and any 2024–2026 Indian hackathon project
-with a comparable design.
+with a comparable design; the licences of the 2024-2026 Indian hackathon projects found
+by the third pass (the Fosshack 2026 project list could not be retrieved - the host
+resolved to a private address, and the web-search backend was failing in this session, so
+a project named "DrishtiMap" - real-time audio navigation for visually impaired Indians,
+on-device object detection with spoken descriptions in Bengali and Hindi - is recorded as
+an **unverified lead, not a fact**, and must not be cited until its own source is read).

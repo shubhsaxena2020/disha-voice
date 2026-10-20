@@ -34,14 +34,17 @@ source; **UNVERIFIED** = could not be confirmed.
 | S21 | Android apps targeting API 35+ must meet current Play target-API requirements | Play Console target API level requirement | <https://developer.android.com/google/play/requirements/target-sdk> | Google | 2026-10-20 | primary | high | `safety-and-claims-review.md` §4 |
 | S22 | A privacy policy URL is required for Play listings that collect personal or sensitive data | Privacy policy requirement | <https://developer.android.com/google/play/requirements/privacy-policy> | Google | 2026-10-20 | primary | high | `safety-and-claims-review.md` §4 |
 | S23 | Android 15+ devices require 16 KB page-size support for apps | Supporting 16 KB page sizes | <https://developer.android.com/guide/practices/page-sizes> | Google | 2026-10-20 | primary | high | `safety-and-claims-review.md` §4 |
-| S25 | Google Guided Vision in Gemini Live: conversational camera description for blind and low-vision users, launched 2026-10-01; reframing cues; Aira training; TalkBack-menu integration; Android 9+ | <https://blog.google/innovation-and-ai/products/gemini-app/guided-vision-gemini-live> | primary (Google) | 2026-10-20 | `competitor-landscape.md` §1, `differentiation-hypothesis.md` |
-| S26 | VisionAId: an offline-first on-device Android assistant for people with visual impairment, six ONNX models, Romanian TTS, calibrated metric depth, published measurements | <https://arxiv.org/abs/2607.02371> | primary (arXiv) | 2026-10-20 | `competitor-landscape.md` §2 |
-| S27 | Andha-Dhun: the first dataset of human-authored Hindi audio descriptions; naive translation introduces artifacts and narrows diversity | <https://arxiv.org/abs/2607.06457> | primary (arXiv) | 2026-10-20 | `competitor-landscape.md` §3, `speech-hindi-audit.md` |
-| S28 | Gemini supported languages (incl. Hindi and 12 other Indian languages) and supported countries | <https://support.google.com/gemini/answer/13575153> | primary (Google) | 2026-10-20 | `competitor-landscape.md` §5 |
-| S29 | Gemini Live expanded to 40+ languages on Android | <https://blog.google/products-and-platforms/products/gemini/gemini-live-extensions-language-expansion/> | primary (Google) | 2026-10-20 | `competitor-landscape.md` §5 |
-| S30 | Guided Vision launch routes (Gemini app, Accessibility shortcut, TalkBack menu) and Android 9+ availability | <https://gcn.com/google-gemini-live-guided-vision-android/22187> | secondary | 2026-10-20 | `competitor-landscape.md` §1 |
-| S31 | Guided Vision was developed with feedback from blind and low-vision communities in India, Brazil, Singapore, Indonesia and Japan | <https://timesofindia.indiatimes.com/technology/tech-news/google-launches-guided-vision-for-gemini-live-what-is-it-and-how-it-works/amp_articleshow/134639412.cms> | secondary | 2026-10-20 | `competitor-landscape.md` §1 |
+| S25 | Google Guided Vision in Gemini Live: conversational camera description for blind and low-vision users, launched 2026-10-01; reframing cues; Aira training; TalkBack-menu integration; Android 9+ | Guided Vision launches in Gemini Live | <https://blog.google/innovation-and-ai/products/gemini-app/guided-vision-gemini-live> | Google | 2026-10-20 | primary | high | `competitor-landscape.md` §1, `differentiation-hypothesis.md` |
+| S26 | VisionAId: an offline-first on-device Android assistant for people with visual impairment, six ONNX models, Romanian TTS, calibrated metric depth, published measurements | VisionAId (arXiv:2607.02371) | <https://arxiv.org/abs/2607.02371> | arXiv | 2026-10-20 | primary | high | `competitor-landscape.md` §2 |
+| S27 | Andha-Dhun: the first dataset of human-authored Hindi audio descriptions; naive translation introduces artifacts and narrows diversity | Andha-Dhun (arXiv:2607.06457) | <https://arxiv.org/abs/2607.06457> | arXiv | 2026-10-20 | primary | high | `competitor-landscape.md` §3, `speech-hindi-audit.md` |
+| S28 | Gemini supported languages (incl. Hindi and 12 other Indian languages) and supported countries | Gemini Apps Supported Countries and Languages | <https://support.google.com/gemini/answer/13575153> | Google | 2026-10-20 | primary | high | `competitor-landscape.md` §5 |
+| S29 | Gemini Live expanded to 40+ languages on Android | Gemini Live Extensions: Language Expansion | <https://blog.google/products-and-platforms/products/gemini/gemini-live-extensions-language-expansion/> | Google | 2026-10-20 | primary | high | `competitor-landscape.md` §5 |
+| S30 | Guided Vision launch routes (Gemini app, Accessibility shortcut, TalkBack menu) and Android 9+ availability | Google launches Guided Vision for Gemini Live on Android | <https://gcn.com/google-gemini-live-guided-vision-android/22187> | GCN / Mobile World Live | 2026-10-20 | secondary | medium | `competitor-landscape.md` §1 |
+| S31 | Guided Vision was developed with feedback from blind and low-vision communities in India, Brazil, Singapore, Indonesia and Japan | Google launches Guided Vision for Gemini Live: what is it and how it works? | <https://timesofindia.indiatimes.com/technology/tech-news/google-launches-guided-vision-for-gemini-live-what-is-it-and-how-it-works/amp_articleshow/134639412.cms> | The Times of India | 2026-10-20 | secondary | medium | `competitor-landscape.md` §1 |
 | S24 | WAI/WCAG reference material used for the accessibility acceptance checklist | Web Accessibility Initiative resources | <https://www.w3.org/WAI/standards-guidelines/wcag/> | W3C | 2026-10-20 | primary | high | `assistive-ux-requirements.md` §5 |
+| S32 | A seven-day diary study with interviews of **seven object-recognition app users in India** found that existing research addresses the *functional* accessibility of OR apps but neglects **social** accessibility; the apps are "designed for independent, western contexts"; the paper proposes designing for interdependence, community-centered, culturally aligned and locally adaptable use | Exploring the Experiences of Individuals Who are Blind or Low-Vision Using Object-Recognition Technologies in India | <https://dl.acm.org/doi/10.1145/3706598.3713107> | ACM (CHI) | 2026-10-21 | primary | high | `competitor-landscape.md` section 9.1, `differentiation-hypothesis.md` H4 |
+| S33 | With **13 cane-using participants** in two urban walking experiments, late-blind participants requested information more frequently and **prioritised information about objects' locations**; level of detail, relative position and type of information all affected the usefulness of scene descriptions; participants could often not explain how they used the information | Beyond the Cane: Describing Urban Scenes to Blind People for Mobility Tasks | <https://pubmed.ncbi.nlm.nih.gov/36148267/> | ACM TOAC (2022), doi 10.1145/3522757 | 2026-10-21 | primary | high | `differentiation-hypothesis.md` H3, issue #3 |
+| S34 | `AudioAttributes` usage constants: `USAGE_ASSISTANCE_NAVIGATION_GUIDANCE` is "for driving or navigation directions", `USAGE_ASSISTANT` is "for audio responses to user queries, audio instructions or help utterances"; `USAGE_ACCESSIBILITY` is **not** among the current constants | AudioAttributes | <https://developer.android.com/reference/android/media/AudioAttributes> | Google | 2026-10-21 | primary | high | issue #8 |
 
 ---
 
@@ -59,6 +62,37 @@ imply coverage it does not have.
 | Hindi support in Seeing AI, Be My Eyes, Envision, Supersense, and Lazarillo | **NOT VERIFIED** from official sources. Recorded as UNVERIFIED in the comparison table. |
 | Independent latency measurements for any competitor | **NONE FOUND.** No competitor publishes comparable on-device latency numbers, which is itself a finding (see `differentiation-hypothesis.md` H5). |
 | Whether the open-source prior art is already Hindi-first | **NOT ESTABLISHED.** |
+
+---
+
+## Third pass, 2026-10-21 — findings recovered from an orphaned research batch
+
+An earlier parallel research batch was interrupted before it recorded its results, and
+never wrote a single file: all four of its subagents were still doing web research when
+the batch owner exited. **It left no side effects** — no files, no commits, no changes
+to the working tree. What it did leave behind were research *leads*, found in its
+transcripts, which were then retrieved and verified independently before anything was
+recorded here.
+
+| Lead | What it is | Outcome |
+|---|---|---|
+| CHI 2025 study of OR-app users in India | A seven-day diary study and interviews with seven object-recognition app users in India. | **Verified and recorded as S32.** Read in full from the ACM page. It concerns the *social* accessibility of OR apps in an interdependent Indian social context, and it bears on the project's positioning (see `competitor-landscape.md` section 9.1 and `differentiation-hypothesis.md` H4). |
+| "Beyond the Cane" | An ACM TOAC 2022 study of what blind users want described in urban scenes. | **Verified and recorded as S33.** It is the closest published evidence yet on whether relative position is useful to blind users, which is issue #3's question (see `differentiation-hypothesis.md` H3). |
+| `AudioAttributes` usage constants | Android's documented audio-usage constants. | **Verified and recorded as S34**, read from the official reference in a browser because the page is JavaScript-rendered and text extraction returns only navigation chrome. Relevant to issue #8. |
+| "DrishtiMap" — an Indian hackathon project | Described in a Fosshack 2026 project list as real-time audio navigation for visually impaired Indians, with on-device object detection and spoken descriptions in Bengali and Hindi. | **NOT VERIFIED — recorded as an unverified lead, not a fact.** The Fosshack archives could not be retrieved (the host resolved to a private address) and the web-search backend was failing during this session. If real, it would be a closer prior-art collision than anything currently recorded, and it must be read at source before it is cited anywhere. |
+| The Play Store "Data safety" form | The declaration a developer completes for a Play listing. | **NOT VERIFIED in this pass.** The support page was retrieved but the relevant section did not survive extraction. It is a publication requirement, not a research input, and no claim in this repository depends on it. |
+
+### The lesson, again
+
+Two of the four leads turned out to be materially important, and both were found by a
+batch that was never going to report. The first two passes of this project each found a
+prior-art collision, and the second pass **overturned a conclusion**. This third pass
+found no competitor, but it did find published evidence on the project's two most
+contested hypotheses, from a batch whose results were lost.
+
+**A research result that is not written down is not a result.** That is the whole reason
+this register exists, and the reason the two studies above are now rows rather than
+something a transcript held for a few hours.
 
 ---
 

@@ -114,7 +114,18 @@ genuinely under-specified.*
 - **Segment:** users who are confident about their own orientation.
 - **Risk:** this may be the point where the project should conclude that the honest product is
   *object identity without position*, and say so.
-- Tracked as issue #3.
+- **Published support, added 2026-10-21 (S33):** "Beyond the Cane" (ACM TOAC 2022) ran two
+  urban walking experiments with 13 cane-using participants and found that **late-blind
+  participants prioritised information about objects' locations**, and that relative
+  position was one of the factors that changed how useful a description was. That is
+  published evidence that relative position matters, and it is the strongest external
+  support this hypothesis has.
+- **What that support does *not* settle (S33):** the same study found early- and late-blind
+  participants wanted different things, and participants frequently could not explain how
+  they had used the information even when they had used it. It also studied **urban walking
+  for mobility**, which this project explicitly is not. The evidence therefore supports
+  "worth testing", not "proven".
+- Tracked as issue #3. The field protocol should cite this paper when it is run.
 
 ### H4 — Hindi-first, offline, hands-free (**downgraded to table stakes**)
 
@@ -139,6 +150,18 @@ genuinely under-specified.*
   exists on a given handset is unknown, and several Indian OEM skins ship minimal TTS data. The
   app must degrade honestly to English, and that degradation may make the "Hindi-first" claim
   hollow on many devices. This is issue #1.
+- **A further caution, added 2026-10-21 (S32):** a seven-day diary study with interviews of
+  **seven object-recognition app users in India** (CHI 2025) found that existing OR apps are
+  "designed for independent, western contexts" and do not fit a multicultural, interdependent
+  Indian social setting, where people navigate public and private spheres *with* others
+  rather than alone. The study's subject is the **social** accessibility of these apps, not
+  their language or their detection accuracy.
+  **The consequence for this project is that "Hindi-first" is not, by itself, the
+  differentiator it might appear to be.** A Hindi-language app built on the same Western
+  independence assumptions would carry the same problem. The paper proposes interdependence,
+  community-centered and locally adaptable design instead. The project does not claim to
+  have solved that, and should not imply that translating the interface or the phrases
+  does. See `competitor-landscape.md` section 9.1.
 
 ### H5 — Transparent local evaluation
 

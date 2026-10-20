@@ -133,7 +133,7 @@ platform data the demo machine may not have.
 | Slow first inference (model load) | Medium | A long pause at the start | The model is only 4.4 MB, but warm-up on a cold device is unmeasured. **Measure it.** |
 | TTS queue stall or dropped audio | Medium | Speech cuts off mid-sentence | Untested. Needs a device. |
 | The judge's phone blocks the camera with a case | Low | The frame is partly obscured | Trivial to avoid. |
-| Wi-Fi captive portal / no network | Low | Nothing — the app needs no network. **This is a genuine advantage to demonstrate.** |
+| Wi-Fi captive portal / no network | Low | Nothing — the app needs no network. **This is a genuine advantage to demonstrate.** | None needed, and worth turning into a demonstration: run the demo in airplane mode, so "it worked with no connection" is shown rather than claimed. |
 | Someone asks "does it detect stairs / is it safe to walk?" | **High** | The demo derails into a safety conversation | Prepare a one-sentence answer: it describes what is in the picture; it is not a navigation aid. |
 
 The last row is the most likely and the most under-prepared. **The demo script should include

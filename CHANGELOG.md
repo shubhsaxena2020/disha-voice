@@ -26,6 +26,26 @@ caveat that the project is pre-1.0 and currently a **prototype**.
 ## [Unreleased]
 
 ### Added
+- **A third research pass, recovered from an orphaned batch.** An earlier parallel research
+  batch was interrupted before it recorded any results, and it left no side effects at all -
+  no files, no commits, no working-tree changes - but its transcripts held research *leads*.
+  Two were retrieved and verified independently and are now recorded:
+  - A **CHI 2025** study of **seven object-recognition app users in India** (source register
+    S32), which finds that existing OR apps are "designed for independent, western contexts"
+    and do not fit an interdependent Indian social setting. This is now in
+    `competitor-landscape.md` section 9.1 and in `differentiation-hypothesis.md` H4, where it
+    adds a caution the project did not have: "Hindi-first" is not by itself the
+    differentiator it appears to be.
+  - **"Beyond the Cane"** (ACM TOAC 2022, S33), which ran urban walking experiments with 13
+    cane-using participants and found that late-blind participants **prioritised
+    information about objects' locations**. This is the closest published evidence yet on
+    issue #3's question, so issue #3 and `differentiation-hypothesis.md` H3 now cite it -
+    and record what it does *not* settle.
+  - Android's documented `AudioAttributes` usage constants (S34), which give issue #8 a
+    concrete mechanism to evaluate. `USAGE_ACCESSIBILITY` is **not** among the current
+    constants, which is the one most people reach for.
+  - A fourth lead, an Indian hackathon project called "DrishtiMap", **could not be
+    verified** and is recorded as an unverified lead in issue #4, not as a fact.
 - **`RESEARCH/platform-api-audit.md`** - an audit of every Android platform API the app
   depends on, measured against the real model and the real built APK rather than assumed
   from documentation. It records one critical defect (now fixed, above), four further
@@ -94,6 +114,10 @@ caveat that the project is pre-1.0 and currently a **prototype**.
   machines, because Gradle generates a different debug keystore on each one.
 
 ### Fixed
+- **Seven rows of the source register did not match the table header.** Rows S25 to S31
+  carried six columns against a nine-column header, so the register did not parse as the
+  table it claimed to be. The missing fields - source title, publisher, reliability - were
+  filled in rather than the rows dropped, and the register is now machine-checkable.
 - **The detector would never have detected anything.** `EfficientDetDetector` separated the
   model's class-id tensor from its score tensor by inspecting their *values*, on the
   assumption that class ids are integral and scores are bounded to 0..1. On a freshly
