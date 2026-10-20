@@ -1,0 +1,388 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/shubhsaxena2020/disha-voice/benchmarks/benchmark-schema.json",
+  "title": "Disha Voice benchmark run record",
+  "description": "Machine-readable contract for one benchmark run, as defined by RESEARCH/benchmark-plan.md. A run records only measurements that were actually produced. A measurement that was not collected is recorded as status 'not_collected' with a reason, never as a zero, an 'N/A', or a guessed value. Every object closes additionalProperties so a stray or invented field fails validation instead of passing silently. Never record a phone serial, IMEI, user speech, camera capture, or any other personal data in this record.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "protocolVersion",
+    "run",
+    "artifacts",
+    "measurements",
+    "notes"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Optional. A record may declare the schema it follows, as JSON Schema instances conventionally do."
+    },
+    "$id": {
+      "type": "string",
+      "description": "Optional identifier for the record itself."
+    },
+    "schemaVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "description": "Version of this schema the record conforms to. Bump on any breaking change to field names, types, or required keys."
+    },
+    "protocolVersion": {
+      "type": "string",
+      "description": "Version of RESEARCH/benchmark-plan.md that this run followed. A run is comparable only when the measured scope and relevant artifacts/conditions match."
+    },
+    "run": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "runId",
+        "capturedAtUtc",
+        "repository",
+        "host",
+        "tools",
+        "commands"
+      ],
+      "properties": {
+        "runId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Unique identifier for this run. Use the same value across every repeat inside the run."
+        },
+        "capturedAtUtc": {
+          "type": "string",
+          "format": "date-time",
+          "description": "UTC timestamp at which the run record was captured."
+        },
+        "repository": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["commit", "dirty"],
+          "properties": {
+            "commit": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{7,40}$",
+              "description": "Full or abbreviated git commit the run was executed from."
+            },
+            "dirty": {
+              "type": "boolean",
+              "description": "Whether the working tree was dirty at run time. Do not compare dirty and clean runs as if identical."
+            },
+            "remote": {
+              "type": "string",
+              "description": "Optional remote the commit was taken from."
+            }
+          }
+        },
+        "host": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["os", "arch", "jdkVersion", "gradleVersion"],
+          "properties": {
+            "os": { "type": "string", "description": "Host operating system name and version." },
+            "arch": { "type": "string", "description": "Host CPU architecture, e.g. x86_64 or aarch64." },
+            "cpu": { "type": "string", "description": "Host CPU model." },
+            "powerMode": {
+              "type": "string",
+              "description": "Host power mode during the run, e.g. 'AC', 'battery', 'unknown'."
+            },
+            "jdkVersion": {
+              "type": "string",
+              "description": "JDK vendor and version used, e.g. 'Temurin 17.0.x'. Keep fixed across compared runs."
+            },
+            "gradleVersion": {
+              "type": "string",
+              "description": "Gradle version used, e.g. '8.14.3'. Use the committed wrapper distribution, not a scratch installation."
+            }
+          }
+        },
+        "tools": {
+          "type": "array",
+          "description": "Every external tool whose output contributed to this record, with its version.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "version"],
+            "properties": {
+              "name": { "type": "string" },
+              "version": { "type": "string" },
+              "purpose": { "type": "string" }
+            }
+          }
+        },
+        "commands": {
+          "type": "array",
+          "description": "Exact commands executed, in order, including repeats.",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "apks": {
+          "type": "array",
+          "description": "APK artifacts produced by this run. One entry per file. Do not silently treat one split as the complete install.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "variant", "bytes", "sha256"],
+            "properties": {
+              "path": { "type": "string", "description": "Path of the APK file, relative to the repository root." },
+              "variant": { "type": "string", "description": "Build variant, e.g. 'debug' or 'release'." },
+              "versionName": { "type": "string" },
+              "versionCode": { "type": "integer" },
+              "abi": { "type": "string", "description": "ABI of this artifact, or 'universal'." },
+              "split": { "type": "string", "description": "Split name, e.g. 'config.arm64_v8a', or 'none' for a universal APK." },
+              "bytes": { "type": "integer", "minimum": 1, "description": "Exact file size in bytes from the file system." },
+              "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+              "measuredWith": { "type": "string", "description": "Tool and version used to measure the size and hash." },
+              "downloadSizeEstimateBytes": {
+                "type": "integer",
+                "description": "Optional apkanalyzer 'apk download-size' estimate. It is an estimate, never the exact file size, and must be recorded separately."
+              }
+            }
+          }
+        },
+        "model": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "The exact production model used. A stub, fake detector, desktop/JVM execution, or emulator does not qualify.",
+          "properties": {
+            "id": { "type": "string" },
+            "version": { "type": "string" },
+            "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+            "runtime": { "type": "string", "description": "Inference runtime and version, e.g. 'TFLite 2.x'." },
+            "delegate": { "type": "string", "description": "Delegate or backend, e.g. 'CPU', 'GPU', 'NNAPI'." },
+            "threadCount": { "type": "integer", "minimum": 1 },
+            "inputShape": { "type": "string" },
+            "inputDtype": { "type": "string" },
+            "preprocessing": { "type": "string", "description": "Exact preprocessing applied to frames before inference, e.g. 'raw uint8 RGB, no normalisation'." }
+          }
+        },
+        "input": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "The fixed local input used for a latency run.",
+          "properties": {
+            "path": { "type": "string" },
+            "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+            "description": { "type": "string" }
+          }
+        }
+      }
+    },
+    "device": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Present only for a physical-device run. Absent means no device was involved. Never record a serial number, IMEI, or any device identifier that identifies a person.",
+      "properties": {
+        "manufacturer": { "type": "string" },
+        "model": { "type": "string" },
+        "buildFingerprint": { "type": "string" },
+        "apiLevel": { "type": "integer" },
+        "abi": { "type": "string" },
+        "chargingState": { "type": "string", "description": "Charging state during the run." },
+        "batterySaverEnabled": { "type": "boolean" },
+        "networkState": { "type": "string", "description": "Network state during the run, recorded rather than assumed." },
+        "screenOn": { "type": "boolean" },
+        "orientation": { "type": "string" },
+        "appForeground": { "type": "boolean" },
+        "appCommit": { "type": "string" },
+        "appVariant": { "type": "string" }
+      }
+    },
+    "measurements": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["hostTestSuite", "apkSize", "deviceInferenceLatency", "thermal"],
+      "description": "Every measurement block is required as a key, but each carries an explicit status. Use 'collected' with the data, or 'not_collected' with a reason. A measured value of zero is legal only when zero was genuinely measured.",
+      "properties": {
+        "hostTestSuite": {
+          "$ref": "#/$defs/hostTestSuite"
+        },
+        "apkSize": {
+          "$ref": "#/$defs/apkSize"
+        },
+        "deviceInferenceLatency": {
+          "$ref": "#/$defs/deviceInferenceLatency"
+        },
+        "thermal": {
+          "$ref": "#/$defs/thermal"
+        }
+      }
+    },
+    "notes": {
+      "type": "array",
+      "description": "Limitations, deviations from the protocol, and anything a reader must know to interpret this record correctly.",
+      "items": { "type": "string" }
+    }
+  },
+  "$defs": {
+    "notCollected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "reason"],
+      "properties": {
+        "status": { "const": "not_collected" },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Why this measurement was not collected. Never a numeric value, 'N/A', or an empty string."
+        }
+      }
+    },
+    "hostTestSuite": {
+      "oneOf": [
+        { "$ref": "#/$defs/notCollected" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "task", "repeats"],
+          "properties": {
+            "status": { "const": "collected" },
+            "task": {
+              "type": "string",
+              "description": "Gradle task, e.g. ':core:test'. Host test-suite time is never inference, app startup, or user-perceived latency."
+            },
+            "seed": {
+              "type": "string",
+              "description": "Fixed seed used by any generated test cases, e.g. '0xD15A0'."
+            },
+            "generatedCaseCount": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Number of generated cases the property test exercised."
+            },
+            "cachePolicy": { "type": "string", "description": "Cache state held constant across repeats." },
+            "repeats": {
+              "type": "array",
+              "minItems": 1,
+              "description": "One entry per independent execution. At least 3 are required for a reported comparison. Never present three calls inside one loop as three independent runs.",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["repeatIndex", "passed", "failed", "skipped", "wallTimeMs"],
+                "properties": {
+                  "repeatIndex": { "type": "integer", "minimum": 1 },
+                  "passed": { "type": "integer", "minimum": 0 },
+                  "failed": { "type": "integer", "minimum": 0 },
+                  "skipped": { "type": "integer", "minimum": 0 },
+                  "wallTimeMs": {
+                    "type": "number",
+                    "minimum": 0,
+                    "description": "Host Gradle test-suite wall time in milliseconds, measured with a monotonic host timer. Informational only."
+                  },
+                  "command": { "type": "string" },
+                  "reportPath": { "type": "string", "description": "Path to the retained test report for this repeat." }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "apkSize": {
+      "oneOf": [
+        { "$ref": "#/$defs/notCollected" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "bytes", "sha256", "variant", "measuredWith"],
+          "properties": {
+            "status": { "const": "collected" },
+            "bytes": { "type": "integer", "minimum": 1, "description": "Exact file size in bytes." },
+            "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+            "variant": { "type": "string" },
+            "measuredWith": { "type": "string", "description": "Tool and version used." },
+            "rehashMatched": {
+              "type": "boolean",
+              "description": "Whether a repeated read confirmed the hash and byte count were identical, i.e. the artifact was not replaced mid-run."
+            }
+          }
+        }
+      ]
+    },
+    "deviceInferenceLatency": {
+      "oneOf": [
+        { "$ref": "#/$defs/notCollected" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "measuredStage", "unit", "repeats"],
+          "properties": {
+            "status": { "const": "collected" },
+            "measuredStage": {
+              "type": "string",
+              "description": "Exactly what was timed, e.g. 'model invocation, model already loaded, fixed input tensor'. Keep model-only inference distinct from preprocessing, camera capture, and end-to-end timing."
+            },
+            "unit": { "type": "string", "description": "Unit of the recorded values, e.g. 'ms'." },
+            "timer": {
+              "type": "string",
+              "description": "Timer or tool used, e.g. 'SystemClock.elapsedRealtimeNanos()' or 'Macrobenchmark'."
+            },
+            "setupOutsideTimedRegion": {
+              "type": "boolean",
+              "description": "Whether model load, decode, and setup were excluded from the timed region."
+            },
+            "harness": {
+              "type": "string",
+              "description": "Benchmark harness, e.g. 'AndroidX Microbenchmark' or 'Macrobenchmark'."
+            },
+            "iterationsPerInvocation": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "For Macrobenchmark, at least 5 iterations per invocation."
+            },
+            "repeats": {
+              "type": "array",
+              "minItems": 3,
+              "description": "At least 3 independent benchmark invocations. Report each repeat separately; a summary must not replace the per-repeat source results.",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["repeatIndex", "value"],
+                "properties": {
+                  "repeatIndex": { "type": "integer", "minimum": 1 },
+                  "value": { "type": "number", "minimum": 0, "description": "Measured value in the declared unit." },
+                  "thermalStatusAtStart": { "type": "string", "description": "Thermal status enum name before the repeat." },
+                  "thermalStatusAtEnd": { "type": "string", "description": "Thermal status enum name after the repeat." },
+                  "rawOutputPath": { "type": "string", "description": "Path to the preserved raw benchmark result or trace." }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "thermal": {
+      "oneOf": [
+        { "$ref": "#/$defs/notCollected" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "samples"],
+          "properties": {
+            "status": { "const": "collected" },
+            "apiLevel": { "type": "integer" },
+            "apiSource": { "type": "string", "description": "Platform API used, e.g. 'PowerManager.getCurrentThermalStatus()'." },
+            "samples": {
+              "type": "array",
+              "minItems": 1,
+              "description": "Thermal status samples. A status is a platform throttling category, not a temperature in degrees Celsius. Do not substitute 'THERMAL_STATUS_NONE' for a sample that was never read.",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["offsetMs", "statusName"],
+                "properties": {
+                  "offsetMs": { "type": "integer", "description": "Milliseconds relative to the start of the run." },
+                  "statusName": { "type": "string", "description": "Android thermal status enum name, e.g. 'THERMAL_STATUS_MODERATE'." }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -124,7 +124,7 @@ $env:ANDROID_HOME = "C:\path\to\Android\Sdk"
 .\gradlew.bat :android:app:assembleDebug
 ```
 
-A connected device is required for camera, speech, install/launch, TalkBack, thermal, and performance checks. See `docs/DEVELOPMENT_SETUP.md` and `docs/TESTING.md` when available.
+A connected device is required for camera, speech, install/launch, TalkBack, thermal, and performance checks. See `docs/DEVELOPMENT_SETUP.md` for the build environment, `TESTING/field-evaluation-protocol.md` for the field protocol, and `docs/DEMO_GUIDE.md` for demo steps.
 
 ## Website preview
 

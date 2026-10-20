@@ -157,6 +157,30 @@ jobs:
           PY
       - name: Check internal links
         run: python3 scripts/check-website-links.py
+      - name: Validate the benchmark record schema
+        run: |
+          set -euo pipefail
+          # The schema is the machine-readable contract for future benchmark
+          # runs, and RESEARCH/benchmark-plan.md points at it. If it stops
+          # being a valid JSON Schema, that reference becomes a lie, so the
+          # build should fail rather than carry on.
+          #
+          # The install is retried: a transient PyPI mirror failure has taken
+          # down green builds before, and it says nothing about this project.
+          for attempt in 1 2 3; do
+            if python3 -m pip install --quiet jsonschema; then break; fi
+            echo "pip install jsonschema failed (attempt $attempt); retrying"
+            sleep 10
+          done
+          python3 -c "import jsonschema" || { echo "::error::could not install jsonschema"; exit 1; }
+          python3 - <<'PY'
+          import json
+          from jsonschema import Draft202012Validator
+          with open('benchmarks/benchmark-schema.json', encoding='utf-8') as fh:
+              schema = json.load(fh)
+          Draft202012Validator.check_schema(schema)
+          print('benchmarks/benchmark-schema.json is a valid JSON Schema (draft 2020-12).')
+          PY
       - name: Audit WCAG AA text contrast
         run: python3 scripts/check-website-contrast.py
       - name: Set up a browser for the layout check

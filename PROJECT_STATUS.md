@@ -168,6 +168,23 @@ Present: `RESEARCH/model-and-data-audit.md` (written from first-hand measurement
 `docs/website-deployment-plan.md`, `SECURITY.md`, `CONTRIBUTING.md`,
 `CODE_OF_CONDUCT.md`, `SUPPORT.md`, issue/PR templates, two CI workflows.
 
+**The benchmark record contract now exists.** `RESEARCH/benchmark-plan.md` referred to
+`benchmarks/benchmark-schema.json` as "the machine-readable record contract", but the file
+was never written. It exists now: a JSON Schema (draft 2020-12) in which every measurement
+block is either `status: "collected"` with data or `status: "not_collected"` with a written
+reason. A missing, zero-filled, or fabricated measurement is therefore **rejected by the
+schema**, not merely discouraged by prose, and unknown fields fail validation everywhere.
+The schema's behaviour was verified against a suite of positive and negative records, and
+CI revalidates it on every build. The plan's own "Current verified boundary" section was
+also corrected — it described a project with no app module, no Gradle wrapper, and no APK,
+none of which is true now.
+
+**GitHub private vulnerability reporting is enabled** on the repository. It was *disabled*
+while `SECURITY.md` instructed reporters to use it, so the policy pointed at a channel that
+did not exist. It is enabled now, `SECURITY.md` states the verified position rather than
+hedging, and the "do not post vulnerability details publicly" rule still stands for the
+case where the option is unavailable.
+
 Every source consulted is registered in `RESEARCH/source-register.md` with its access
 date, reliability rating, and the claim it supports — including the retrievals that
 **failed**, which is what keeps the UNVERIFIED rows honest.

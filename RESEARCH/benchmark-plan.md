@@ -4,18 +4,49 @@
 
 ## Current verified boundary
 
-- `adb devices -l` reported no attached devices in this session.
-- No APK was present in the repository, and the current Gradle project includes `:core`, a Kotlin/JVM policy module, but no Android app module. Therefore APK size, inference latency, and device thermal results do not exist yet and must not be estimated.
-- The Android-free `:core:test` suite, including the deterministic synthetic tests added with this plan, ran successfully using Gradle 8.14.3 and JDK 17. This is a host test result, not an app performance result.
-- There is currently no tracked Gradle Wrapper in the repository. To make future reruns independent of this machine's scratch Gradle installation, add and commit a wrapper pinned to the selected Gradle distribution before treating test wall-clock timings as reproducible. Keep the JDK version fixed and record both versions.
+*Revised 2026-10-21. The original version of this section was written before the Android
+app module, the Gradle wrapper, and the APK existed, and it said so. Those three statements
+were true when written and are false now. The correction is recorded here rather than
+silently rewritten, because the rest of this plan depends on the boundary.*
 
-No benchmark result dataset is created by this plan. The companion `benchmarks/benchmark-schema.json` defines what an actual future run must record. Omit measurements that have not been collected; do not insert zeros, `N/A`, guessed values, or synthetic latency/thermal readings.
+- `adb devices -l` reported no attached devices. **This is still true.** There is still no
+  physical Android device, so on-device inference latency and thermal results do not exist
+  and must not be estimated.
+- The Gradle project now has two modules: `:core` (Kotlin/JVM policy module) and
+  `:android:app` (the Android application). The Gradle Wrapper **is** committed and pins
+  Gradle 8.14.3 (`gradle/wrapper/gradle-wrapper.properties`), so runs are no longer
+  dependent on a scratch Gradle installation. Keep the JDK version fixed and record both
+  versions.
+- A debug APK **now exists** and is published: `disha-voice-v0.1.1-prototype-debug.apk`,
+  30,671,369 bytes, SHA-256 `b80108a1196e6cc64ee641ab20fb63b79794e5c2e8ab969b3c452331805f83c5`.
+  It is a **debug-signed prototype**, so it is a valid artifact record but **not** a valid
+  release-size proxy.
+- The Android-free `:core:test` suite, including the deterministic synthetic tests added
+  with this plan, runs successfully under Gradle 8.14.3 and JDK 17. This is a host test
+  result, not an app performance result.
+
+No benchmark result dataset is created by this plan. The companion
+`benchmarks/benchmark-schema.json` is a JSON Schema (draft 2020-12) that defines what an
+actual future run must record. Omit measurements that have not been collected; do not
+insert zeros, `N/A`, guessed values, or synthetic latency/thermal readings.
+
+The schema encodes that rule structurally rather than by convention: every measurement
+block is a one-of between `status: "collected"` with data and `status: "not_collected"`
+with a written reason. A missing measurement, a zero-filled measurement, and a fabricated
+measurement are all rejected, and so is an unknown field anywhere in the record. The
+schema's behaviour was verified against a suite of positive and negative records.
+
+`benchmarks/results/detector_benchmark.json` is a **desktop** model benchmark produced
+earlier, in its own shape. It does not conform to this schema and is not retrofitted to
+do so: it records real measurements, and rewriting them to fit a contract written later
+would be worse than leaving them clearly separate. The schema governs **runs of this
+plan**.
 
 ## Measurement matrix
 
 | Measurement | Now, without a phone | Later, on a real Android device |
 |---|---|---|
-| APK artifact size | Only after a real APK exists. Record exact file bytes, SHA-256, build variant, and tool output. No APK is currently available. | Same procedure; compare only like-for-like build variants and APK splits. |
+| APK artifact size | A debug APK now exists and is published, so it can be recorded. Record exact file bytes, SHA-256, build variant, and tool output. A **debug** APK is not a valid release-size proxy. | Same procedure; compare only like-for-like build variants and APK splits. |
 | Synthetic policy correctness | Yes: deterministic Kotlin/JVM unit/property tests with generated inputs and recorded seed/case counts. | Same tests remain Android-free; do not substitute them for device validation. |
 | Policy test runner wall time | Optional host-side Gradle wall time, at least 3 independent executions. Label it as test-suite execution time only; it is not inference, app startup, or user-perceived latency. | May also be captured on the build host, separately from on-device results. |
 | Model inference latency | No. Host/JVM timings, fake detectors, emulators, and synthetic policy tests are not valid device inference measurements. | Yes, using the exact distributable model/runtime on the target device and a fixed input. Keep model-only inference distinct from preprocessing or end-to-end camera/TTS timing. |
@@ -39,7 +70,7 @@ Existing example-based `AnnouncementPolicyTest` cases continue to cover fixed zo
 ### Reproducible execution and optional timing
 
 1. Use the same checkout/commit, clean working tree, Gradle Wrapper distribution, JDK vendor/version, host power mode, and test command for the full comparison. Record whether the tree is dirty; do not compare dirty and clean runs as if identical.
-2. Run the full test task three times as separate Gradle process invocations, forcing task execution each time. From the repository root, once a wrapper is committed, use:
+2. Run the full test task three times as separate Gradle process invocations, forcing task execution each time. From the repository root, using the committed wrapper, use:
 
    ```sh
    ./gradlew :core:test --no-daemon --rerun-tasks
@@ -50,12 +81,12 @@ Existing example-based `AnnouncementPolicyTest` cases continue to cover fixed zo
 4. If the command wall time is reported, call it **host Gradle test-suite wall time**, not policy runtime or Android performance. Gradle startup, compilation, cache state, CPU load, and filesystem state affect it. Keep the same cache policy across repeats (prefer a warmed, unchanged cache for all measured runs) and avoid concurrent CPU-heavy tasks. Build/test wall time is informational only and should not be used as a user-facing latency gate.
 5. Do not make tests depend on nondeterministic random seeds, real images, wall-clock time, network access, Android SDK state, or a phone. A future property test must log and fix its seed and generated-case count.
 
-## 2. APK size (only when an APK artifact exists)
+## 2. APK size (a debug APK now exists; a release-like variant still does not)
 
 1. Build the intended release-like variant and identify the exact APK file(s), ABI/split, version, variant, commit, and build configuration. Do not use a debug APK as a release-size proxy. If the app is delivered as split APKs, report each artifact and the explicitly defined total; do not silently treat one split as the complete install.
 2. Record the exact artifact byte count from the file system and SHA-256 of that same file. Record the command/tool and version. An APK's exact file size is not a timing metric, so timing repeats are unnecessary; repeat a read only to detect an artifact being replaced, and require the hash and byte count to remain identical.
 3. Optionally record `apkanalyzer apk download-size <file.apk>` as a separate estimate, never as the APK's exact file size. If available, use APK Analyzer for composition (DEX/resources/native libraries) and retain the output; do not add component sizes in a way that double-counts ZIP entries.
-4. Store no APK-size result until a build actually produces an APK. APK Analyzer documentation explains the distinction between raw/compressed file size and estimated download size and supports artifact comparison. [APK Analyzer](https://developer.android.com/studio/build/apk-analyzer); [apkanalyzer CLI](https://developer.android.com/studio/command-line/apkanalyzer).
+4. Record an APK-size result only from a build that actually produced the APK, and state its variant. A debug-signed prototype is an artifact record, not a release-size claim. APK Analyzer documentation explains the distinction between raw/compressed file size and estimated download size and supports artifact comparison. [APK Analyzer](https://developer.android.com/studio/build/apk-analyzer); [apkanalyzer CLI](https://developer.android.com/studio/command-line/apkanalyzer).
 
 ## 3. On-device inference latency (future; physical device only)
 

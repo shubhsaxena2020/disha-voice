@@ -26,6 +26,16 @@ caveat that the project is pre-1.0 and currently a **prototype**.
 ## [Unreleased]
 
 ### Added
+- **`benchmarks/benchmark-schema.json`** — the machine-readable record contract that
+  `RESEARCH/benchmark-plan.md` referred to but which did not exist. It is a JSON Schema
+  (draft 2020-12). Every measurement block is a one-of between `status: "collected"` with
+  data and `status: "not_collected"` with a written reason, so a missing, zero-filled, or
+  fabricated measurement is **rejected by the schema** rather than left to convention. The
+  schema closes unknown fields everywhere, so an invented field fails validation instead of
+  passing silently. Its behaviour was verified against a suite of positive and negative
+  records, and CI now revalidates it on every build.
+- `docs/DEMO_GUIDE.md` is now published on the site and linked from the download card, so
+  the published APK has instructions a visitor can actually reach.
 - `benchmarks/scripts/verify_preprocessing.py`: runs the bundled model on the real test
   images under three input conventions and reports what each produces. The Android app and
   the desktop benchmark both feed **raw uint8 RGB**; that they agree is reassuring but not
@@ -69,8 +79,6 @@ caveat that the project is pre-1.0 and currently a **prototype**.
   text. 152 rendered pairs checked.
 - The website now publishes all 12 research documents under `docs/research/`, linked
   from a new "Read the working out" section. The published file count went from 8 to 20.
-
-### Added
 - `scripts/compare-apk-payload.py`: compares two APKs by payload, ignoring the
   per-machine debug certificate. CI now asserts that a fresh build has a
   byte-identical payload (all 546 ZIP entries) to the published pre-release.
@@ -78,6 +86,14 @@ caveat that the project is pre-1.0 and currently a **prototype**.
   machines, because Gradle generates a different debug keystore on each one.
 
 ### Fixed
+- **`RESEARCH/benchmark-plan.md` claimed a boundary that no longer exists.** Its "Current
+  verified boundary" section said there was no Android app module, no committed Gradle
+  wrapper, and no APK. All three were true when written and all three are false now. The
+  section now states the current position and records that it was corrected, and the APK
+  matrix row and the section-2 heading were corrected with it. A research document that
+  describes the project as it was is worse than no document, because it is believed.
+- **`README.md` pointed at `docs/TESTING.md`, which does not exist.** It now points at
+  `TESTING/field-evaluation-protocol.md` and `docs/DEMO_GUIDE.md`, which do.
 - `RESEARCH/feature-comparison.csv` was malformed: 9 of its 11 original rows had the wrong
   number of columns because of unquoted commas. It has been rebuilt with a proper CSV
   writer and now parses cleanly at 23 columns across 14 rows.
@@ -98,6 +114,11 @@ caveat that the project is pre-1.0 and currently a **prototype**.
   CI now verifies it on every run.
 
 ### Changed
+- **GitHub private vulnerability reporting is now enabled** on the repository. It was
+  disabled while `SECURITY.md` told reporters to use it, so the policy pointed at a
+  channel that did not exist. `SECURITY.md` now states the verified position instead of
+  hedging, and keeps the no-public-channel rule for the case where the option is
+  unavailable.
 - The project's differentiation claim was corrected after verifying that Google Lookout
   already ships Hindi, already works offline, and already provides direction and
   distance. The website now states plainly that the project is not the first.

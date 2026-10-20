@@ -20,6 +20,7 @@ files = {
     "website/index.html": "index.html",
     "website/styles.css": "styles.css",
     "docs/privacy/privacy-policy.md": "docs/privacy/privacy-policy.md",
+    "docs/DEMO_GUIDE.md": "docs/DEMO_GUIDE.md",
     "docs/safety/SAFETY.md": "docs/safety/SAFETY.md",
     "README.md": "README.md",
     "PROJECT_STATUS.md": "PROJECT_STATUS.md",
