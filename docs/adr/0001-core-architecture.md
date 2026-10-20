@@ -7,6 +7,17 @@
 - **Supersedes:** nothing
 - **Amended by:** nothing yet
 
+### Related documents
+
+This ADR records one decision. Three other documents in the repository bear on it, and a
+reader should read them together:
+
+| Document | Relationship to this ADR |
+|---|---|
+| [`RESEARCH/architecture-options.md`](../../RESEARCH/architecture-options.md) | A wider survey of five architecture axes (where the policy lives, how detection runs, threading, speech, build/test strategy). It reaches the **same conclusion** on the `:core`/app split, and covers options this ADR does not evaluate — notably Kotlin Multiplatform, MediaPipe, and an explicit frame-sampling rate. |
+| [`RESEARCH/platform-api-audit.md`](../../RESEARCH/platform-api-audit.md) | An audit of every platform API the app depends on, against the real model and the real built APK. It found the defect described in [Consequences](#negative) and documents four further findings that deliberately need a device. |
+| [`RESEARCH/model-and-data-audit.md`](../../RESEARCH/model-and-data-audit.md) | The detector decision, the measured tensor contract, and why the raw confidence score cannot be treated as a safety signal — the reason the two-threshold policy in `:core` exists at all. |
+
 ---
 
 ## Context
@@ -481,19 +492,36 @@ of them is closed by the 12 passing `:core` tests.
    the 160 dp primary control, the 64 dp secondary controls, and the WCAG AA contrast
    figures.
 
-### A note on the state of this document
+### The state of this document
 
-This ADR was written from the working tree on 2026-10-21. While it was being written, another
-agent was concurrently modifying `android/app/src/main/java/org/dishavoice/app/detection/`
-— specifically `EfficientDetDetector.kt`, and a new `OutputTensorResolver.kt` with its own
-`OutputTensorResolverTest.kt` and a new `RESEARCH/platform-api-audit.md`. Those files are in
-the app module, not in `:core`, so they do not change the decision recorded here. `:core`
-was unmodified throughout, and the `:core` suite was re-run with `--rerun-tasks` immediately
-before this document was finalised, to confirm the 12/12 result against the tree as it
-actually stands.
+This ADR was written on 2026-10-21 against commit `e63840a`, and every figure quoted
+above was re-verified against the tree as it stood at that commit. `:core` was re-run with
+`--rerun-tasks` immediately before this document was finalised.
 
-The figures quoted in this document were re-verified against the final state of that work:
-`:android:app:testDebugUnitTest` reports 24 tests, 0 failures, 0 errors, 0 skipped, for a
-repository total of 36 distinct test methods. (The concurrent work was briefly in a
-failing state mid-way, from an `IntArray` reference-equality comparison in the new
-resolver; that was resolved by the other agent before this ADR was finalised.)
+| Suite | Tests | Failures | Errors | Skipped |
+|---|---|---|---|---|
+| `:core` — `AnnouncementPolicyTest` | 8 | 0 | 0 | 0 |
+| `:core` — `AnnouncementPolicyPropertyTest` | 4 | 0 | 0 | 0 |
+| `:android:app` — `DetectionDecoderTest` | 9 | 0 | 0 | 0 |
+| `:android:app` — `InputTensorBuilderTest` | 7 | 0 | 0 | 0 |
+| `:android:app` — `OutputTensorResolverTest` | 8 | 0 | 0 | 0 |
+| **Total** | **36** | **0** | **0** | **0** |
+
+**One thing this ADR does not cover, because it is not a decision about the architecture.**
+While this ADR was being written, the same working tree was being used to fix a defect in
+the *detector*, not in the policy: `EfficientDetDetector` had been separating the model's
+class-id tensor from its score tensor by inspecting their values, which cannot work because
+every output tensor reads as zero on a freshly initialised interpreter. That defect, its
+measurement, and the fix are documented in `RESEARCH/platform-api-audit.md` section 2.
+
+It is recorded here for one reason: it is the clearest available evidence for the
+architectural claim this ADR makes. The failure was in the platform-facing layer, and it
+was invisible to every test in `:core` — because `:core` does not own the decode path and
+never will. A pure domain policy is testable to the last line, and the layer that
+translates pixels into domain values is where silent, total failures live. That is an
+argument for the `:core`/app split and an argument against pretending a green JVM test
+suite says anything about the app.
+
+The architectural claim this ADR makes — that `:core` is pure Kotlin/JVM, that the app
+depends on `:core` one-way, and that the policy is testable without the Android SDK — is
+structural and does not depend on the test counts above.

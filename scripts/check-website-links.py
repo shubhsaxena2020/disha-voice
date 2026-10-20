@@ -41,6 +41,7 @@ files = {
     "RESEARCH/feature-comparison.csv": "docs/research/feature-comparison.csv",
     "docs/RELEASE_NOTES_v0.1.1-prototype.md": "docs/RELEASE_NOTES_v0.1.1-prototype.md",
     "docs/RELEASE_NOTES_v0.1.2-prototype.md": "docs/RELEASE_NOTES_v0.1.2-prototype.md",
+    "docs/adr/0001-core-architecture.md": "docs/adr/0001-core-architecture.md",
     "TESTING/field-evaluation-protocol.md": "docs/research/field-evaluation-protocol.md",
 }
 for source, destination in files.items():
