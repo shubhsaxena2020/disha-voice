@@ -6,22 +6,49 @@ Disha Voice explores whether a phone can offer concise Hindi descriptions of sel
 
 > **Safety:** This project is not a mobility aid, navigation or collision-avoidance system, hazard detector, distance estimator, or path-clearance tool. It may miss or misidentify objects. Silence does not mean that nothing is present. Do not rely on it for independent travel, street crossing, stairs, or safety-critical decisions. Continue using established mobility aids, training, and practices.
 
-## Current status
+| | |
+|---|---|
+| **Repository** | https://github.com/shubhsaxena2020/disha-voice |
+| **Website** | https://shubhsaxena2020.github.io/disha-voice/ |
+| **Pre-release (debug APK)** | https://github.com/shubhsaxena2020/disha-voice/releases/tag/v0.1.0-prototype |
+| **Status** | Prototype. **Not release-ready** and **not tested on a physical device.** |
+| **Licence** | Apache-2.0 (see [`LICENSE`](LICENSE), [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)) |
 
-- The pure Kotlin core implements image-relative left/centre/right classification, confidence bands, and repeated-announcement suppression.
-- The pure core currently has automated unit tests. See `PROJECT_STATUS.md` for the current verified count and work in progress.
-- Android camera, the actual detector/model, Hindi TextToSpeech on a handset, and TalkBack behavior have not yet passed a real-device evaluation.
-- The website is a static, local-only concept page in `website/` and marks its illustration as illustrative. No public site, APK, release, or remote repository is claimed here.
-- Model selection is conditional on checking exact model provenance, object labels, distribution rights, and device behavior. A domain-policy test is not an object-detection test.
+## What is verified today
+
+- **Pure Kotlin domain core** — image-relative left/centre/right classification, confidence
+  banding, and repeated-announcement suppression. **12 tests passing.**
+- **Android app builds** — `:android:app:assembleDebug` produces a 30,671,369-byte APK
+  (SHA-256 `96bab1f3…dc7b0`), minSdk 24 / targetSdk 36, requesting **only** the `CAMERA`
+  permission, with **no** `INTERNET` permission. **9 tests passing.**
+- **On-device detection works** — a bundled Apache-2.0 EfficientDet-Lite0 model
+  (COCO-2017, 90 classes) detects real objects: a Labrador as *dog* at 0.840, a street bus
+  as *bus* at 0.801 alongside three people, with correct image-relative zones. Desktop-CPU
+  latency: 25.9–35.9 ms median over 7 repeats per image. **These are not phone numbers.**
+- **Website** — static, no external requests, passes an automated accessibility audit and
+  a WCAG contrast check. Deployed via GitHub Pages.
+
+## What is NOT verified
+
+- **No physical Android device was available.** Camera behaviour, Hindi
+  TextToSpeech on a handset, install/launch, TalkBack, thermal behaviour, and on-device
+  latency are all unverified.
+- The confidence thresholds (0.70 / 0.45) are **prototype defaults, not calibrated values.**
+- Whether image-relative left/centre/right is genuinely *useful* to a blind user is an
+  **open research question** — see issue #3.
+- The artifact published for download is **debug-signed**, not a production release.
+
+`PROJECT_STATUS.md` tracks the full release gate, item by item, with what is still blocking.
 
 ## Repository layout
 
 - `core/` — pure Kotlin domain policy, deliberately independent of Android APIs.
-- `android/` — Android application work (in progress).
+- `android/` — the Android application (CameraX, LiteRT, Compose, TextToSpeech).
 - `website/` — dependency-free static companion site.
-- `RESEARCH/` — sourced competitor, API, model, UX, privacy, and differentiation research.
-- `TESTING/` — test protocol and results (results only after execution).
-- `docs/` — setup, safety, accessibility, privacy, and release docs.
+- `benchmarks/` — reproducible model inspection and CPU benchmark harness, with results.
+- `RESEARCH/` — model audit, licence audit, benchmark plan, and prior-art research.
+- `TESTING/` — field-evaluation protocol (a plan; **no results collected yet**).
+- `docs/` — setup, release, safety, privacy, and demo documentation.
 - `PROJECT_STATUS.md` — acceptance-gate dashboard and verified blockers.
 
 ## Build the core tests
