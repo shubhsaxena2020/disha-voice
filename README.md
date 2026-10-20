@@ -4,6 +4,15 @@
 
 Disha Voice explores whether a phone can offer concise Hindi descriptions of selected objects visible in its camera image, while reducing repetitive announcements and being explicit about uncertainty.
 
+> **Context, stated up front.** Google ships two apps in this space and both are more
+> capable than this one: **Lookout** (offline, direction and distance) and **Guided Vision
+> in Gemini Live** (launched 1 October 2026 — conversational camera description, in Hindi,
+> in India, integrated into TalkBack, and requiring a network connection). This project
+> does not try to out-feature either. It is narrower on purpose: **nothing leaves the
+> phone**, it **says less**, and it **publishes the measurements** that would show whether
+> saying less is better. See
+> [`RESEARCH/competitor-landscape.md`](RESEARCH/competitor-landscape.md).
+
 > **Safety:** This project is not a mobility aid, navigation or collision-avoidance system, hazard detector, distance estimator, or path-clearance tool. It may miss or misidentify objects. Silence does not mean that nothing is present. Do not rely on it for independent travel, street crossing, stairs, or safety-critical decisions. Continue using established mobility aids, training, and practices.
 
 | | |
@@ -44,6 +53,10 @@ Disha Voice explores whether a phone can offer concise Hindi descriptions of sel
 - Whether image-relative left/centre/right is genuinely *useful* to a blind user is an
   **open research question** — see issue #3.
 - The artifact published for download is **debug-signed**, not a production release.
+- **The competitive position is narrow.** Guided Vision in Gemini Live is a closer and far
+  more capable competitor than this project, released nineteen days ago. The remaining
+  ground is offline, non-conversational, Hindi-specific, and measured — see the competitor
+  landscape.
 
 `PROJECT_STATUS.md` tracks the full release gate, item by item, with what is still blocking.
 
@@ -67,7 +80,7 @@ under `docs/research/`, and is written to separate what was **measured** from wh
 
 | Document | What it settles |
 |---|---|
-| [`competitor-landscape.md`](RESEARCH/competitor-landscape.md) | Google Lookout already ships Hindi, works offline, and gives direction and distance. What is actually left to differentiate on. |
+| [`competitor-landscape.md`](RESEARCH/competitor-landscape.md) | Google Guided Vision (launched 2026-10-01) and Lookout, plus VisionAId, an offline-first research system. What is actually left to differentiate on. |
 | [`skeptical-review-research.md`](RESEARCH/skeptical-review-research.md) | An adversarial pass on this project's own claims, including where they may be wrong. |
 | [`safety-and-claims-review.md`](RESEARCH/safety-and-claims-review.md) | What may and may not be said, and the reasoning behind each restriction. |
 | [`assistive-ux-requirements.md`](RESEARCH/assistive-ux-requirements.md) | The repetition problem, speech design rules, and a testable accessibility checklist. |

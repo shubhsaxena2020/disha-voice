@@ -30,6 +30,16 @@ Stated plainly, because a novelty claim would not survive scrutiny:
   differentiator to a table-stakes requirement**: the app must have these properties to be
   usable in India at all, but having them is not an achievement, and claiming otherwise would
   be refuted by a Google support page.
+- **SECOND UPDATE, 2026-10-20 (same day, later).** A more thorough search found
+  **Google Guided Vision in Gemini Live**, launched **2026-10-01** — conversational camera
+  description for blind and low-vision users, in Gemini's 40+ languages including Hindi, in
+  India, on Android, and **integrated into the TalkBack menu**. It requires a network
+  connection. It is a **closer competitor than Lookout**, and it removes the last comfortable
+  framing: this project is not competing with a dated product, it is competing with the
+  market leader's launch from nineteen days ago. **H4 is downgraded again**, from
+  table-stakes to *an expectation the competition meets more easily than this project can*:
+  Guided Vision is multilingual and conversational; it is not offline and not
+  Hindi-specific, and those two remain the only defensible ground.
 
 So the honest framing of this project is: *a small, careful, offline-first, accessibility-first
 implementation of an existing idea, with the research effort spent on the parts that are
@@ -153,21 +163,28 @@ genuinely under-specified.*
 > camera can see and keeps quiet otherwise — running fully on-device, with no account, no
 > tracking, and no upload of the user's surroundings.
 >
-> **It is deliberately narrower than Google Lookout.** Lookout already speaks Hindi, works
-> offline, and even gives direction and distance. Disha Voice competes on a different axis:
-> **it says less, says it honestly, and never sends a frame off the phone** — and it publishes
-> the measurements that show whether that is actually better.
+> **It is deliberately narrower than what Google ships.** Google now has two products in
+> this space: Lookout (offline, seven modes, direction and distance) and **Guided Vision in
+> Gemini Live** (launched 2026-10-01 — conversational camera description, in Hindi, in India,
+> integrated with TalkBack, and requiring a network connection). Disha Voice competes on a
+> different axis from both: **it says less, says it honestly, never sends a frame off the
+> phone, and publishes the measurements that show whether that is actually better.** It is
+> not trying to out-feature either of them; it is trying to be the one that is *quiet* and
+> *checkable*.
 
 **Elevator pitch (one paragraph):**
 
-> Google Lookout already speaks Hindi and works offline. Disha Voice takes a different bet:
-> that the problem with assistive camera apps is not that they fail to speak, but that they
-> never stop. Lookout users complain that it "is continually announcing 'No text in view'" and
-> that the announcements "cannot be turned off". So Disha Voice is built to say less — one
-> short, honest phrase about one object, repeated only when it has changed — and to run
-> entirely on your phone, with no account, no tracking, and no upload of your surroundings. It
-> is an early prototype, not yet tested on a phone, and explicitly not a navigation aid; it
-> publishes exactly what has and has not been verified.
+> Google already ships two assistive camera apps: Lookout, which works offline, and
+> Guided Vision in Gemini Live, which converses with your camera and launched on 1 October
+> 2026. Both are free, both speak Hindi, and both are far more capable than anything here.
+> Disha Voice takes a different bet: that the problem with assistive camera apps is not that
+> they fail to speak, but that they never stop. Lookout users complain that it "is continually
+> announcing 'No text in view'" and that announcements "cannot be turned off" — and Guided
+> Vision is, by design, a conversation. So Disha Voice is built to say less — one short,
+> honest phrase about one object, repeated only when it has changed — and to run entirely on
+> your phone with no network, no account, and no upload of your surroundings. It is an early
+> prototype, not yet tested on a phone, and explicitly not a navigation aid; it publishes
+> exactly what has and has not been verified.
 
 **Three-line store description:**
 

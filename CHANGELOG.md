@@ -9,6 +9,28 @@ caveat that the project is pre-1.0 and currently a **prototype**.
 ## [Unreleased]
 
 ### Added
+- **A second-pass competitor finding, and the corrections it forced.**
+  - **Google Guided Vision in Gemini Live** (launched **2026-10-01**) is a closer and far
+    more capable competitor than Lookout: conversational camera description for blind and
+    low-vision users, in Gemini's 40+ languages including Hindi, in India, on Android,
+    trained with Aira on tens of thousands of hours, stress-tested by 1,000+ Aira Trusted
+    Testers, and launched from the Google TalkBack menu. It requires a network connection.
+  - **VisionAId** (arXiv 2607.02371) is an offline-first on-device Android assistant for
+    people with visual impairment, in Romanian, with published measurements (mAP@50
+    0.986; calibrated metric depth below 1 cm error within 3 m).
+  - **Andha-Dhun** (arXiv 2607.06457) is the first dataset of human-authored Hindi audio
+    descriptions, and finds that naive translation introduces artifacts and narrows
+    diversity — which cites this project's decision to write original Hindi rather than
+    translate English.
+  - `RESEARCH/competitor-landscape.md` was substantially rewritten; the source register,
+    the differentiation hypothesis, the skeptical review, the assistive-UX requirements, the
+    README, `PROJECT_STATUS.md` and the website were all corrected to match.
+  - Issues #3, #4 and #8 were updated with the prior art, which answers two of this
+    project's open questions: Google's **reframing cue** ("pan slowly to the right, tilt
+    downward, or step back") is prior art for the image-relative position problem, and
+    shipping a feature **inside the TalkBack menu** is prior art for the audio collision.
+  - The remaining ground is now stated precisely: **offline, non-conversational,
+    Hindi-specific, and measured**.
 - CI artefacts: the debug APK and the unit-test reports are uploaded from every run,
   the APK SHA-256 is recorded in the run summary, and a test-results table is printed.
 - The app module's unit tests and an APK build now run in CI, and CI asserts the APK
@@ -31,6 +53,9 @@ caveat that the project is pre-1.0 and currently a **prototype**.
   machines, because Gradle generates a different debug keystore on each one.
 
 ### Fixed
+- `RESEARCH/feature-comparison.csv` was malformed: 9 of its 11 original rows had the wrong
+  number of columns because of unquoted commas. It has been rebuilt with a proper CSV
+  writer and now parses cleanly at 23 columns across 14 rows.
 - The CI layout check no longer runs `apt-get update` via
   `playwright install --with-deps`, which failed the whole job when
   `packages.microsoft.com` returned 403. It now uses the system Chrome that

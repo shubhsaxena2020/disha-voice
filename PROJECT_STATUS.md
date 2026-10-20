@@ -3,10 +3,17 @@
 **Status: working prototype, published.** Builds, tests pass, and a debug APK is built, released and downloadable. **Not release-ready** — no real-device verification and no signed release.
 
 **Most important open fact:** the app has never run on a phone, and the most likely
-complete failure is that its speech collides with TalkBack (issue #8). Google Lookout
-already ships Hindi, works offline, and gives direction and distance, so the
-project's differentiator is **restraint and published evidence**, not features
-(`RESEARCH/competitor-landscape.md`).
+complete failure is that its speech collides with TalkBack (issue #8).
+
+**The competitive ground just got smaller.** Google now ships **two** products in this
+space, and both are more capable than this project: **Lookout** (offline, direction and
+distance) and **Guided Vision in Gemini Live** (launched **2026-10-01** — conversational
+camera description, in Hindi, in India, integrated into the TalkBack menu, requiring a
+network connection). A third collision, **VisionAId** (arXiv 2607.02371), is an
+offline-first on-device Android assistant for people with visual impairment — in Romanian,
+and with published measurements. What is left for this project is **offline,
+non-conversational, Hindi-specific, and measured**. That is narrow, and it is defensible.
+See `RESEARCH/competitor-landscape.md`.
 
 | | |
 |---|---|
@@ -158,13 +165,42 @@ Every source consulted is registered in `RESEARCH/source-register.md` with its a
 date, reliability rating, and the claim it supports — including the retrievals that
 **failed**, which is what keeps the UNVERIFIED rows honest.
 
-#### The finding that changed the project
+#### The findings that changed the project
 
-**Google Lookout already ships Hindi, already works offline, and its Find mode already
-gives direction and distance** — verified from Google's own support documentation and
-Play listing (see `RESEARCH/competitor-landscape.md` §1). The project's original
-differentiators (Hindi-first, offline) are therefore **table stakes, not advantages**,
-and `RESEARCH/differentiation-hypothesis.md` has been corrected to say so.
+**Finding 1 — Google Lookout already ships Hindi, already works offline, and its Find mode
+already gives direction and distance** — verified from Google's own support documentation
+and Play listing (see `RESEARCH/competitor-landscape.md` section 4). The project's original
+differentiators (Hindi-first, offline) are therefore **table stakes, not advantages**, and
+`RESEARCH/differentiation-hypothesis.md` has been corrected to say so.
+
+**Finding 2 — a second, closer competitor, found on a second pass the same day.**
+**Google Guided Vision in Gemini Live** launched **2026-10-01**: conversational camera
+description for blind and low-vision users, in Gemini's 40+ languages including Hindi, in
+India, on Android, built with the blind and low-vision community, trained with **Aira on
+tens of thousands of hours**, stress-tested by **1,000+ Aira Trusted Testers**, and
+**launched from the Google TalkBack menu**. It requires a network connection.
+
+This is more capable than anything here and nineteen days old. It also **solved two of this
+project's open questions by prior art**:
+
+- **The position problem (issue #3).** Rather than describing where an object is, Guided
+  Vision tells the user how to move — "pan slowly to the right, tilt downward, or step
+  back". That is actionable where "left of the image" may not be.
+- **The TalkBack collision (issue #8).** Shipping a feature *inside the TalkBack menu* is a
+  design that coexists with the screen reader rather than talking over it.
+
+**Finding 3 — VisionAId (arXiv 2607.02371)** is an offline-first on-device Android assistant
+for people with visual impairment, in Romanian, with **published measurements** (mAP@50
+0.986; calibrated metric depth below 1 cm error within 3 m; depth latency 491 ms INT8 on a
+Galaxy S21 Ultra). It confirms prior art for the technical thesis that issue #4 had flagged
+as the largest unverified risk, and it shows that calibrated depth is achievable — which
+means this project's refusal to estimate distance should be stated as *"not yet validated
+here"*, not *"never"*.
+
+**What did not change:** the project is still right to be quiet, still right to be offline,
+and still right to publish its evidence. Guided Vision is *conversational by design* — a
+model that answers follow-up questions will keep describing — so **the fatigue problem is
+not solved by it, and is likely made worse by it.** The trade-off is live, not theoretical.
 
 The project has been re-positioned around what actually remains: **a narrow,
 fully on-device app that says less, says it honestly, and publishes the measurements

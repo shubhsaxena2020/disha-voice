@@ -65,6 +65,35 @@ time-based cooldown does not know about camera movement. This is why the cooldow
 
 ---
 
+## 2a. Prior art for the position problem (added 2026-10-20)
+
+**Google Guided Vision in Gemini Live** (launched 2026-10-01) offers a design for the
+"position may be useless" problem that this project had only diagnosed, not solved.
+
+Google's reframing cue, in its own words: if the camera "is pointed too high, too close, or
+slightly off to the side", Gemini gives "natural verbal prompts to help you reframe — asking
+you to **pan slowly to the right, tilt downward, or step back**" so it can get the visual
+context it needs.
+
+**Why this is better than the project's current design.** "Left of the image" describes where
+an object sits in a picture. "Pan to your right" describes what the user should *do* next.
+The second is actionable in a way the first is not, and it does not require the user to hold
+a mental map of their own body relative to the camera. The project's image-relative position
+may well fail its field test (issue #3); Google's reframing cue is a strong prior-art
+alternative that the project should evaluate **against** image-relative position rather than
+in isolation.
+
+**It also reframes the safety framing.** A reframing cue is advice about *the camera*, not a
+claim about *the world*, so it carries none of the risk that "there is a cup to your left"
+does. It can be wrong in the same way a scene description can be wrong, and it is wrong
+about a thing the user controls.
+
+**The cost of adopting it:** reframing cues are *chatty*. Telling the user to pan, then tilt,
+then step back, is three utterances where the project currently promises one. That is
+precisely the trade-off the project exists to explore, so it should be measured, not assumed.
+
+---
+
 ## 3. Speech output design
 
 ### Principles
@@ -113,6 +142,30 @@ streams at once is a serious defect for exactly the audience this project exists
   is never speech-only.
 - The app's own control (start/stop) is a single large button, so a screen-reader user has one
   obvious action rather than a mode to understand.
+
+### Prior art from Google (added 2026-10-20)
+
+**Google ships Guided Vision *from the Google TalkBack menu*.** The feature is also
+reachable through an Android Accessibility shortcut (floating button, two-finger swipe, or
+both volume keys).
+
+This is a materially different answer to the collision described above than the one this
+project had planned. Rather than trying to make its own speech coexist politely with
+TalkBack, Google made the feature **part of the screen reader's own menu** — so the user
+deliberately invokes it from the place they already invoke everything else, and the screen
+reader's own utterance flow makes room for it.
+
+Two things follow:
+
+1. **It is worth testing, not just noting.** An "invoke from the TalkBack menu" design is a
+   concrete candidate mitigation for issue #8, and it is likely to work better than the
+   project's current plan of "choose the right audio stream".
+2. **It changes the project's premise slightly.** The current design assumes the app is
+   *always* listening and speaking. Google's design is that the user *asks* for it. A
+   push-to-talk or menu-invoked model would eliminate the repetition problem outright —
+   because silence would be the default and speech would be requested. That is a different
+   product, and possibly a better one, and it is worth recording as an option the project
+   has not considered.
 
 ### What is still needed (issue #8)
 

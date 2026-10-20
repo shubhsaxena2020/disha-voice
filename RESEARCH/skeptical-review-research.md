@@ -206,18 +206,111 @@ Stated plainly, because a review that implies complete coverage is not credible:
 
 ## 9. The strongest surviving claim
 
-After all of the above, here is what I think the project can honestly claim — and no more:
+After all of the above — **including the second-pass competitor findings in section 10** — here
+is what I think the project can honestly claim, and no more:
 
 > **Disha Voice is a small, offline, accessible Android prototype whose contribution is
 > restraint and honesty rather than capability: it names what a bundled open-licensed model
-> can see, in Hindi when the device allows it, and it publishes exactly what it has and has not
-> verified — including the design decisions that may turn out to be wrong.**
+> can see, in Hindi when the device allows it, and it publishes exactly what it has and has
+> not verified — including the design decisions that may turn out to be wrong.**
 
 That is a modest claim. It is also one the evidence actually supports, which is worth more than
 a bold one it does not.
+
+**The second pass made this claim smaller, and made it more true.** Google's Guided Vision
+(section 10) is a better product, launched nineteen days ago, that does more of what this
+project does. What remains — offline, non-conversational, Hindi-specific, and *measured* — is
+a narrower claim, but a claim that survives a check. A project that knows exactly what it is
+not good at is easier to trust than one that has not looked.
 
 **And the most valuable possible outcome of the next phase** is a negative result: if the field
 evaluation shows that image-relative position does not help, or that the TalkBack collision
 cannot be solved, the right response is to publish that and simplify the product. A project
 that can report "this turned out not to work, and here is the evidence" has done better
 research work than one that quietly ships a feature nobody validated.
+
+---
+
+## 10. Second-pass finding — the competitor arrived the day before (2026-10-20)
+
+**SEVERITY: critical | CONFIDENCE: high | BLOCKS_MVP: no (but it changes what the MVP is for)**
+
+A more thorough competitor search, run after the first version of this review, found
+**Google Guided Vision in Gemini Live**, launched **2026-10-01**
+(<https://blog.google/innovation-and-ai/products/gemini-app/guided-vision-gemini-live>).
+
+It is a **conversational, real-time visual assistant** for blind and low-vision people. You
+share your camera in a Gemini Live session and it describes what it sees, answers follow-up
+questions, and gives **proactive spoken reframing cues** — "asking you to pan slowly to the
+right, tilt downward, or step back". It was developed with the blind and low-vision
+community, trained with **Aira on tens of thousands of hours**, stress-tested by **more than
+1,000 Aira Trusted Testers**, and launched on Android 9+ in Gemini's 40+ languages —
+**including Hindi, in India**. It can be launched from the **Google TalkBack menu**.
+
+### Why this is the most damaging finding in the review
+
+The first version of this document argued that the project's differentiation was "close to
+zero" but that the remaining value was in *restraint and honesty* — being quieter and more
+truthful than the competition. That argument is now much weaker, for three reasons.
+
+1. **The competition got better, and got closer, nineteen days ago.** Guided Vision is not
+   a dated product with a stale feature set. It is a launch, backed by tens of thousands of
+   hours of expert-labelled data and a thousand-person evaluation network, aimed squarely at
+   this project's users. Any claim of being "ahead of the competition" is now simply false.
+2. **It solved the problem this project was going to solve — differently.** The project's
+   section 2 finding was that image-relative position may be useless, and that the fix would
+   have to be discovered. Google's answer is to **not describe position at all**, and instead
+   tell the user how to move: "pan right", "tilt down", "step back". That is *actionable*
+   where "left of the image" was not. The project should treat this as prior art for its own
+   open issue #3, and should be honest that its own proposed answer is the weaker one.
+3. **It addressed the TalkBack collision by design.** Google ships Guided Vision **inside the
+   TalkBack menu** — a feature that coexists with the screen reader rather than talking over
+   it. That is a concrete answer to the project's own section 3 finding, the one flagged as
+   "the most likely complete failure". Google appears to have solved it, or at least to have
+   designed around it, and the project is still carrying the problem as an open issue.
+
+### What the project should actually do about it
+
+**Not:** panic, and abandon the research. The Google product does not settle the question
+this project exists to answer. It is *conversational*, by design and by nature — a model
+that answers follow-up questions will keep describing. **The fatigue problem is not solved by
+Guided Vision; it is very likely made worse by it.** And it needs a network connection, which
+is the difference between "works" and "does not work" for a user in a basement, a lift, or on
+a metered connection.
+
+**Instead:**
+
+1. **Say so, prominently and without hedging.** The website and the README should name
+   Guided Vision, state that it is more capable, and state what this project is for instead.
+   A project that pretends Google's newest accessibility launch does not exist is not
+   trustworthy on anything else it says.
+2. **Reframe the target.** The interesting question is no longer "can a small team build a
+   Hindi object detector?" — obviously not, and it should not try. It is: **"does an
+   assistive camera assistant that deliberately says less, works with no network, and states
+   its own uncertainty, produce a better experience than one that talks continuously?"**
+   That question is still open, and the fact that Google chose the opposite trade is
+   evidence that the trade is a real design decision with real costs either way.
+3. **Adopt what Google did better.** The reframing cue (section 2) and the TalkBack-menu
+   integration (section 3) are both directly usable. This is what prior art is for.
+4. **Keep the honesty.** The one thing the project can still do that no competitor does is
+   publish the evidence — including the evidence that its own features might not help. That
+   is now a larger part of the contribution, not a smaller one, because the competitive
+   ground has shrunk to almost exactly that.
+
+### One more, smaller finding: VisionAId (arXiv 2607.02371, 2026-07-02)
+
+An offline-first on-device Android assistant for people with visual impairment, with six
+ONNX models including calibrated metric depth (below 1 cm error within 3 m), multimodal
+output in **Romanian**, and **published measurements** (mAP@50 0.986; depth latency 491 ms
+INT8 on a Galaxy S21 Ultra).
+
+This is **confirmed prior art for the technical thesis** that issue #4 had flagged as the
+project's largest unverified risk. It is not a Hindi collision, and it is a research system
+rather than a product, so it is not a competitive threat. But it is a demonstration that
+**calibrated depth on a mid-range phone is achievable** — which means the project's standing
+refusal to estimate distance should be restated as *"not yet validated here"* rather than
+*"never"*. A permanent ethical position that the research literature has already overtaken
+is not restraint; it is a stale assumption.
+
+It is also the model to emulate. VisionAId is what "publishing measurements" looks like
+when there are measurements to publish.

@@ -34,6 +34,13 @@ source; **UNVERIFIED** = could not be confirmed.
 | S21 | Android apps targeting API 35+ must meet current Play target-API requirements | Play Console target API level requirement | <https://developer.android.com/google/play/requirements/target-sdk> | Google | 2026-10-20 | primary | high | `safety-and-claims-review.md` §4 |
 | S22 | A privacy policy URL is required for Play listings that collect personal or sensitive data | Privacy policy requirement | <https://developer.android.com/google/play/requirements/privacy-policy> | Google | 2026-10-20 | primary | high | `safety-and-claims-review.md` §4 |
 | S23 | Android 15+ devices require 16 KB page-size support for apps | Supporting 16 KB page sizes | <https://developer.android.com/guide/practices/page-sizes> | Google | 2026-10-20 | primary | high | `safety-and-claims-review.md` §4 |
+| S25 | Google Guided Vision in Gemini Live: conversational camera description for blind and low-vision users, launched 2026-10-01; reframing cues; Aira training; TalkBack-menu integration; Android 9+ | <https://blog.google/innovation-and-ai/products/gemini-app/guided-vision-gemini-live> | primary (Google) | 2026-10-20 | `competitor-landscape.md` §1, `differentiation-hypothesis.md` |
+| S26 | VisionAId: an offline-first on-device Android assistant for people with visual impairment, six ONNX models, Romanian TTS, calibrated metric depth, published measurements | <https://arxiv.org/abs/2607.02371> | primary (arXiv) | 2026-10-20 | `competitor-landscape.md` §2 |
+| S27 | Andha-Dhun: the first dataset of human-authored Hindi audio descriptions; naive translation introduces artifacts and narrows diversity | <https://arxiv.org/abs/2607.06457> | primary (arXiv) | 2026-10-20 | `competitor-landscape.md` §3, `speech-hindi-audit.md` |
+| S28 | Gemini supported languages (incl. Hindi and 12 other Indian languages) and supported countries | <https://support.google.com/gemini/answer/13575153> | primary (Google) | 2026-10-20 | `competitor-landscape.md` §5 |
+| S29 | Gemini Live expanded to 40+ languages on Android | <https://blog.google/products-and-platforms/products/gemini/gemini-live-extensions-language-expansion/> | primary (Google) | 2026-10-20 | `competitor-landscape.md` §5 |
+| S30 | Guided Vision launch routes (Gemini app, Accessibility shortcut, TalkBack menu) and Android 9+ availability | <https://gcn.com/google-gemini-live-guided-vision-android/22187> | secondary | 2026-10-20 | `competitor-landscape.md` §1 |
+| S31 | Guided Vision was developed with feedback from blind and low-vision communities in India, Brazil, Singapore, Indonesia and Japan | <https://timesofindia.indiatimes.com/technology/tech-news/google-launches-guided-vision-for-gemini-live-what-is-it-and-how-it-works/amp_articleshow/134639412.cms> | secondary | 2026-10-20 | `competitor-landscape.md` §1 |
 | S24 | WAI/WCAG reference material used for the accessibility acceptance checklist | Web Accessibility Initiative resources | <https://www.w3.org/WAI/standards-guidelines/wcag/> | W3C | 2026-10-20 | primary | high | `assistive-ux-requirements.md` §5 |
 
 ---
@@ -47,7 +54,7 @@ imply coverage it does not have.
 |---|---|
 | Wikimedia Commons test images | **Blocked** — the environment received a Wikimedia error page instead of the image. Abandoned in favour of TensorFlow / PyTorch / Ultralytics example images. |
 | `storage.googleapis.com/download.tensorflow.org/models/tflite/task_library/.../lite0_efficientdet_lite0.tflite` | **Returned an XML error, not a model.** Abandoned; the Hugging Face copy (S13) was used instead and independently hash-verified. |
-| Finding a standalone Hindi-first assistive app or a 2024–2026 Indian hackathon project | **NOT FOUND.** This is a weak negative: the automated research passes repeatedly failed to produce output, so this is "not found", **not** "verified absent". Tracked as issue #4 and as the largest unverified risk. |
+| Finding a standalone Hindi-first assistive app or a 2024–2026 Indian hackathon project | **NOT FOUND — but see the second pass below.** The first pass recorded this as a weak negative. A second, more thorough search on 2026-10-20 **overturned the general conclusion**: it found Google Guided Vision (a Google product, not a standalone app) and VisionAId (a research system, in Romanian). The narrow question — a *standalone Hindi-first* product — still stands as not found, and remains a weak negative. Tracked as issue #4. |
 | Licences of SightBuddy, SeeForMe, and VISION | **NOT VERIFIED** — the licence files were not read in this session. Recorded as UNVERIFIED rather than guessed. Issue #4. |
 | Hindi support in Seeing AI, Be My Eyes, Envision, Supersense, and Lazarillo | **NOT VERIFIED** from official sources. Recorded as UNVERIFIED in the comparison table. |
 | Independent latency measurements for any competitor | **NONE FOUND.** No competitor publishes comparable on-device latency numbers, which is itself a finding (see `differentiation-hypothesis.md` H5). |
@@ -63,3 +70,22 @@ imply coverage it does not have.
 - Mark anything inferred as an inference, with the reasoning.
 - When a source could not be reached, record that too — a failed retrieval is evidence about
   coverage, and it is what keeps the UNVERIFIED rows honest.
+
+---
+
+## Second pass, 2026-10-20 — what changed
+
+A second, more thorough search was run after the first pass. It was not a formality: it
+**overturned a conclusion**. The first pass recorded "no prior art found" for an
+offline-first assistive Android app. The second pass found two confirmed collisions:
+
+| New source | What it is | Effect on the project |
+|---|---|---|
+| **Google Guided Vision in Gemini Live** (S25) | Conversational camera description for blind and low-vision users, launched **2026-10-01**, on Android 9+, in Gemini's 40+ languages including Hindi, in India, integrated with the TalkBack menu. Requires a network connection. | **A closer competitor than Lookout.** The "feature-level differentiation is close to zero" claim was too generous. The remaining ground is now: on-device, offline, non-conversational, and measured. |
+| **VisionAId** (S26) | Offline-first on-device Android assistant for people with visual impairment; six ONNX models; Romanian speech synthesis; calibrated metric depth; published mAP@50 and depth-error figures. | **Confirms prior art for the technical thesis** (issue #4's largest risk). Not a Hindi collision. Also shows calibrated depth is achievable, which reframes the project's permanent refusal to estimate distance. |
+| **Andha-Dhun** (S27) | The first dataset of human-authored Hindi audio descriptions; finds that naive translation introduces artifacts and narrows diversity. | **Cites the project's decision** to write original Hindi rather than translate English. Establishes that Hindi assistive description is an acknowledged research area. |
+
+**The lesson worth keeping:** the first pass was careful about *claiming* absence — it
+labelled the negative result weak — and yet the document still read as more confident than
+the evidence allowed. "Not found" was written in a way that a reader would take as "does not
+exist". The second pass found the strongest competitor within one day of publication.
