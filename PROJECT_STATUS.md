@@ -2,6 +2,12 @@
 
 **Status: working prototype, published.** Builds, tests pass, and a debug APK is built, released and downloadable. **Not release-ready** — no real-device verification and no signed release.
 
+**Most important open fact:** the app has never run on a phone, and the most likely
+complete failure is that its speech collides with TalkBack (issue #8). Google Lookout
+already ships Hindi, works offline, and gives direction and distance, so the
+project's differentiator is **restraint and published evidence**, not features
+(`RESEARCH/competitor-landscape.md`).
+
 | | |
 |---|---|
 | **Repository** | https://github.com/shubhsaxena2020/disha-voice |
@@ -264,6 +270,11 @@ the top of this document.
   had lost its POSIX executable bit (exit 126), and the Pages link check caught three links
   that would 404 on the deployed site. Added `scripts/check-website-links.py` so the second
   class of error is caught locally.
+- **2026-10-20** — **Clean-checkout reproduction re-verified after every change**: a
+  fresh `git clone` of the published repository builds, runs **21/21** tests green, and
+  produces an APK whose payload is byte-identical to the published release (546/546 ZIP
+  entries, including `classes.dex`, the manifest and the bundled model). On the same
+  machine the whole-file SHA-256 is also identical.
 - **2026-10-20** — **Clean-checkout reproduction verified**: a fresh `git clone` of the
   published repository builds, runs 21/21 tests green, and produces a debug APK whose
   SHA-256 is **identical** to the published artifact
