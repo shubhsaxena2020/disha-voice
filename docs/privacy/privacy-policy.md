@@ -2,7 +2,7 @@
 
 **Status:** Draft for the planned Android prototype; not a verified description of a released app. **Last reviewed:** 2026-10-20.
 
-> **Important:** The project is not release-ready and has no verified Android build. The safeguards below are design requirements, not claims that the current source code has been audited or behaves this way. See [Project status](../../PROJECT_STATUS.md).
+> **Important:** The project is not release-ready. The safeguards below are design requirements, not claims that the current source code has been audited or behaves this way. See the [project status](https://github.com/shubhsaxena2020/disha-voice/blob/main/PROJECT_STATUS.md).
 
 ## In brief
 

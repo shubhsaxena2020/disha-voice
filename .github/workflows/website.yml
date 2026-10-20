@@ -42,6 +42,11 @@ jobs:
               "website/index.html": "index.html",
               "website/styles.css": "styles.css",
               "docs/privacy/privacy-policy.md": "docs/privacy/privacy-policy.md",
+              "docs/safety/SAFETY.md": "docs/safety/SAFETY.md",
+              "README.md": "README.md",
+              "PROJECT_STATUS.md": "PROJECT_STATUS.md",
+              "CHANGELOG.md": "CHANGELOG.md",
+              "LICENSE": "LICENSE",
           }
           for source, destination in files.items():
               source_path = root / source
