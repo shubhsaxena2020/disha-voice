@@ -27,11 +27,11 @@ jobs:
       - name: Validate Gradle wrapper
         uses: gradle/actions/wrapper-validation@v4
       - name: Run core tests
-        run: ./gradlew --no-daemon :core:test
+        run: ./scripts/gradle-with-retry.sh :core:test
       - name: Run app unit tests
-        run: ./gradlew --no-daemon :android:app:testDebugUnitTest
+        run: ./scripts/gradle-with-retry.sh :android:app:testDebugUnitTest
       - name: Build the debug APK
-        run: ./gradlew --no-daemon :android:app:assembleDebug
+        run: ./scripts/gradle-with-retry.sh :android:app:assembleDebug
       - name: Verify the APK requests only the camera
         run: |
           set -euo pipefail
