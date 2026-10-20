@@ -19,7 +19,7 @@ See `RESEARCH/competitor-landscape.md`.
 |---|---|
 | **Repository** | https://github.com/shubhsaxena2020/disha-voice |
 | **Website (live)** | https://shubhsaxena2020.github.io/disha-voice/ |
-| **Pre-release** | https://github.com/shubhsaxena2020/disha-voice/releases/tag/v0.1.0-prototype |
+| **Pre-release** | https://github.com/shubhsaxena2020/disha-voice/releases/tag/v0.1.1-prototype |
 
 **Last updated:** 2026-10-20
 
@@ -36,7 +36,7 @@ Image-relative zone classification (left/centre/right from box centre x, boundar
 Kotlin + Jetpack Compose + CameraX + LiteRT + Android TextToSpeech.
 
 - `app-debug.apk` — **30,671,369 bytes**
-- SHA-256 `96bab1f33062922add352ea4709bac080bd3f2266f19d582e53928346f3dc7b0`
+- SHA-256 `b80108a1196e6cc64ee641ab20fb63b79794e5c2e8ab969b3c452331805f83c5`
 - minSdk 24, targetSdk 36, compileSdk 36
 - **Permissions: `CAMERA` only.** No `INTERNET`. Verified with `aapt2 dump permissions`.
 - `allowBackup=false`, `usesCleartextTraffic=false` — verified in the built manifest.
@@ -44,12 +44,12 @@ Kotlin + Jetpack Compose + CameraX + LiteRT + Android TextToSpeech.
 - Native libs for arm64-v8a, armeabi-v7a, x86, x86_64.
 - Release build type has R8 + resource shrinking enabled and **no signing config** — a release key is the operator's to supply, never generated and committed.
 
-**Unit tests: 9 passing, 0 failures** (detection decoding + label mapping).
+**Unit tests: 16 passing, 0 failures** (9 detection decoding and label mapping, 7 input-tensor convention).
 
-**Total across modules: 21 distinct tests, 0 failures, 0 errors, 0 skipped**
-(12 in `:core` + 9 in `:android:app`). The app module's 9 tests run under both the
-debug and release variants, so a build that tests both reports 30 *executions* of 21
-distinct test methods.
+**Total across modules: 28 distinct tests, 0 failures, 0 errors, 0 skipped**
+(12 in `:core`, 16 in `:android:app`). The app module's tests run under both the
+debug and release variants, so a build that tests both reports more *executions* of the
+same distinct test methods.
 
 ### 3. Detector — VERIFIED ON REAL IMAGES
 Bundled **EfficientDet-Lite0 (int8)**, Apache-2.0, COCO-2017, 90 classes, SHA-256 `33a3b622…6704`.
@@ -281,7 +281,7 @@ the top of this document.
 | # | Requirement | Status |
 |---|---|---|
 | 1 | Builds from a clean checkout with documented steps | **Met** — verified: a fresh `git clone` builds and tests successfully |
-| 2 | Automated tests and CI pass | **Met** — 21/21 distinct local tests pass; both GitHub Actions workflows green. CI now also runs the app module's tests and rebuilds the APK, and asserts it requests `CAMERA` and not `INTERNET` |
+| 2 | Automated tests and CI pass | **Met** — 28/28 distinct local tests pass; both GitHub Actions workflows green. CI now also runs the app module's tests and rebuilds the APK, and asserts it requests `CAMERA` and not `INTERNET` |
 | 3 | APK exists, installable, launches | **Partial** — APK builds and is verified structurally; **install/launch untested** |
 | 4 | Core detection and TTS verified on a real device | **Not met** — no device (issue #1) |
 | 5 | No secrets tracked; permissions justified | **Met** — CAMERA only, no INTERNET, `allowBackup=false`; secret scan clean |
@@ -303,12 +303,12 @@ the top of this document.
 - **2026-10-20** — Wrote the domain core test-first; observed RED (missing types), implemented minimally, observed GREEN.
 - **2026-10-20** — Downloaded and verified the Apache-2.0 EfficientDet-Lite0 model; measured its real tensor contract with LiteRT; **found and fixed the label off-by-one** that misidentified a Labrador as a cat.
 - **2026-10-20** — Built the Android app module, fixing real API mismatches found by compiling: CameraX `Preview.SurfaceProvider` (not `PreviewView.PreviewSurfaceProvider`), the LiteRT 1.0.1 `Tensor` API (buffer reads, not `floatArray()`), `setNumThreads` (not a `numThreads` property), and `FileChannel.map`.
-- **2026-10-20** — Produced and independently verified `app-debug.apk`; ran 21 unit tests (all pass); ran a 7-repeat CPU benchmark; audited the website with Playwright and computed WCAG contrast, fixing one failing pair.
+- **2026-10-20** — Produced and independently verified `app-debug.apk`; ran 28 unit tests (all pass); ran a 7-repeat CPU benchmark; audited the website with Playwright and computed WCAG contrast, fixing one failing pair.
 - **2026-10-20** — Committed 59 files as `3289c54`.
 - **2026-10-20** — Published the repository (public, as authorised), enabled GitHub Pages,
   created three milestones and ten real issues, set branch protection on `main` (required
   status checks, one approving review, no force-push, no deletions), and published the
-  `v0.1.0-prototype` pre-release with the debug APK and `SHA256SUMS.txt`.
+  `v0.1.1-prototype` pre-release with the debug APK and `SHA256SUMS.txt`.
 - **2026-10-20** — CI failed twice for real reasons and both were fixed: the Gradle wrapper
   had lost its POSIX executable bit (exit 126), and the Pages link check caught three links
   that would 404 on the deployed site. Added `scripts/check-website-links.py` so the second
@@ -321,14 +321,14 @@ the top of this document.
   them. CI no longer runs apt at all; the layout check uses the system Chrome that
   GitHub's runners already ship, and the fallback chain was tested directly.
 - **2026-10-20** — **Clean-checkout reproduction re-verified after every change**: a
-  fresh `git clone` of the published repository builds, runs **21/21** tests green, and
+  fresh `git clone` of the published repository builds, runs **28/28** tests green, and
   produces an APK whose payload is byte-identical to the published release (546/546 ZIP
   entries, including `classes.dex`, the manifest and the bundled model). On the same
   machine the whole-file SHA-256 is also identical.
 - **2026-10-20** — **Clean-checkout reproduction verified**: a fresh `git clone` of the
-  published repository builds, runs 21/21 tests green, and produces a debug APK whose
+  published repository builds, runs 28/28 tests green, and produces a debug APK whose
   SHA-256 is **identical** to the published artifact
-  (`96bab1f33062922add352ea4709bac080bd3f2266f19d582e53928346f3dc7b0`).
+  (`b80108a1196e6cc64ee641ab20fb63b79794e5c2e8ab969b3c452331805f83c5`).
   **Corrected 2026-10-20:** that identity holds for a build on the *same machine*,
   because it reuses the same debug keystore. It does **not** hold across machines —
   Gradle generates a per-machine debug keystore, so the certificate inside the APK

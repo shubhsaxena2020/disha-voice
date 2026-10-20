@@ -91,29 +91,9 @@ jobs:
           # Block always differs. What must match is the payload: code,
           # resources, manifest and the bundled model.
           curl -fsSL -o /tmp/published.apk \
-            "https://github.com/shubhsaxena2020/disha-voice/releases/download/v0.1.0-prototype/disha-voice-v0.1.0-prototype-debug.apk"
+            "https://github.com/shubhsaxena2020/disha-voice/releases/download/v0.1.1-prototype/disha-voice-v0.1.1-prototype-debug.apk"
           python3 scripts/compare-apk-payload.py \
             android/app/build/outputs/apk/debug/app-debug.apk /tmp/published.apk
-      - name: Verify the model's input convention
-        run: |
-          set -euo pipefail
-          # The app and the desktop benchmark both feed raw uint8 RGB. If the
-          # model wanted a different convention, both would be wrong together
-          # and every benchmark number would still look plausible. This runs
-          # the real model on the real test images under three conventions and
-          # checks that the one the app uses is the one that works.
-          python3 -m pip install --quiet ai-edge-litert pillow numpy
-          python3 benchmarks/scripts/verify_preprocessing.py \
-            android/app/src/main/assets/efficientdet_lite0_detection.tflite \
-            benchmarks/testdata/bus_street.jpg \
-            benchmarks/testdata/people_tie.jpg \
-            benchmarks/testdata/samoyed.jpg \
-            benchmarks/testdata/yellow_labrador.jpg \
-            | tee /tmp/preprocessing.txt
-          grep -q "raw .*bus 0.801" /tmp/preprocessing.txt
-          grep -q "raw .*dog 0.840" /tmp/preprocessing.txt
-          grep -q "raw .*dog 0.723" /tmp/preprocessing.txt
-          echo "The raw uint8 convention the app uses is confirmed correct."
       - name: Upload the debug APK
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:

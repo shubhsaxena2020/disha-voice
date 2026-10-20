@@ -105,9 +105,19 @@ measurably worse or merely equivalent:**
   Labrador from 0.840 to 0.801, and the ranking in `people_tie` changes. The model does not
   expect mean/std normalisation.
 
-**This check is now part of CI**, because a silent change to the input convention would
+**What is enforced in CI, and what is not.** A silent change to the input convention would
 degrade detection without breaking anything, and the desktop benchmark alone would not
-notice.
+notice — so something must guard it. The three-convention comparison above needs the test
+images, which are **deliberately not committed** (they are third-party fixtures, and
+`benchmarks/testdata/` is git-ignored), so it cannot run in CI. The guard that *does* run is
+a JVM unit test on the app's own code: `InputTensorBuilderTest` asserts that the bytes fed
+to the interpreter are **raw unsigned channel values in R, G, B order** — no float
+scaling, no mean/std subtraction, no requantisation — and that the full 0-255 range
+survives. That test is part of `:android:app:testDebugUnitTest` and runs on every build.
+
+The split is deliberate: **CI pins the app's behaviour**, and the empirical comparison
+proves the app's behaviour is the right one. The comparison stays reproducible locally
+with `benchmarks/scripts/verify_preprocessing.py`.
 
 ### Label index space (an off-by-one that was caught, not shipped)
 

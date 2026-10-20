@@ -6,6 +6,23 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) with the
 caveat that the project is pre-1.0 and currently a **prototype**.
 
+## [0.1.1-prototype] - 2026-10-20
+
+**Published pre-release:** https://github.com/shubhsaxena2020/disha-voice/releases/tag/v0.1.1-prototype
+
+- SHA-256 `b80108a1196e6cc64ee641ab20fb63b79794e5c2e8ab969b3c452331805f83c5`, 30,671,369 bytes.
+- **No user-visible change** from v0.1.0-prototype. Republished because the source changed in
+  a way that matters for trust:
+  - The input-tensor construction is now a testable unit (`InputTensorBuilder`), with **7 new
+    unit tests** pinning the model's input convention: raw unsigned 0-255 channel values in
+    R, G, B order, no float scaling, no mean/std subtraction, no requantisation. The
+    convention was previously only assumed; it has now been **measured** against the real
+    model on the real test images under three candidates, and raw uint8 is the correct one.
+  - The test count is now **28 distinct tests**, 0 failures (was 21).
+- CI now retries transient dependency-resolution failures (a shared-runner Maven Central 403
+  took down a green build) and pins line endings and the executable bit via `.gitattributes`.
+- The CI payload check now compares against this release.
+
 ## [Unreleased]
 
 ### Added
@@ -74,7 +91,7 @@ caveat that the project is pre-1.0 and currently a **prototype**.
 - A 7 px horizontal scroll on mobile viewports, caused by a decorative ring in the hero
   illustration.
 - The published test count said 30; it double-counted the app tests, which run under
-  both the debug and release variants. The true count is 21 distinct tests.
+  both the debug and release variants. The true count of distinct tests is 28.
 - The README and PROJECT_STATUS claimed the build is "byte-identical" to the published
   APK. That holds only for a build on the same machine. The corrected claim is
   payload-identical across machines, with only the debug certificate differing - and
@@ -124,10 +141,10 @@ signed release, and no store distribution have been performed.
 
 ### Verified
 
-- `:core:test` and `:android:app:testDebugUnitTest` — **21 distinct tests, 0 failures**
-  (12 in `:core`, 9 in `:android:app`; the app tests also run under the release variant).
+- `:core:test` and `:android:app:testDebugUnitTest` — **28 distinct tests, 0 failures**
+  (12 in `:core`, 16 in `:android:app`; the app tests also run under the release variant).
 - `:android:app:assembleDebug` — produces `app-debug.apk` (30,671,369 bytes,
-  SHA-256 `96bab1f33062922add352ea4709bac080bd3f2266f19d582e53928346f3dc7b0`),
+  SHA-256 `b80108a1196e6cc64ee641ab20fb63b79794e5c2e8ab969b3c452331805f83c5`),
   minSdk 24 / targetSdk 36.
 - APK inspected independently: **CAMERA permission only, no `INTERNET` permission**,
   `allowBackup=false`, `usesCleartextTraffic=false`, model present in `assets/`.
@@ -140,7 +157,7 @@ signed release, and no store distribution have been performed.
   ten tracked issues; the website is deployed and verified live at
   <https://shubhsaxena2020.github.io/disha-voice/>.
 - **Clean-checkout reproduction:** a fresh clone of the published repository builds, passes
-  21/21 tests, and produces a debug APK whose SHA-256 is identical to the published
+  28/28 tests, and produces a debug APK whose SHA-256 is identical to the published
   artifact.
 
 ### Known limitations
@@ -156,5 +173,5 @@ signed release, and no store distribution have been performed.
   image" helps a blind user without egocentric grounding is an open research question.
 - **A debug-signed APK only.** No release keystore has been configured.
 
-[Unreleased]: https://github.com/shubhsaxena2020/disha-voice/compare/v0.1.0-prototype...HEAD
-[0.1.0-prototype]: https://github.com/shubhsaxena2020/disha-voice/releases/tag/v0.1.0-prototype
+[Unreleased]: https://github.com/shubhsaxena2020/disha-voice/compare/v0.1.1-prototype...HEAD
+[0.1.0-prototype]: https://github.com/shubhsaxena2020/disha-voice/releases/tag/v0.1.1-prototype

@@ -118,20 +118,8 @@ class EfficientDetDetector(
     }
 
     /** Builds the uint8 RGB input tensor expected by this model. */
-    private fun buildInputBuffer(bitmap: Bitmap, size: Int): ByteBuffer {
-        val scaled = Bitmap.createScaledBitmap(bitmap, size, size, true)
-        val buffer = ByteBuffer.allocateDirect(size * size * 3).order(ByteOrder.nativeOrder())
-        val pixels = IntArray(size * size)
-        scaled.getPixels(pixels, 0, size, 0, 0, size, size)
-        for (pixel in pixels) {
-            buffer.put((pixel shr 16 and 0xFF).toByte()) // R
-            buffer.put((pixel shr 8 and 0xFF).toByte())  // G
-            buffer.put((pixel and 0xFF).toByte())       // B
-        }
-        buffer.rewind()
-        if (scaled !== bitmap) scaled.recycle()
-        return buffer
-    }
+    private fun buildInputBuffer(bitmap: Bitmap, size: Int): ByteBuffer =
+        InputTensorBuilder.buildFromBitmap(bitmap, size)
 
     override fun close() {
         runCatching { interpreter?.close() }
