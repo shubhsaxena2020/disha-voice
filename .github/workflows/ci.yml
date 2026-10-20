@@ -91,7 +91,7 @@ jobs:
           # Block always differs. What must match is the payload: code,
           # resources, manifest and the bundled model.
           curl -fsSL -o /tmp/published.apk \
-            "https://github.com/shubhsaxena2020/disha-voice/releases/download/v0.1.1-prototype/disha-voice-v0.1.1-prototype-debug.apk"
+            "https://github.com/shubhsaxena2020/disha-voice/releases/download/v0.1.2-prototype/disha-voice-v0.1.2-prototype-debug.apk"
           python3 scripts/compare-apk-payload.py \
             android/app/build/outputs/apk/debug/app-debug.apk /tmp/published.apk
       - name: Upload the debug APK

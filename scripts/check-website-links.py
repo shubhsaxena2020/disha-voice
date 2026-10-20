@@ -37,8 +37,10 @@ files = {
     "RESEARCH/differentiation-hypothesis.md": "docs/research/differentiation-hypothesis.md",
     "RESEARCH/open-source-license-audit.md": "docs/research/open-source-license-audit.md",
     "RESEARCH/benchmark-plan.md": "docs/research/benchmark-plan.md",
+    "RESEARCH/platform-api-audit.md": "docs/research/platform-api-audit.md",
     "RESEARCH/feature-comparison.csv": "docs/research/feature-comparison.csv",
     "docs/RELEASE_NOTES_v0.1.1-prototype.md": "docs/RELEASE_NOTES_v0.1.1-prototype.md",
+    "docs/RELEASE_NOTES_v0.1.2-prototype.md": "docs/RELEASE_NOTES_v0.1.2-prototype.md",
     "TESTING/field-evaluation-protocol.md": "docs/research/field-evaluation-protocol.md",
 }
 for source, destination in files.items():

@@ -1,1 +1,1 @@
-b80108a1196e6cc64ee641ab20fb63b79794e5c2e8ab969b3c452331805f83c5  disha-voice-v0.1.1-prototype-debug.apk
+6b55a59f2a76b94fad397a22b34a021d26adf1a125f1e809b6528ade057f2790  disha-voice-v0.1.2-prototype-debug.apk

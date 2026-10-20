@@ -8,9 +8,9 @@ caveat that the project is pre-1.0 and currently a **prototype**.
 
 ## [0.1.1-prototype] - 2026-10-20
 
-**Published pre-release:** https://github.com/shubhsaxena2020/disha-voice/releases/tag/v0.1.1-prototype
+**Published pre-release:** https://github.com/shubhsaxena2020/disha-voice/releases/tag/v0.1.2-prototype
 
-- SHA-256 `b80108a1196e6cc64ee641ab20fb63b79794e5c2e8ab969b3c452331805f83c5`, 30,671,369 bytes.
+- SHA-256 `6b55a59f2a76b94fad397a22b34a021d26adf1a125f1e809b6528ade057f2790`, 30,671,369 bytes.
 - **No user-visible change** from v0.1.0-prototype. Republished because the source changed in
   a way that matters for trust:
   - The input-tensor construction is now a testable unit (`InputTensorBuilder`), with **7 new
@@ -26,6 +26,14 @@ caveat that the project is pre-1.0 and currently a **prototype**.
 ## [Unreleased]
 
 ### Added
+- **`RESEARCH/platform-api-audit.md`** - an audit of every Android platform API the app
+  depends on, measured against the real model and the real built APK rather than assumed
+  from documentation. It records one critical defect (now fixed, above), four further
+  findings that are documented but deliberately **not** fixed blind because they need a
+  device to validate (YUV row/pixel stride, main-thread frame conversion, main-thread
+  model load, and a bitmap leak on cancellation - issues #11 to #14), and a list of
+  platform behaviours that were checked and are correct, so they are not re-audited
+  later. It also states plainly what the audit does **not** establish.
 - **`benchmarks/benchmark-schema.json`** — the machine-readable record contract that
   `RESEARCH/benchmark-plan.md` referred to but which did not exist. It is a JSON Schema
   (draft 2020-12). Every measurement block is a one-of between `status: "collected"` with
@@ -86,6 +94,25 @@ caveat that the project is pre-1.0 and currently a **prototype**.
   machines, because Gradle generates a different debug keystore on each one.
 
 ### Fixed
+- **The detector would never have detected anything.** `EfficientDetDetector` separated the
+  model's class-id tensor from its score tensor by inspecting their *values*, on the
+  assumption that class ids are integral and scores are bounded to 0..1. On a freshly
+  allocated interpreter **every output tensor reads as zero**, which is inside 0..1, so
+  the class-id tensor also satisfied the "this is a score tensor" test. The resolution
+  failed, and because it failed *before* `run()`, the output buffers were never populated
+  - so every subsequent frame failed identically. The camera preview would run, the UI
+  would say "Listening", and the app would **never announce a single object**, with no
+  error surfaced anywhere. Measured against the shipped model, not assumed; see
+  `RESEARCH/platform-api-audit.md` section 2.
+
+  The resolution now uses shape and position only, never values, in a pure
+  `OutputTensorResolver` that is unit tested on the JVM. It also happens once at
+  construction, so a layout mismatch now makes the detector report `isReady == false` and
+  the UI say **"Model unavailable"**, instead of silently detecting nothing.
+  `OutputTensorResolverTest` pins the contract measured from the shipped asset, so
+  replacing the model breaks a test rather than silently mis-decoding detections.
+  The fixed resolution was run against the real model on the real test images and
+  reproduces the published benchmark numbers exactly (bus 0.801, person 0.789 / 0.707).
 - **`RESEARCH/benchmark-plan.md` claimed a boundary that no longer exists.** Its "Current
   verified boundary" section said there was no Android app module, no committed Gradle
   wrapper, and no APK. All three were true when written and all three are false now. The
@@ -114,6 +141,11 @@ caveat that the project is pre-1.0 and currently a **prototype**.
   CI now verifies it on every run.
 
 ### Changed
+- Removed the dead `tensorflowLite = "2.17.0"` key from `gradle/libs.versions.toml`.
+  Nothing referenced it, and it named a version of a *different* artifact from the one
+  actually used (`com.google.ai.edge.litert:litert:1.0.1`), so it invited a reader to
+  believe the project ships TFLite 2.17.0. No published claim was wrong; the key was
+  misleading.
 - **GitHub private vulnerability reporting is now enabled** on the repository. It was
   disabled while `SECURITY.md` told reporters to use it, so the policy pointed at a
   channel that did not exist. `SECURITY.md` now states the verified position instead of
@@ -165,7 +197,7 @@ signed release, and no store distribution have been performed.
 - `:core:test` and `:android:app:testDebugUnitTest` — **28 distinct tests, 0 failures**
   (12 in `:core`, 16 in `:android:app`; the app tests also run under the release variant).
 - `:android:app:assembleDebug` — produces `app-debug.apk` (30,671,369 bytes,
-  SHA-256 `b80108a1196e6cc64ee641ab20fb63b79794e5c2e8ab969b3c452331805f83c5`),
+  SHA-256 `6b55a59f2a76b94fad397a22b34a021d26adf1a125f1e809b6528ade057f2790`),
   minSdk 24 / targetSdk 36.
 - APK inspected independently: **CAMERA permission only, no `INTERNET` permission**,
   `allowBackup=false`, `usesCleartextTraffic=false`, model present in `assets/`.
@@ -194,5 +226,5 @@ signed release, and no store distribution have been performed.
   image" helps a blind user without egocentric grounding is an open research question.
 - **A debug-signed APK only.** No release keystore has been configured.
 
-[Unreleased]: https://github.com/shubhsaxena2020/disha-voice/compare/v0.1.1-prototype...HEAD
-[0.1.0-prototype]: https://github.com/shubhsaxena2020/disha-voice/releases/tag/v0.1.1-prototype
+[Unreleased]: https://github.com/shubhsaxena2020/disha-voice/compare/v0.1.2-prototype...HEAD
+[0.1.0-prototype]: https://github.com/shubhsaxena2020/disha-voice/releases/tag/v0.1.2-prototype

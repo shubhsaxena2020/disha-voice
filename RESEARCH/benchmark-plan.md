@@ -17,8 +17,8 @@ silently rewritten, because the rest of this plan depends on the boundary.*
   Gradle 8.14.3 (`gradle/wrapper/gradle-wrapper.properties`), so runs are no longer
   dependent on a scratch Gradle installation. Keep the JDK version fixed and record both
   versions.
-- A debug APK **now exists** and is published: `disha-voice-v0.1.1-prototype-debug.apk`,
-  30,671,369 bytes, SHA-256 `b80108a1196e6cc64ee641ab20fb63b79794e5c2e8ab969b3c452331805f83c5`.
+- A debug APK **now exists** and is published: `disha-voice-v0.1.2-prototype-debug.apk`,
+  30,671,369 bytes, SHA-256 `6b55a59f2a76b94fad397a22b34a021d26adf1a125f1e809b6528ade057f2790`.
   It is a **debug-signed prototype**, so it is a valid artifact record but **not** a valid
   release-size proxy.
 - The Android-free `:core:test` suite, including the deterministic synthetic tests added

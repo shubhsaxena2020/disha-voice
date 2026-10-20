@@ -19,7 +19,7 @@ Disha Voice explores whether a phone can offer concise Hindi descriptions of sel
 |---|---|
 | **Repository** | https://github.com/shubhsaxena2020/disha-voice |
 | **Website** | https://shubhsaxena2020.github.io/disha-voice/ |
-| **Pre-release (debug APK)** | https://github.com/shubhsaxena2020/disha-voice/releases/tag/v0.1.1-prototype |
+| **Pre-release (debug APK)** | https://github.com/shubhsaxena2020/disha-voice/releases/tag/v0.1.2-prototype |
 | **Status** | Prototype. **Not release-ready** and **not tested on a physical device.** |
 | **Licence** | Apache-2.0 (see [`LICENSE`](LICENSE), [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)) |
 
@@ -28,7 +28,7 @@ Disha Voice explores whether a phone can offer concise Hindi descriptions of sel
 - **Pure Kotlin domain core** — image-relative left/centre/right classification, confidence
   banding, and repeated-announcement suppression. **12 tests passing.**
 - **Android app builds** — `:android:app:assembleDebug` produces a 30,671,369-byte APK
-  (SHA-256 `b80108a1…f83c5`), minSdk 24 / targetSdk 36, requesting **only** the `CAMERA`
+  (SHA-256 `6b55a59f…f2790`), minSdk 24 / targetSdk 36, requesting **only** the `CAMERA`
   permission, with **no** `INTERNET` permission. **16 tests passing.**
   The input-tensor convention is pinned by a unit test, so a silent change to the
   pre-processing cannot degrade detection without failing the build.
