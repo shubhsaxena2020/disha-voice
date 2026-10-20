@@ -36,6 +36,7 @@ files = {
     "RESEARCH/differentiation-hypothesis.md": "docs/research/differentiation-hypothesis.md",
     "RESEARCH/open-source-license-audit.md": "docs/research/open-source-license-audit.md",
     "RESEARCH/benchmark-plan.md": "docs/research/benchmark-plan.md",
+    "RESEARCH/feature-comparison.csv": "docs/research/feature-comparison.csv",
     "TESTING/field-evaluation-protocol.md": "docs/research/field-evaluation-protocol.md",
 }
 for source, destination in files.items():
