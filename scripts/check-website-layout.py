@@ -171,13 +171,47 @@ def find_playwright() -> str | None:
     return None
 
 
+def launch_browser(p):
+    """Launch a browser, preferring one that is actually installed.
+
+    Playwright's bundled Chromium is only present if
+    ``playwright install chromium`` was run. On CI the system Google Chrome
+    is pre-installed, so that is used instead. The order is: bundled
+    Chromium, then the system Chrome channel, then any chromium-family
+    browser on PATH.
+
+    Returns a launched browser, or raises the last error.
+    """
+    attempts = []
+
+    def _launch(**kwargs):
+        return p.chromium.launch(**kwargs)
+
+    # 1. the bundled Chromium
+    try:
+        return _launch()
+    except Exception as exc:  # noqa: BLE001
+        attempts.append(f"bundled chromium: {exc}")
+
+    # 2. the system Chrome / Chromium channel
+    for channel in ("chrome", "chromium", "msedge"):
+        try:
+            return _launch(channel=channel)
+        except Exception as exc:  # noqa: BLE001
+            attempts.append(f"channel {channel}: {exc}")
+
+    raise RuntimeError(
+        "No usable browser was found. Tried:\n  " + "\n  ".join(attempts)
+    )
+
+
 def run_with_python_api() -> dict:
     """Run the audit with the Playwright Python API."""
     from playwright.sync_api import sync_playwright
 
     results: dict[str, list[str]] = {}
     with sync_playwright() as p:
-        browser = p.chromium.launch()
+        browser = launch_browser(p)
         for name, width, height in VIEWPORTS:
             ctx = browser.new_context(viewport={"width": width, "height": height})
             page = ctx.new_page()
@@ -221,9 +255,19 @@ def main() -> int:
                 "import sys, json\n"
                 "from playwright.sync_api import sync_playwright\n"
                 f"AUDIT = {PAGE_AUDIT!r}\n"
+                "def launch(p):\n"
+                "    try:\n"
+                "        return p.chromium.launch()\n"
+                "    except Exception:\n"
+                "        for channel in ('chrome', 'chromium', 'msedge'):\n"
+                "            try:\n"
+                "                return p.chromium.launch(channel=channel)\n"
+                "            except Exception:\n"
+                "                pass\n"
+                "    raise RuntimeError('no usable browser found')\n"
                 "results = {}\n"
                 "with sync_playwright() as p:\n"
-                "    browser = p.chromium.launch()\n"
+                "    browser = launch(p)\n"
                 "    for name, width, height in " + repr(VIEWPORTS) + ":\n"
                 "        ctx = browser.new_context(viewport={'width': width, 'height': height})\n"
                 "        page = ctx.new_page()\n"

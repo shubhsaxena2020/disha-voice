@@ -159,11 +159,19 @@ jobs:
         run: python3 scripts/check-website-links.py
       - name: Audit WCAG AA text contrast
         run: python3 scripts/check-website-contrast.py
-      - name: Set up Python for the layout check
+      - name: Set up a browser for the layout check
         run: |
+          set -euo pipefail
+          # GitHub's ubuntu runners already ship Google Chrome and the shared
+          # libraries Chromium needs, so the layout check uses the system
+          # browser. `playwright install --with-deps` is deliberately NOT
+          # used: it runs `apt-get update` against every configured mirror,
+          # including packages.microsoft.com, and fails the whole job when
+          # any one of them is unreachable. That is a network dependency
+          # unrelated to what is being checked.
           python3 -m pip install --upgrade pip
           pip install playwright
-          python3 -m playwright install --with-deps chromium
+          python3 -c "import playwright; print('playwright module installed')"
       - name: Check the rendered layout at three viewports
         run: python3 scripts/check-website-layout.py
 
