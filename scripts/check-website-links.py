@@ -38,6 +38,7 @@ files = {
     "RESEARCH/open-source-license-audit.md": "docs/research/open-source-license-audit.md",
     "RESEARCH/benchmark-plan.md": "docs/research/benchmark-plan.md",
     "RESEARCH/platform-api-audit.md": "docs/research/platform-api-audit.md",
+    "RESEARCH/architecture-options.md": "docs/research/architecture-options.md",
     "RESEARCH/feature-comparison.csv": "docs/research/feature-comparison.csv",
     "docs/RELEASE_NOTES_v0.1.1-prototype.md": "docs/RELEASE_NOTES_v0.1.1-prototype.md",
     "docs/RELEASE_NOTES_v0.1.2-prototype.md": "docs/RELEASE_NOTES_v0.1.2-prototype.md",
