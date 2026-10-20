@@ -1,0 +1,72 @@
+name: Bug report
+description: Report a reproducible problem with the project
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve Disha Voice. This is a prototype and may not be release-ready. **Do not include private photos, video, audio, recordings, screenshots, personal information, location data, credentials, or other confidential material.**
+
+        For a suspected security vulnerability, do not file a public issue. Follow [SECURITY.md](../../SECURITY.md) and use GitHub private vulnerability reporting only if it is enabled for this repository. Do not post vulnerability details publicly if that option is unavailable.
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: Describe the issue and its impact.
+      placeholder: A concise description of the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Provide minimal, numbered steps. Use synthetic or properly licensed public examples only.
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What happened instead? Include relevant error messages, with secrets and personal data removed.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include only relevant, non-sensitive details (for example, app revision, OS or Android version, device model, and language settings).
+      placeholder: |
+        Revision/build:
+        OS / Android version:
+        Device (optional):
+        Language (optional):
+    validations:
+      required: false
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Add non-sensitive context that may help diagnose the problem. Do not attach private media or personal data.
+    validations:
+      required: false
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Before submitting
+      options:
+        - label: I have removed credentials, personal information, private media, and other confidential material from this report.
+          required: true
+        - label: This is not a security vulnerability report; I will use the private process in SECURITY.md for security concerns.
+          required: true

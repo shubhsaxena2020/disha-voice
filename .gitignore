@@ -1,0 +1,44 @@
+# Gradle
+.gradle/
+**/build/
+local.properties
+
+# Android
+*.apk
+*.aab
+*.ap_
+*.jks
+*.keystore
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.p12
+*.key
+
+# Editor / OS
+.idea/
+*.iml
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Local test media and data
+*.mp4
+*.mov
+*.jpg
+*.jpeg
+*.png
+*.wav
+*.m4a
+TESTING/private-data/
+benchmarks/results/private/
+
+# Website build outputs
+website/dist/
+
+# Temporary reports
+*.log
+*.tmp

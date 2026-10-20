@@ -1,0 +1,54 @@
+name: Build and test
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  core-tests:
+    name: Core tests (JDK 17)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Validate Gradle wrapper
+        uses: gradle/actions/wrapper-validation@v4
+      - name: Run core tests
+        run: ./gradlew --no-daemon :core:test
+
+  website-checks:
+    name: Static website checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Check required pages and local-only assets
+        shell: bash
+        run: |
+          test -s website/index.html
+          test -s website/styles.css
+          python3 - <<'PY'
+          from pathlib import Path
+          html = Path('website/index.html').read_text(encoding='utf-8')
+          css = Path('website/styles.css').read_text(encoding='utf-8')
+          assert '<html lang="en">' in html
+          assert 'id="main"' in html and 'class="skip-link"' in html
+          assert 'Illustration only · not a live detection' in html
+          assert 'Not a mobility aid' in html
+          assert 'prefers-reduced-motion:reduce' in css
+          assert 'https://' not in html and 'https://' not in css, 'Website must not make external requests by default'
+          print('Website content and local-only checks passed.')
+          PY

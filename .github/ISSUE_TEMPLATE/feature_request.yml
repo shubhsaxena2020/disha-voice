@@ -1,0 +1,48 @@
+name: Feature request
+description: Suggest a change within the project's scope
+title: "[Feature]: "
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting an improvement. Disha Voice is a prototype visual-information assistant, not a medical product or a mobility, navigation, collision-avoidance, or path-clearance aid. Requests must not add or imply those capabilities. **Do not include private photos, video, audio, recordings, screenshots, personal information, location data, credentials, or other confidential material.**
+
+        For a suspected security vulnerability, do not file a public issue. Follow [SECURITY.md](../../SECURITY.md) and use GitHub private vulnerability reporting only if it is enabled for this repository. Do not post vulnerability details publicly if that option is unavailable.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+      description: Describe the user need or friction, without including private information.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What would you like to happen?
+      description: Describe the proposed behavior and how it stays within the project's visual-information scope.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Describe any alternatives or workarounds you considered.
+    validations:
+      required: false
+  - type: textarea
+    id: accessibility
+    attributes:
+      label: Accessibility and safety considerations
+      description: How might this affect blind or low-vision users, accessibility, uncertainty, or privacy? Do not describe the app as providing medical or navigation guidance.
+    validations:
+      required: false
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Before submitting
+      options:
+        - label: This proposal does not request medical advice or claims, mobility/navigation guidance, collision avoidance, or path-clearance claims.
+          required: true
+        - label: I have not included private media, personal information, credentials, or other confidential material.
+          required: true
