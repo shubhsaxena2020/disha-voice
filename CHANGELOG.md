@@ -31,6 +31,10 @@ caveat that the project is pre-1.0 and currently a **prototype**.
   machines, because Gradle generates a different debug keystore on each one.
 
 ### Fixed
+- The CI layout check no longer runs `apt-get update` via
+  `playwright install --with-deps`, which failed the whole job when
+  `packages.microsoft.com` returned 403. It now uses the system Chrome that
+  GitHub's runners already ship, with a tested fallback chain.
 - 17 text/background pairs were below WCAG AA. The worst was the "Read the full safety
   note" link inside the dark safety band, which rendered the site's green on the band's
   dark green at **1.94:1** - effectively invisible to a low-vision user.

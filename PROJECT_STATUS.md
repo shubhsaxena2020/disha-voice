@@ -270,6 +270,13 @@ the top of this document.
   had lost its POSIX executable bit (exit 126), and the Pages link check caught three links
   that would 404 on the deployed site. Added `scripts/check-website-links.py` so the second
   class of error is caught locally.
+- **2026-10-20** — **CI failed once for a reason unrelated to the code, and the
+  dependency was removed.** The "Build and test" workflow failed on a docs-only commit
+  because `playwright install --with-deps chromium` runs `apt-get update` against every
+  configured apt mirror, and `packages.microsoft.com` returned 403 — so the job died
+  while installing browser system libraries for a check that has nothing to do with
+  them. CI no longer runs apt at all; the layout check uses the system Chrome that
+  GitHub's runners already ship, and the fallback chain was tested directly.
 - **2026-10-20** — **Clean-checkout reproduction re-verified after every change**: a
   fresh `git clone` of the published repository builds, runs **21/21** tests green, and
   produces an APK whose payload is byte-identical to the published release (546/546 ZIP
