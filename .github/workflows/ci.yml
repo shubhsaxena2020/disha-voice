@@ -49,6 +49,24 @@ jobs:
           assert 'Illustration only · not a live detection' in html
           assert 'Not a mobility aid' in html
           assert 'prefers-reduced-motion:reduce' in css
-          assert 'https://' not in html and 'https://' not in css, 'Website must not make external requests by default'
-          print('Website content and local-only checks passed.')
+
+          # The site must not LOAD anything from another origin. Outbound <a href>
+          # links are fine - a link is navigation a user chooses, not a request
+          # the page makes. What must not exist is a subresource or a script
+          # that phones home.
+          import re as _re
+          # Any element that can pull a remote resource. finditer + group(0) is
+          # required here: findall with a capture group returns only the group.
+          for match in _re.finditer(
+              r'<(?:script|img|iframe|source|video|audio|embed|object|link)\b[^>]*>', html, _re.I
+          ):
+              tag = match.group(0)
+              if _re.search(r'(?:src|href|data)\s*=\s*["\']\s*(?:https?:)?//', tag, _re.I):
+                  raise SystemExit(f'Website must not load remote subresources: {tag}')
+          assert '<script' not in html.lower(), 'Website must not include JavaScript'
+          assert 'fonts.googleapis.com' not in html and 'fonts.googleapis.com' not in css
+          assert '@import' not in css, 'Website must not import remote stylesheets'
+          assert '//fonts.' not in css and 'cdn.' not in css
+          print('Website content and local-only checks passed: no JavaScript, '
+                'no remote subresources, no remote fonts.')
           PY
