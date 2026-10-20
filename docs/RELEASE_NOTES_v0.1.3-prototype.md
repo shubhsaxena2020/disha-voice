@@ -8,7 +8,7 @@
 - **Version:** `0.1.3-prototype` (versionCode 4)
 - **APK:** `disha-voice-v0.1.3-prototype-debug.apk`
 - **Size:** 30,701,552 bytes
-- **SHA-256:** `5041d752ed16bc1c0c4c3225e471fd83a5115f5c866bacba40c4f3dd3f33dfa9`
+- **SHA-256:** `6b229b83de5a430006df904ba247b74edffb64790143e7286e7949b608973600`
 - **Minimum Android version:** 7.0 (API 24)
 - **Target Android version:** 16 (API 36)
 - **Permissions requested:** `CAMERA` only. The app has **no** internet permission, requests **no**
@@ -20,7 +20,7 @@ Verify the checksum after download:
 
 ```bash
 sha256sum disha-voice-v0.1.3-prototype-debug.apk
-# 5041d752ed16bc1c0c4c3225e471fd83a5115f5c866bacba40c4f3dd3f33dfa9
+# 6b229b83de5a430006df904ba247b74edffb64790143e7286e7949b608973600
 ```
 
 ## What changed from v0.1.0-prototype

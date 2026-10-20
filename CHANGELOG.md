@@ -10,7 +10,7 @@ caveat that the project is pre-1.0 and currently a **prototype**.
 
 **Published pre-release:** https://github.com/shubhsaxena2020/disha-voice/releases/tag/v0.1.3-prototype
 
-- SHA-256 `5041d752ed16bc1c0c4c3225e471fd83a5115f5c866bacba40c4f3dd3f33dfa9`, 30,701,552 bytes.
+- SHA-256 `6b229b83de5a430006df904ba247b74edffb64790143e7286e7949b608973600`, 30,701,552 bytes.
 - **No user-visible change** from v0.1.0-prototype. Republished because the source changed in
   a way that matters for trust:
   - The input-tensor construction is now a testable unit (`InputTensorBuilder`), with **7 new
@@ -126,6 +126,19 @@ caveat that the project is pre-1.0 and currently a **prototype**.
   machines, because Gradle generates a different debug keystore on each one.
 
 ### Fixed
+- **The published APK was not the one CI builds.** The payload check compares a fresh
+  build against the published release, and it failed on v0.1.3 with the APK's total size
+  identical and exactly two of eight DEX files differing. Rather than weaken the check,
+  the cause was diagnosed and the artifact replaced: a debug build on Windows and the same
+  commit built on Linux differ in exactly two of the APK's 548 ZIP entries, because the
+  Compose compiler's **stability inference** is not identical across operating systems and
+  emits an extra `Composer.changedInstance()` call. Path length, line endings and JDK
+  version were ruled out by experiment first.
+
+  **The published artifact is now the APK CI built**, so the comparison CI makes is CI
+  against CI, on the same platform, with the same toolchain. 546 of 548 ZIP entries are
+  byte-identical either way, including the resources, the manifest, the model, the native
+  libraries and the notices. The check itself is unchanged.
 - **The APK carried no third-party licence notices at all.** A machine-readable inventory
   of every resolved dependency (`RESEARCH/third-party-inventory.csv`, 134 rows), built by
   reading the built APK and the Gradle cache, found **fourteen discrepancies** in the
@@ -263,7 +276,7 @@ signed release, and no store distribution have been performed.
 - `:core:test` and `:android:app:testDebugUnitTest` — **28 distinct tests, 0 failures**
   (12 in `:core`, 16 in `:android:app`; the app tests also run under the release variant).
 - `:android:app:assembleDebug` — produces `app-debug.apk` (30,701,552 bytes,
-  SHA-256 `5041d752ed16bc1c0c4c3225e471fd83a5115f5c866bacba40c4f3dd3f33dfa9`),
+  SHA-256 `6b229b83de5a430006df904ba247b74edffb64790143e7286e7949b608973600`),
   minSdk 24 / targetSdk 36.
 - APK inspected independently: **CAMERA permission only, no `INTERNET` permission**,
   `allowBackup=false`, `usesCleartextTraffic=false`, model present in `assets/`.

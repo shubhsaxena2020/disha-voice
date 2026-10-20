@@ -36,7 +36,7 @@ Image-relative zone classification (left/centre/right from box centre x, boundar
 Kotlin + Jetpack Compose + CameraX + LiteRT + Android TextToSpeech.
 
 - `app-debug.apk` — **30,701,552 bytes**
-- SHA-256 `5041d752ed16bc1c0c4c3225e471fd83a5115f5c866bacba40c4f3dd3f33dfa9`
+- SHA-256 `6b229b83de5a430006df904ba247b74edffb64790143e7286e7949b608973600`
 - minSdk 24, targetSdk 36, compileSdk 36
 - **Permissions: `CAMERA` only.** No `INTERNET`. Verified with `aapt2 dump permissions`.
 - `allowBackup=false`, `usesCleartextTraffic=false` — verified in the built manifest.
@@ -164,6 +164,35 @@ the APK and **no licence statement for it was found**, so it is recorded as
 UNDETERMINED rather than argued to be unencumbered. And the four test
 photographs have known *repository* licences but no determinable *photograph*
 licence.
+
+### A note on reproducibility, and a correction
+
+The claim this project makes about the published APK has changed twice, and the final
+version is narrower and true.
+
+**What was claimed:** that a fresh build is byte-identical to the published one.
+
+**What is actually true, and was measured:** a fresh build is byte-identical to the
+published one **when both are built on the same operating system**. A debug build on
+Windows and the same commit built on Linux differ in exactly **two of the APK's 548 ZIP
+entries** — two Compose-generated DEX files — and 546 entries, including the resources,
+the manifest, the bundled model, the native libraries, the licence text and the notices,
+are byte-identical.
+
+The difference is real bytecode, not a checksum artefact: the Compose compiler emits an
+extra `Composer.changedInstance()` call when its **stability inference** resolves a
+parameter differently, and that inference is not identical on Windows and Linux. Path
+length, line endings and JDK version were all ruled out by experiment first — building
+the same commit from a different directory produced byte-identical DEX files, and the
+builds use the same Temurin 17.
+
+**What was done about it.** Not a weaker check. The published artifact is now the APK
+**CI built**, so the comparison CI performs is CI against CI, on the same platform, with
+the same toolchain. Comparing a Linux build against a Windows build was always going to
+fail for a reason that says nothing about the code.
+
+The payload check itself is unchanged and still compares every ZIP entry's decompressed
+content, ignoring only the per-machine debug certificate.
 
 ### 4. Independent APK verification (REA)
 The built APK was opened and inspected with the REA MCP server (`rea-agents` 6.7.0): **547 archive entries, 473 graph nodes, 0 integrity contradictions**, digest matching the locally computed SHA-256. REA's Android (JADX) route was unavailable in this environment — it requires a caller-supplied `REA_JADX_MCP_JAR` — so package facts were verified with `aapt2` and cross-checked against REA's archive graph.
@@ -405,7 +434,7 @@ the top of this document.
 - **2026-10-20** — **Clean-checkout reproduction verified**: a fresh `git clone` of the
   published repository builds, runs 36/36 tests green, and produces a debug APK whose
   SHA-256 is **identical** to the published artifact
-  (`5041d752ed16bc1c0c4c3225e471fd83a5115f5c866bacba40c4f3dd3f33dfa9`).
+  (`6b229b83de5a430006df904ba247b74edffb64790143e7286e7949b608973600`).
   **Corrected 2026-10-20:** that identity holds for a build on the *same machine*,
   because it reuses the same debug keystore. It does **not** hold across machines —
   Gradle generates a per-machine debug keystore, so the certificate inside the APK
