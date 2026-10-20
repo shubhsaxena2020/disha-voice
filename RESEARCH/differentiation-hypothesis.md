@@ -22,6 +22,14 @@ Stated plainly, because a novelty claim would not survive scrutiny:
 - **Text-to-speech in an Indian language is not novel.** Android TTS has shipped `hi-IN` voices
   for years.
 - **A "Hindi-first" wrapper is a localisation layer, not a research contribution** on its own.
+- **CORRECTED 2026-10-20 after the competitor research:** *"Hindi-first" and "offline" are not
+  even differentiators, because the market leader already has both.* Google Lookout supports
+  **Hindi** (along with Bengali, Gujarati, Kannada, Marathi, Tamil, Telugu and 30+ others),
+  has worked **offline** since 2022, and its Find mode provides **direction and distance**.
+  See `RESEARCH/competitor-landscape.md`. **H4 below is therefore downgraded from a
+  differentiator to a table-stakes requirement**: the app must have these properties to be
+  usable in India at all, but having them is not an achievement, and claiming otherwise would
+  be refuted by a Google support page.
 
 So the honest framing of this project is: *a small, careful, offline-first, accessibility-first
 implementation of an existing idea, with the research effort spent on the parts that are
@@ -98,11 +106,16 @@ genuinely under-specified.*
   *object identity without position*, and say so.
 - Tracked as issue #3.
 
-### H4 — Hindi-first, offline, hands-free
+### H4 — Hindi-first, offline, hands-free (**downgraded to table stakes**)
 
 > **Statement:** For users whose first language is Hindi and whose data allowance or connectivity
 > is limited, an offline app that speaks naturally in Hindi is materially better than an
 > English-only or cloud-dependent one.
+
+- **Downgraded 2026-10-20:** Google Lookout already ships Hindi, already works offline, and
+  already provides direction and distance. This is therefore **not a differentiator** — it is a
+  precondition for being usable in India at all. The hypothesis below survives only as a
+  statement about *which users are better served*, not as a claim of novelty.
 
 - **Mechanism:** no network dependency, no data cost, no upload of the user's surroundings, and
   speech in the user's own language.
@@ -139,16 +152,22 @@ genuinely under-specified.*
 > without noise, Disha Voice is an accessibility-first Android prototype that names what the
 > camera can see and keeps quiet otherwise — running fully on-device, with no account, no
 > tracking, and no upload of the user's surroundings.
+>
+> **It is deliberately narrower than Google Lookout.** Lookout already speaks Hindi, works
+> offline, and even gives direction and distance. Disha Voice competes on a different axis:
+> **it says less, says it honestly, and never sends a frame off the phone** — and it publishes
+> the measurements that show whether that is actually better.
 
 **Elevator pitch (one paragraph):**
 
-> Most "blind assistant" apps either talk constantly or need the cloud. Disha Voice is built
-> around the opposite idea: say less, say it accurately, and say it in Hindi without sending a
-> single frame off the phone. It runs a small open-licensed object-detection model inside the
-> app, tells you what it recognises and where it sits in the picture, and suppresses the
-> repeated announcements that make similar tools exhausting to use. It is an early prototype —
-> not yet tested on a phone, and explicitly not a navigation aid — and it publishes exactly
-> what has and has not been verified.
+> Google Lookout already speaks Hindi and works offline. Disha Voice takes a different bet:
+> that the problem with assistive camera apps is not that they fail to speak, but that they
+> never stop. Lookout users complain that it "is continually announcing 'No text in view'" and
+> that the announcements "cannot be turned off". So Disha Voice is built to say less — one
+> short, honest phrase about one object, repeated only when it has changed — and to run
+> entirely on your phone, with no account, no tracking, and no upload of your surroundings. It
+> is an early prototype, not yet tested on a phone, and explicitly not a navigation aid; it
+> publishes exactly what has and has not been verified.
 
 **Three-line store description:**
 

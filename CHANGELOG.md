@@ -45,7 +45,8 @@ signed release, and no store distribution have been performed.
 
 ### Verified
 
-- `:core:test` and `:android:app:testDebugUnitTest` — **30 tests, 0 failures**.
+- `:core:test` and `:android:app:testDebugUnitTest` — **21 distinct tests, 0 failures**
+  (12 in `:core`, 9 in `:android:app`; the app tests also run under the release variant).
 - `:android:app:assembleDebug` — produces `app-debug.apk` (30,671,369 bytes,
   SHA-256 `96bab1f33062922add352ea4709bac080bd3f2266f19d582e53928346f3dc7b0`),
   minSdk 24 / targetSdk 36.
@@ -60,7 +61,7 @@ signed release, and no store distribution have been performed.
   ten tracked issues; the website is deployed and verified live at
   <https://shubhsaxena2020.github.io/disha-voice/>.
 - **Clean-checkout reproduction:** a fresh clone of the published repository builds, passes
-  30/30 tests, and produces a debug APK whose SHA-256 is identical to the published
+  21/21 tests, and produces a debug APK whose SHA-256 is identical to the published
   artifact.
 
 ### Known limitations

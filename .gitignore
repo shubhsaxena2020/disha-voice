@@ -42,3 +42,6 @@ website/dist/
 # Temporary reports
 *.log
 *.tmp
+
+# Local site-build scratch directory
+_site_check/
