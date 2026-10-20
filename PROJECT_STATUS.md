@@ -70,6 +70,13 @@ Real detections (LiteRT, CPU, this machine):
 
 Ground truth for each image was confirmed with an independent vision model.
 
+**Input convention — verified, not assumed.** The app and the desktop benchmark both feed
+**raw uint8 RGB**. That agreement is not proof, so the model was run on the real test images
+under three conventions (`benchmarks/scripts/verify_preprocessing.py`, now in CI):
+`raw` → bus 0.801 / dog 0.840 / dog 0.723; `norm11` → near-identical, because this model's
+input quantisation maps the uint8 range onto [-1, 1]; `imagenet` → clearly **worse**
+(bus 0.801 → 0.668, dog 0.840 → 0.801). The app's convention is correct.
+
 **Latency (7 repeats/image, desktop CPU):** median 25.9–35.9 ms, min 25.1, max 63.7.
 **This is a desktop measurement, not a phone measurement.** Full data: `benchmarks/results/detector_benchmark.json`.
 

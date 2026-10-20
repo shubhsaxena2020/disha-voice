@@ -9,6 +9,14 @@ caveat that the project is pre-1.0 and currently a **prototype**.
 ## [Unreleased]
 
 ### Added
+- `benchmarks/scripts/verify_preprocessing.py`: runs the bundled model on the real test
+  images under three input conventions and reports what each produces. The Android app and
+  the desktop benchmark both feed **raw uint8 RGB**; that they agree is reassuring but not
+  proof, because if the model wanted a different convention both would be wrong together
+  and every benchmark number would still look plausible. Measured: `raw` and `norm11`
+  agree closely (this model's input quantisation maps the uint8 range onto [-1, 1]), while
+  ImageNet mean/std normalisation is clearly worse (bus 0.801 -> 0.668, dog 0.840 -> 0.801).
+  The app's convention is confirmed correct, and the check is now in CI.
 - **A second-pass competitor finding, and the corrections it forced.**
   - **Google Guided Vision in Gemini Live** (launched **2026-10-01**) is a closer and far
     more capable competitor than Lookout: conversational camera description for blind and

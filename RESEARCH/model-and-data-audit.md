@@ -76,6 +76,39 @@ OUTPUTS
 
 Both are encoded in `EfficientDetDetector.buildInputBuffer` and in the Python harness.
 
+### Input convention — verified empirically, not assumed
+
+The app feeds **raw uint8 RGB (0-255)** into the uint8 input tensor
+(`EfficientDetDetector.buildInputBuffer`), and the desktop benchmark
+(`benchmarks/scripts/run_detection.py`) does the same. That they agree is reassuring but
+**not proof**: if the model had been trained for a different convention, both would be wrong
+together, and every benchmark number in this document would still look plausible.
+
+So the model was run on the real test images under three conventions
+(`benchmarks/scripts/verify_preprocessing.py`):
+
+| Convention | bus_street | people_tie | samoyed | yellow_labrador |
+|---|---|---|---|---|
+| **`raw` — what the app does** | bus 0.801, person 0.789, 0.707, 0.629 | person 0.648, 0.605, tie 0.262 | **dog 0.723** | **dog 0.840** |
+| `norm11` — normalise to [-1,1], requantise | bus 0.801, person 0.789, 0.688, 0.648 | person 0.648, 0.605, tie 0.277 | dog 0.723 | dog 0.828 |
+| `imagenet` — (x/255-mean)/std, requantise | person 0.773, 0.723, **bus 0.668** | person 0.801, 0.586 | dog 0.648 | dog 0.801 |
+
+**The conclusion is that the app's convention is correct, and the alternatives are
+measurably worse or merely equivalent:**
+
+- `raw` and `norm11` agree closely, because this model's input quantisation
+  (scale 0.0078125, zero_point 127) maps the uint8 range onto the [-1, 1] range — so
+  requantising a [-1, 1] value lands back on approximately the same uint8 value. The two
+  conventions are near-indistinguishable *for this model*, which is why the correct choice
+  is not obvious from first principles.
+- `imagenet` normalisation is clearly **worse**: the bus drops from 0.801 to 0.668, the
+  Labrador from 0.840 to 0.801, and the ranking in `people_tie` changes. The model does not
+  expect mean/std normalisation.
+
+**This check is now part of CI**, because a silent change to the input convention would
+degrade detection without breaking anything, and the desktop benchmark alone would not
+notice.
+
 ### Label index space (an off-by-one that was caught, not shipped)
 
 The model has **no embedded label map** (verified: the strings `person`, `bicycle`, `zebra`,
