@@ -146,4 +146,4 @@ Please see `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, and `SECURITY.md`. Do not co
 
 ## License
 
-The project license will be selected after research and third-party/model license review. Until `LICENSE` and `THIRD_PARTY_NOTICES.md` are complete, treat this repository as all-rights-reserved; do not assume code, models, data, or assets are freely redistributable.
+Licensed under the Apache License 2.0. See [`LICENSE`](LICENSE) and [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) for the licenses of the bundled model and third-party components.
